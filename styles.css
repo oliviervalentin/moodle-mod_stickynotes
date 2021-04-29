@@ -1,0 +1,114 @@
+/* @import url(https://fonts.googleapis.com/css2?family=Permanent+Marker); */
+/* @import url(https://fonts.googleapis.com/css2?family=Gloria+Hallelujah); */
+
+.sticky {
+  right: 0;
+  z-index: 150;
+  /* transform: rotate(5deg); */
+  width: 150px;
+  min-height: 100px;
+  max-height: 150px;
+  margin: -10px 10px 10px;
+  padding: 10px;
+  font-size: 14px;
+  color: #000;
+  background: rgba(255, 255, 51, 0.8);
+  /* background: [[setting:backgroundcolor]]; */
+  box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
+}
+div[id*="1container"] , div[id*="2container"], div[id*="7container"] {
+  transform:rotate(4deg);
+  margin-top:5px;
+  margin-left:5px;
+  display: inline-block;
+}
+div[id*="3container"] , div[id*="8container"], div[id*="0container"] {
+  transform:rotate(-2deg);
+   margin-top:5px;
+   margin-left:10px;
+   display: inline-block;
+}
+div[id*="4container"] , div[id*="6container"], div[id*="9container"] {
+  transform:rotate(-3deg);
+   margin-top:-5px;
+   display: inline-block;
+}
+div[id*="5container"] {
+  transform:rotate(-5deg);
+   margin-top:2px;
+   margin-right: -5px;
+   display: inline-block;
+}
+.sticky:before {
+  border-top: solid 8px #fff;
+  border-right: solid 8px #fff;
+  border-left: solid 8px transparent;
+  border-bottom: solid 8px transparent;
+}
+.sticky:after {
+  border-bottom: solid 8px #dddd33;
+  border-left: solid 8px #dddd33;
+  border-right: solid 8px transparent;
+  border-top: solid 8px transparent;
+}
+.createnote {
+    background-color: #EEE;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 25px;
+    border: 2px solid #FFF;
+}
+.headernote {
+    font-size: 10px;
+    text-align: right;
+    color: #FFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.contentnote {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Permanent Marker", "Gloria Hallelujah", "Chalkboard SE", sans-serif;
+    text-align: center;
+    min-height: 55px;
+}
+.footernote {
+    /* text-align: right; */
+}
+.columnnote{
+    text-align: center;
+}
+.columnnote i{
+    font-size: 14px;
+}
+.editnote{
+    text-align: right;
+}
+.vote{
+    text-align: left;
+    float: left;
+    color: #e20081;
+    font-size: 8px;
+}
+.vote a{
+    margin-right: -5px;
+}
+#id_color option[value='1']{
+    background-color: #EECC66;
+}
+#id_color option[value='2']{
+    background-color: #AACC24;
+}
+#id_color option[value='3']{
+    background-color: #99DDFF;
+}
+#id_color option[value='4']{
+    background-color: #6699CC;
+}
+#id_color option[value='5']{
+    background-color: #EE8866;
+}
+#id_color option[value='6']{
+    background-color: #BBBBBB;
+}
