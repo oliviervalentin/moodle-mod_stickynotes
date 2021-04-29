@@ -46,6 +46,7 @@ to complete the installation from the command line.
 ## License ##
 
 2021 Olivier VALENTIN
+Main icon design by Alexandra CODINA
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
