@@ -61,11 +61,42 @@ $string['maxlimitvotes'] = 'Max votes number';
 $string['maxlimitvotes_help'] = 'Defines the number of votes per user.';
 $string['viewauthor'] = 'Show authors';
 $string['viewauthor_help'] = 'If enabled, managers and teachers will see authors ont he top of each note.';
-$string['colors'] = 'Colors choice';
-$string['colors_help'] = 'If enabled, users can choose the background color for notes.';
+$string['colors'] = 'Let user choose background color for notes';
+$string['colors_help'] = 'If enabled, users can choose the background color for notes among the ones selected by teacher.';
+$string['rotate'] = 'Rotate notes';
+$string['rotate_help'] = 'If enabled, notes will have a random rotation effect.';
+$string['choosecolors'] = 'Select which colors will be available for notes backgrounds.';
+$string['color1_meaning'] = 'Signification for color 1';
+$string['color2_meaning'] = 'Signification for color 2';
+$string['color3_meaning'] = 'Signification for color 3';
+$string['color4_meaning'] = 'Signification for color 4';
+$string['color5_meaning'] = 'Signification for color 5';
+$string['color6_meaning'] = 'Signification for color 6';
+$string['settings_colors'] = 'Colors settings';
+$string['settings_votes'] = 'Votes settings';
+
+// Colors settings.
+$string['color1'] = '#EECC66';
+$string['color1_descr'] = 'Color code for Color 1. Color 1 is also default color if color choice is not enabled in activity.';
+$string['color1_title'] = 'Color 1';
+$string['color2'] = '#AACC24';
+$string['color2_descr'] = 'Color code for Color 2.';
+$string['color2_title'] = 'Color 2';
+$string['color3'] = '#99DDFF';
+$string['color3_descr'] = 'Color code for Color 3.';
+$string['color3_title'] = 'Color 3';
+$string['color4'] = '#6699CC';
+$string['color4_descr'] = 'Color code for Color 4.';
+$string['color4_title'] = 'Color 4';
+$string['color5'] = '#EE8866';
+$string['color5_descr'] = 'Color code for Color 5.';
+$string['color5_title'] = 'Color 5';
+$string['color6'] = '#BBBBBB';
+$string['color6_descr'] = 'Color code for Color 6.';
+$string['color6_title'] = 'Color 6';
 
 // Forms strings.
-$string['message'] = 'Type your message here';
+$string['message'] = 'Message';
 $string['validate'] = 'Save';
 $string['maximumchars'] = 'The maximul length for a message is limited to 100 characters';
 $string['title'] = 'Column title';
@@ -85,6 +116,9 @@ $string['cannotvote']  = 'You are not authorized to vote';
 $string['cannotvotelimitreached']  = 'Your max vote limit is reached';
 $string['erroremptymessage'] = 'You must write a message for your note';
 $string['erroremptytitle'] = 'You must give a title to your column';
+$string['createnote_title'] = 'Create a new note in column ';
+$string['updatenote_title'] = 'Update note';
+$string['choosecolorbuttons'] = 'Choose background color';
 
 // Mustache template strings.
 $string['createnote'] = 'Add new Sticky Note';
@@ -102,3 +136,8 @@ $string['edit_column_pix'] = 'Edit this column';
 $string['delete_column_pix'] = 'Delete this column';
 $string['edit_note_pix'] = 'Edit this note';
 $string['delete_note_pix'] = 'Delete this note';
+
+// Events.
+$string['eventnotecreated'] = 'Sticky note created';
+$string['eventnoteupdated'] = 'Sticky note updated';
+$string['eventnotedeleted'] = 'Sticky note deleted';
