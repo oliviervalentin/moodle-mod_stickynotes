@@ -61,11 +61,42 @@ $string['maxlimitvotes'] = 'Nombre de votes maximum';
 $string['maxlimitvotes_help'] = 'Définit le nombre de votes par utilisateur';
 $string['viewauthor'] = 'Afficher les auteurs';
 $string['viewauthor_help'] = 'Si activé, les gestionnaires et enseignants peuvent voir les auteurs de chaque note.';
-$string['colors'] = 'Choix des couleurs';
-$string['colors_help'] = 'Si activé, permet de choisir la couleur de fond d\'une note.';
+$string['colors'] = 'Permettre à l\'utilisateur de choisir la couleur de fond des notes';
+$string['colors_help'] = 'Si activé, l\'utilisateur pourra choisir une couleur de fond parmi celles sélectionnées par l\'enseignant.';
+$string['rotate'] = 'Rotation des notes';
+$string['rotate_help'] = 'Si activé, les notes seront présentées avec un effet de rotation aléatoire.';
+$string['choosecolors'] = 'Choisissez les couleurs qui seront disponibles pour le fond des notes.';
+$string['color1_meaning'] = 'Signification de la couleur 1';
+$string['color2_meaning'] = 'Signification de la couleur 2';
+$string['color3_meaning'] = 'Signification de la couleur 3';
+$string['color4_meaning'] = 'Signification de la couleur 4';
+$string['color5_meaning'] = 'Signification de la couleur 5';
+$string['color6_meaning'] = 'Signification de la couleur 6';
+$string['settings_colors'] = 'Gestion des couleurs';
+$string['settings_votes'] = 'Gestion des votes';
+
+// Colors settings.
+$string['color1'] = '#EECC66';
+$string['color1_descr'] = 'Code couleur pour Couleur 1. Cette couleur est également la couleur par défaut si le choix des couleurs n\'est pas activé dans une activité.';
+$string['color1_title'] = 'Couleur 1';
+$string['color2'] = '#AACC24';
+$string['color2_descr'] = 'Code couleur pour Couleur 2.';
+$string['color2_title'] = 'Couleur 2';
+$string['color3'] = '#99DDFF';
+$string['color3_descr'] = 'Code couleur pour Couleur 3.';
+$string['color3_title'] = 'Couleur 3';
+$string['color4'] = '#6699CC';
+$string['color4_descr'] = 'Code couleur pour Couleur 4.';
+$string['color4_title'] = 'Couleur 4';
+$string['color5'] = '#EE8866';
+$string['color5_descr'] = 'Code couleur pour Couleur 5.';
+$string['color5_title'] = 'Couleur 5';
+$string['color6'] = '#BBBBBB';
+$string['color6_descr'] = 'Code couleur pour Couleur 6.';
+$string['color6_title'] = 'Couleur 6';
 
 // Forms strings.
-$string['message'] = 'Tapez votre texte';
+$string['message'] = 'Texte de votre note';
 $string['validate'] = 'Enregistrer';
 $string['maximumchars'] = 'La longueur maximal d\'un message est limitée à 100 caractères.';
 $string['title'] = 'Titre de la colonne';
@@ -85,6 +116,9 @@ $string['cannotvote']  = 'Vous n\'êtes pas autorisé à participer au vote.';
 $string['cannotvotelimitreached']  = 'Vous ne pouvez ajouter de vote car votre limite est atteinte.';
 $string['erroremptymessage'] = 'Vous devez rédiger un texte pour votre note.';
 $string['erroremptytitle'] = 'Vous devez donner un titre à votre colonne.';
+$string['createnote_title'] = 'Ajout d\'une note dans la colonne ';
+$string['updatenote_title'] = 'Modification d\'une note';
+$string['choosecolorbuttons'] = 'Couleur de fond';
 
 // Mustache template strings.
 $string['createnote'] = 'Ajouter une Sticky Note';
@@ -102,3 +136,8 @@ $string['edit_column_pix'] = 'Modifier cette colonne';
 $string['delete_column_pix'] = 'Supprimer cette colonne';
 $string['edit_note_pix'] = 'Modifier cette note';
 $string['delete_note_pix'] = 'Supprimer cette note';
+
+// Events.
+$string['eventnotecreated'] = 'Sticky note créée';
+$string['eventnoteupdated'] = 'Sticky note modifiée';
+$string['eventnotedeleted'] = 'Sticky note supprimée';
