@@ -82,6 +82,7 @@ div[id*="2container"] , div[id*="9container"] {
     text-align: center;
     min-height: 83px;
     padding-top: 5px;
+	overflow-wrap: break-word;
 }
 .footernote a, .footernote a:visited{
     color: #000;
