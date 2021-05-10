@@ -37,17 +37,17 @@
                         {{#capabilityvote}}
                         {{#voteenabled}}
                             {{#myvote}}
-                                <a href="{{voteurl}}">{{# pix}}heart_full, stickynotes, {{#str}}heart_full_pix, stickynotes{{/str}}{{/ pix}}</a>
+                                <a href="{{voteurl}}"><i class="fa fa-heart" title="{{#str}}heart_full_pix, stickynotes{{/str}}"></i></a>
                             {{/myvote}}
                             {{^myvote}}
                                 {{#limitedvote}}
-                                    {{# pix}}heart_limited, stickynotes, {{#str}}heart_limited_pix, stickynotes{{/str}}{{/ pix}}
+                                    <i class="fa fa-heart-o grey" title="{{#str}}heart_limited_pix, stickynotes{{/str}}"></i>
                                 {{/limitedvote}}
                                 {{^limitedvote}}
-                                    <a href="{{voteurl}}">{{# pix}}heart_empty, stickynotes, {{#str}}heart_empty_pix, stickynotes{{/str}}{{/ pix}}</a>
+                                    <a href="{{voteurl}}"><i class="fa fa-heart-o" title="{{#str}}heart_empty_pix, stickynotes{{/str}}"></i></a>
                                 {{/limitedvote}}
                             {{/myvote}}
-                        ({{totalvotes}})
+                        {{totalvotes}}
                         {{/voteenabled}}
                         {{^voteenabled}}
                             {{! No vote enabled : nothing !}}
