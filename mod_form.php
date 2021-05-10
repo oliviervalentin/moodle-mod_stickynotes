@@ -65,14 +65,6 @@ class mod_stickynotes_mod_form extends moodleform_mod {
             $this->add_intro_editor();
         }
 
-        // Choose colors ?
-        $mform->addElement('advcheckbox', 'colors', get_string('colors', 'stickynotes'));
-        $mform->addHelpButton('colors', 'colors', 'stickynotes');
-
-        // Show authors ?
-        $mform->addElement('advcheckbox', 'viewauthor', get_string('viewauthor', 'stickynotes'));
-        $mform->addHelpButton('viewauthor', 'viewauthor', 'stickynotes');
-
         // Enable the limitation of notes ?
         $mform->addElement('advcheckbox', 'limitstickynotes', get_string('limitstickynotes', 'stickynotes'));
         $mform->addHelpButton('limitstickynotes', 'limitstickynotes', 'stickynotes');
@@ -83,7 +75,18 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         $mform->setType('maxstickynotes', PARAM_INT);
         $mform->addRule('maxstickynotes', get_string('maxstickynoteserror', 'stickynotes'), 'regex', '/^[0-9]+$/', 'client');
 
-        // Adding the "Votes" fieldset.
+        // Show authors ?
+        $mform->addElement('advcheckbox', 'viewauthor', get_string('viewauthor', 'stickynotes'));
+        $mform->addHelpButton('viewauthor', 'viewauthor', 'stickynotes');
+
+        // Rotate notes ?
+        $mform->addElement('advcheckbox', 'rotate', get_string('rotate', 'stickynotes'));
+        $mform->addHelpButton('rotate', 'rotate', 'stickynotes');
+        $mform->setDefault('rotate',  '1');
+
+        // Adding the "votes" fieldset.
+        $mform->addElement('header', 'settings_votes', get_string('settings_votes', 'stickynotes'));
+
         // Define votes types :0 = no votes, 1 = user can like a vote.
         $options = array(
             '0'      => get_string('votenone', 'stickynotes'),
@@ -116,6 +119,83 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         $mform->addElement('select', 'maxlimitvotes', get_string('maxlimitvotes', 'stickynotes'), $maxvoteschoice);
         $mform->addHelpButton('maxlimitvotes', 'maxlimitvotes', 'stickynotes');
         $mform->setType('maxlimitvotes', PARAM_INT);
+
+        // Adding the "colors" fieldset.
+        $mform->addElement('header', 'settings_colors', get_string('settings_colors', 'stickynotes'));
+
+        // Can users choose background colors ?
+        $mform->addElement('advcheckbox', 'colors', get_string('colors', 'stickynotes'));
+        $mform->addHelpButton('colors', 'colors', 'stickynotes');
+        $mform->setDefault('colors',  '1');
+
+        // Text to introduce choice of colors and their meanings.
+        $mform->addElement('static', 'color_show', '', get_string('choosecolors', 'stickynotes'));
+
+        // Color 1.
+        $mform->disabledIf('color1', 'colors', '0');
+        $mform->addElement('advcheckbox', 'color1', '<div style="background-color:'.get_config('mod_stickynotes', 'color1').'">
+'.get_string('color1_title', 'stickynotes').'</div>');
+        $mform->setDefault('color1',  '1');
+
+        $mform->disabledIf('color1_meaning', 'colors', '0');
+        $mform->disabledIf('color1_meaning', 'color1', '0');
+        $mform->addElement('text', 'color1_meaning', get_string('color1_meaning', 'stickynotes'));
+        $mform->setType('color1_meaning', PARAM_TEXT);
+
+        // Color 2.
+        $mform->disabledIf('color2', 'colors', '0');
+        $mform->addElement('advcheckbox', 'color2', '<div style="background-color:'.get_config('mod_stickynotes', 'color2').'">
+'.get_string('color2_title', 'stickynotes').'</div>');
+        $mform->setDefault('color2',  '1');
+
+        $mform->disabledIf('color2_meaning', 'colors', '0');
+        $mform->disabledIf('color2_meaning', 'color2', '0');
+        $mform->addElement('text', 'color2_meaning', get_string('color2_meaning', 'stickynotes'));
+        $mform->setType('color2_meaning', PARAM_TEXT);
+
+        // Color 3.
+        $mform->disabledIf('color3', 'colors', '0');
+        $mform->addElement('advcheckbox', 'color3', '<div style="background-color:'.get_config('mod_stickynotes', 'color3').'">
+'.get_string('color3_title', 'stickynotes').'</div>');
+        $mform->setDefault('color3',  '1');
+
+        $mform->disabledIf('color3_meaning', 'colors', '0');
+        $mform->disabledIf('color3_meaning', 'color3', '0');
+        $mform->addElement('text', 'color3_meaning', get_string('color3_meaning', 'stickynotes'));
+        $mform->setType('color3_meaning', PARAM_TEXT);
+
+        // Color 4.
+        $mform->disabledIf('color4', 'colors', '0');
+        $mform->addElement('advcheckbox', 'color4', '<div style="background-color:'.get_config('mod_stickynotes', 'color4').'">
+'.get_string('color4_title', 'stickynotes').'</div>');
+        $mform->setDefault('color4',  '1');
+
+        $mform->disabledIf('color4_meaning', 'colors', '0');
+        $mform->disabledIf('color4_meaning', 'color4', '0');
+        $mform->addElement('text', 'color4_meaning', get_string('color4_meaning', 'stickynotes'));
+        $mform->setType('color4_meaning', PARAM_TEXT);
+
+        // Color 5.
+        $mform->disabledIf('color5', 'colors', '0');
+        $mform->addElement('advcheckbox', 'color5', '<div style="background-color:'.get_config('mod_stickynotes', 'color5').'">
+'.get_string('color5_title', 'stickynotes').'</div>');
+        $mform->setDefault('color5',  '1');
+
+        $mform->disabledIf('color5_meaning', 'colors', '0');
+        $mform->disabledIf('color5_meaning', 'color5', '0');
+        $mform->addElement('text', 'color5_meaning', get_string('color5_meaning', 'stickynotes'));
+        $mform->setType('color5_meaning', PARAM_TEXT);
+
+        // Color 6.
+        $mform->disabledIf('color6', 'colors', '0');
+        $mform->addElement('advcheckbox', 'color6', '<div style="background-color:'.get_config('mod_stickynotes', 'color6').'">
+'.get_string('color6_title', 'stickynotes').'</div>');
+        $mform->setDefault('color6',  '1');
+
+        $mform->disabledIf('color6_meaning', 'colors', '0');
+        $mform->disabledIf('color6_meaning', 'color6', '0');
+        $mform->addElement('text', 'color6_meaning', get_string('color6_meaning', 'stickynotes'));
+        $mform->setType('color6_meaning', PARAM_TEXT);
 
         // Add standard elements.
         $this->standard_coursemodule_elements();

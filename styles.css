@@ -5,31 +5,34 @@
   right: 0;
   z-index: 150;
   /* transform: rotate(5deg); */
-  width: 150px;
-  min-height: 100px;
-  max-height: 150px;
+  width: 165px;
+  min-height: 120px;
+  max-height: 160px;
   margin: -10px 10px 10px;
   padding: 10px;
   font-size: 14px;
   color: #000;
   background: rgba(255, 255, 51, 0.8);
-  /* background: [[setting:backgroundcolor]]; */
   box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
 }
-div[id*="1container"] , div[id*="2container"], div[id*="7container"] {
+div[id*="normal"] {
+  display: inline-block;
+  margin-top: 1px;
+}
+div[id*="1container"],  div[id*="7container"] {
   transform:rotate(4deg);
   margin-top:5px;
   margin-left:5px;
   display: inline-block;
 }
 div[id*="3container"] , div[id*="8container"], div[id*="0container"] {
-  transform:rotate(-2deg);
+  transform:rotate(-5deg);
    margin-top:5px;
    margin-left:10px;
    display: inline-block;
 }
-div[id*="4container"] , div[id*="6container"], div[id*="9container"] {
-  transform:rotate(-3deg);
+div[id*="4container"] , div[id*="6container"] {
+  transform:rotate(3deg);
    margin-top:-5px;
    display: inline-block;
 }
@@ -38,6 +41,12 @@ div[id*="5container"] {
    margin-top:2px;
    margin-right: -5px;
    display: inline-block;
+}
+div[id*="2container"] , div[id*="9container"] {
+  transform:rotate(2deg);
+  margin-top:-5px;
+  margin-right: -5px;
+  display: inline-block;
 }
 .sticky:before {
   border-top: solid 8px #fff;
@@ -55,7 +64,7 @@ div[id*="5container"] {
     background-color: #EEE;
     text-align: center;
     padding: 10px 0;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     border: 2px solid #FFF;
 }
 .headernote {
@@ -67,14 +76,15 @@ div[id*="5container"] {
     text-overflow: ellipsis;
 }
 .contentnote {
-    font-size: 14px;
+    font-size: 1.1em;
     font-weight: bold;
-    font-family: "Permanent Marker", "Gloria Hallelujah", "Chalkboard SE", sans-serif;
+    font-family: inherit;
     text-align: center;
-    min-height: 55px;
+    min-height: 83px;
+    padding-top: 5px;
 }
-.footernote {
-    /* text-align: right; */
+.footernote a, .footernote a:visited{
+    color: #000;
 }
 .columnnote{
     text-align: center;
@@ -88,11 +98,13 @@ div[id*="5container"] {
 .vote{
     text-align: left;
     float: left;
-    color: #e20081;
-    font-size: 8px;
+    font-size: 1em;
 }
-.vote a{
-    margin-right: -5px;
+.vote .fa{
+    margin-right: 2px;
+}
+.grey {
+    color: #EEE;
 }
 #id_color option[value='1']{
     background-color: #EECC66;
