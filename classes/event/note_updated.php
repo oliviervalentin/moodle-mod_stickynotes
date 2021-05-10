@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_stickynotes "note created" event class.
+ * The mod_stickynotes "note updated" event class.
  *
  * @package     mod_stickynotes
  * @copyright   2021 Olivier VALENTIN
@@ -26,20 +26,20 @@ namespace mod_stickynotes\event;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The mod_stickynotes "note created" event class.
+ * The mod_stickynotes "note updated" event class.
  *
  * @package     mod_stickynotes
  * @copyright   2021 Olivier VALENTIN
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class note_created extends \core\event\base {
+class note_updated extends \core\event\base {
     /**
      * Init method.
      *
      * @return void
      */
     protected function init() {
-        $this->data['crud']        = 'c';
+        $this->data['crud']        = 'u';
         $this->data['edulevel']    = self::LEVEL_PARTICIPATING;
         $this->data['objecttable'] = 'stickynotes_note';
     }
@@ -50,7 +50,7 @@ class note_created extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' has created the note with id '$this->objectid'
+        return "The user with id '$this->userid' has updated the note with id '$this->objectid'
  in the stickynote course module id '$this->contextinstanceid'.";
     }
 
@@ -60,6 +60,6 @@ class note_created extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('eventnotecreated', 'mod_stickynotes');
+        return get_string('eventnoteupdated', 'mod_stickynotes');
     }
 }
