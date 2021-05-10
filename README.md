@@ -4,6 +4,9 @@ Sticky Notes is an activity for creating a post-it wall for brainstormings, rank
 
 # Features ##
 
+On install, admin can choose 6 colors which will be used throughall activities in Moodle. Default colors
+have been chosen to respect accessibility and colorblindness.
+
 Adding a Sticky Notes activity is like adding any other activity in Moodle. Turn on editing mode and
 add activity "Sticky Notes".
 
@@ -14,8 +17,11 @@ It gives possibility to "like" notes just by cliking a little heart icon.
 
 When creating an activity, teacher can define several features or limitation :
 - capability to create a note with different background color
+- choose colors to use in activity between the 6 default colors
+- add a meaning for every color
 - limit the number of notes a user can create 
 - limit the number of votes a user can do
+- enable the rotate effect.
 
 This activity is anonymous for student : no names appears. But teachers can choose to viewing creator names
 for thier own use.
