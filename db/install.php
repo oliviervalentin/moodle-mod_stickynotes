@@ -29,23 +29,5 @@ defined('MOODLE_INTERNAL') || die();
  * Custom code to be run on installing the plugin.
  */
 function xmldb_stickynotes_install() {
-    global $DB;
 
-    $record1 = new stdClass();
-    $record1->color = '#EECC66';
-    $record2 = new stdClass();
-    $record2->color = '#AACC24';
-    $record3 = new stdClass();
-    $record3->color = '#99DDFF';
-    $record4 = new stdClass();
-    $record4->color = '#6699CC';
-    $record5 = new stdClass();
-    $record5->color = '#EE8866';
-    $record6 = new stdClass();
-    $record6->color = '#BBBBBB';
-
-    $records = array($record1, $record2, $record3, $record4, $record5, $record6);
-    $DB->insert_records('stickynotes_colors', $records);
-
-    return true;
 }

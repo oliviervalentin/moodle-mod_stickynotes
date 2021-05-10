@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/stickynotes/db" VERSION="20210422" COMMENT="XMLDB file for Moodle mod_stickynotes"
+<XMLDB PATH="mod/stickynotes/db" VERSION="20210504" COMMENT="XMLDB file for Moodle mod_stickynotes"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -19,6 +19,19 @@
         <FIELD NAME="maxstickynotes" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Number of maximum sticky notes per user"/>
         <FIELD NAME="orderstickynotes" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="desc" SEQUENCE="false" COMMENT="Defines how sticky notes are ordered from newest to oldest (or inverse) or by numer of votes"/>
         <FIELD NAME="viewauthor" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If enabled, managers and teachers will see authors"/>
+        <FIELD NAME="rotate" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="If enabled, notes will have a random rotation effect."/>
+        <FIELD NAME="color1" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Check if color 1 is used."/>
+        <FIELD NAME="color1_meaning" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="If used, gives meaning for the use of color 1 in the activity."/>
+        <FIELD NAME="color2" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Check if color 2 is used."/>
+        <FIELD NAME="color2_meaning" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="If used, gives meaning for the use of color 2 in the activity."/>
+        <FIELD NAME="color3" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Check if color 3 is used."/>
+        <FIELD NAME="color3_meaning" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="If used, gives meaning for the use of color 3 in the activity."/>
+        <FIELD NAME="color4" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Check if color 4 is used."/>
+        <FIELD NAME="color4_meaning" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="If used, gives meaning for the use of color 4 in the activity."/>
+        <FIELD NAME="color5" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Check if color 5 is used."/>
+        <FIELD NAME="color5_meaning" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="If used, gives meaning for the use of color 5 in the activity."/>
+        <FIELD NAME="color6" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Check if color 6 is used."/>
+        <FIELD NAME="color6_meaning" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="If used, gives meaning for the use of color 6 in the activity."/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was added to the course."/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was last modified."/>
       </FIELDS>
@@ -46,24 +59,14 @@
         <FIELD NAME="stickycolid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID of the related column"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID of the user who created the note"/>
         <FIELD NAME="message" TYPE="char" LENGTH="200" NOTNULL="true" SEQUENCE="false" COMMENT="Content of the note"/>
-        <FIELD NAME="color" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="ID of the background color"/>
+        <FIELD NAME="color" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="color1" SEQUENCE="false" COMMENT="ID of the background color"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Timestamp of when the note was added"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Timestamp of when the note was modified"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="fk_stickyid" TYPE="foreign" FIELDS="stickyid" REFTABLE="stickynotes" REFFIELDS="id" COMMENT="ID of the activity"/>
-        <KEY NAME="fk_color" TYPE="foreign" FIELDS="color" REFTABLE="stickynotes_colors" REFFIELDS="id" COMMENT="ID of the color"/>
         <KEY NAME="fk_stickycolid" TYPE="foreign" FIELDS="stickycolid" REFTABLE="stickynotes_column" REFFIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="stickynotes_colors" COMMENT="Colors used for notes backgrounds">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="color" TYPE="char" LENGTH="45" NOTNULL="true" SEQUENCE="false"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="stickynotes_vote" COMMENT="Informations for users votes">
