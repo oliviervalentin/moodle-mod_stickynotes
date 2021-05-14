@@ -2,7 +2,7 @@
     <div id="columns" style="display:flex;" >
     <div id="contents" style="display:flex; width: 98%;" >
     {{#allcols}}
-        <div class="columnnote" style="width: 100%;">
+        <div id="column{{columnid}}" class="columnnote" style="width: 100%;">
         
         {{! Column title and edit icon}}
         <h4>{{title}}
@@ -22,7 +22,7 @@
         {{/capabilitycreatenote}}
 
     {{#allnotes}}
-                <div id="{{elementidcontainer}}" class="sticky" style="background-color:{{backgroundcolor}};">
+                <div id="{{elementidcontainer}}" class="sticky" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
                 <div id="{{elementid}}">
                     <div class="headernote">
                         {{#capability_viewauthor}}
