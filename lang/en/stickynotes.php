@@ -136,6 +136,7 @@ $string['edit_column_pix'] = 'Edit this column';
 $string['delete_column_pix'] = 'Delete this column';
 $string['edit_note_pix'] = 'Edit this note';
 $string['delete_note_pix'] = 'Delete this note';
+$string['move_cross_pix'] = "Drag and drop this note";
 
 // Events.
 $string['eventnotecreated'] = 'Sticky note created';
