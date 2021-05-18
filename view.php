@@ -66,6 +66,7 @@ $PAGE->set_url('/mod/stickynotes/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
+$PAGE->requires->js_call_amd('mod_stickynotes/dragndrop', 'init');
 
 // Define some capabilities.
 $capabilitycreatenote = false;
@@ -175,7 +176,7 @@ foreach ($cols as $col) {
         $allnotes[] = (array)$note;
     }
     $notescol = new StdClass;
-
+    $notescol->columnid = $col->id;
     $notescol->allnotes = $allnotes;
     // Create URL to create note.
     $notescol->createnoteurl = $CFG->wwwroot . '/mod/stickynotes/note.php?id='.$id.'&create=1&col=' . $col->id;
@@ -220,6 +221,7 @@ if ($moduleinstance->limitstickynotes == 1) {
 }
 
 $output = $PAGE->get_renderer('mod_stickynotes');
+
 echo $output->render_notes_list($all);
 
 echo $OUTPUT->footer();
