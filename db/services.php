@@ -36,4 +36,13 @@ $functions = array(
                 'capabilities'  => 'mod/stickynotes:updateownnote'
         ),
 
+         'mod_stickynotes_get_notes_column_select' => array(
+                'classname'   => 'mod_stickynotes_external',
+                'methodname'  => 'get_notes_column_select',
+                'classpath'   => 'mod/stickynotes/externallib.php',
+                'description' => 'Return notes un a column for select menu',
+                'type'        => 'read',
+                'ajax' => true,
+                'loginrequired' => true
+          )
 );

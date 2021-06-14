@@ -107,7 +107,8 @@ $allcols = array();
 
 // For each columns, retrieve all notes.
 foreach ($cols as $col) {
-    $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id), '', '*');
+    $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id),
+    'ordernote', '*');
 
     $allnotes = new StdClass;
     $allnotes = array();

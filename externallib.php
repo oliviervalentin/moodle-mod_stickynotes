@@ -76,4 +76,53 @@ class mod_stickynotes_external extends external_api {
 
     }
 
+    /**
+     * Returns welcome message
+     * @return array = array('' => , ); welcome message
+     */
+    public static function get_notes_column_select($id) {
+        global $USER;
+        global $DB;
+        global $CFG;
+
+        $params = self::validate_parameters(
+            self::get_notes_column_select_parameters(),
+                array('id' => $id)
+        );
+
+        $sql = 'SELECT id, ordernote, message FROM {stickynotes_note} WHERE stickycolid = ? ORDER BY ordernote';
+        $paramsdb = array($id);
+        $dbresult = $DB->get_records_sql($sql, $paramsdb);
+
+        $return[0] = array(
+            'ordernote' => '1',
+            'message' => get_string('firstplace', 'stickynotes')
+        );
+
+        foreach ($dbresult as $move) {
+            $neworder = $move->ordernote + 1;
+            $return[] = array('message' => get_string('after', 'stickynotes')." '".$move->message."'", 'ordernote' => $neworder);
+        }
+        return json_encode(array_values($return));
+    }
+
+    /**
+     * Returns description of method parameters
+     * @return external_function_parameters
+     */
+    public static function get_notes_column_select_parameters() {
+        return new external_function_parameters(
+          array(
+              'id' => new external_value(PARAM_INT, "id")
+              )
+        );
+    }
+
+    /**
+     * Returns description of method result value
+     * @return external_description
+     */
+    public static function get_notes_column_select_returns() {
+        return new external_value(PARAM_RAW, 'The updated JSON output');
+    }
 }

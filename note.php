@@ -25,6 +25,7 @@
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
 require_once(__DIR__.'/../../lib/outputcomponents.php');
+$PAGE->requires->js('/mod/stickynotes/assets/js_select.js');
 global $DB, $USER;
 
 // Declare optional parameters.
@@ -34,6 +35,7 @@ $delete = optional_param('delete', 0, PARAM_INT);
 $note = optional_param('note', 0, PARAM_INT);
 $col = optional_param('col', 0, PARAM_INT);
 $confirm = optional_param('confirm', 0, PARAM_INT);
+$ordernote = optional_param('ordernote', 0, PARAM_INT);
 
 // These params will be passed as hidden variables later in the form.
 $pageparams = array('edit' => $edit, 'create' => $create);
@@ -87,6 +89,7 @@ if (!empty($create)) {
     $post->create = 1;
     $post->choose_color = $moduleinstance->colors;
     $post->stickyid = $cm->instance;
+    $post->stickycolid = $col;
 
     // Define the page title for creating form.
     $settitle = get_column_title($col);
@@ -220,6 +223,7 @@ $formarray = array(
     'message'        => $postmessage,
     'stickycolid'    => $postcol,
     'stickyid'       => $cm->instance,
+    'ordernote'      => $ordernote,
 );
 
 $mformnote = new form_note('note.php', $formarray, 'post');
@@ -268,6 +272,9 @@ if ($fromform = $mformnote->get_data()) {
         // If user creates a new note.
         $fromform->userid = $USER->id;
         $returnurl = "view.php?id=".$fromform->id;
+        $fromform->ordernote = $ordernote;
+
+        // Finally, we can create note.
         $createnote = insert_stickynote($fromform);
 
         // Trigger note created event.
