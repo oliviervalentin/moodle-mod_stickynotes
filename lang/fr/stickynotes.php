@@ -122,6 +122,8 @@ $string['choosecolorbuttons'] = 'Couleur de fond';
 $string['after'] = 'Après';
 $string['firstplace'] = 'Au début de la colonne';
 $string['lastplace'] = 'A la fin de la colonne';
+$string['nomove'] = 'Déplacer cette note ?';
+$string['nomove_help'] = 'Si coché, active les menus de sélection permettant de changer la place et l\'ordre de la note.';
 
 // Mustache template strings.
 $string['createnote'] = 'Ajouter une Sticky Note';

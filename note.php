@@ -36,6 +36,8 @@ $note = optional_param('note', 0, PARAM_INT);
 $col = optional_param('col', 0, PARAM_INT);
 $confirm = optional_param('confirm', 0, PARAM_INT);
 $ordernote = optional_param('ordernote', 0, PARAM_INT);
+// $oldcolumn = optional_param('oldcolumn', 0, PARAM_INT);
+// $oldrank = optional_param('oldrank', 0, PARAM_INT);
 
 // These params will be passed as hidden variables later in the form.
 $pageparams = array('edit' => $edit, 'create' => $create);
@@ -129,6 +131,8 @@ if (!empty($create)) {
     $post->course = $course->id;
     $post->message = $post->message;
     $post->choose_color = $moduleinstance->colors;
+	$post->oldrank = $post->ordernote;
+	$post->oldcolumn = $post->stickycolid;
 
     // Define the page title for creating form.
     $pagetitle = (get_string('updatenote_title', 'stickynotes'));
@@ -254,7 +258,10 @@ if ($fromform = $mformnote->get_data()) {
         $fromform->userid = $USER->id;
         $fromform->instance = $fromform->id;
         $fromform->id = $fromform->note;
-
+// print_object($fromform);		
+		if($fromform->nomove == 0) {$fromform->ordernote = $fromform->oldrank;$fromform->stickycolid = $fromform->oldcolumn;}
+		
+// print_object($fromform);exit();
         $returnurl = "view.php?id=".$fromform->instance;
         $updatenote = update_stickynote($fromform);
 
