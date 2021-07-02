@@ -33,18 +33,36 @@ require_once("$CFG->libdir/externallib.php");
  */
 class mod_stickynotes_external extends external_api {
 
-    public static function changing_note_column($noteid, $newcolumnid) {
+    public static function changing_note_position($noteid, $oldcolumnid, $newcolumnid, $oldindex, $newindex) {
         global $DB;
 
-        $params = self::validate_parameters(self::changing_note_column_parameters(),
-                array('noteid' => $noteid, 'newcolumnid' => $newcolumnid));
+        $params = self::validate_parameters(self::changing_note_position_parameters(),
+                array('noteid' => $noteid, 'oldcolumnid' => $oldcolumnid, 'newcolumnid' => $newcolumnid, 'oldindex' => $oldindex, 'newindex' => $newindex));
 
         $newdata = new stdClass();
         $newdata->id = $noteid;
         $newdata->stickycolid = $newcolumnid;
+        $newdata->ordernote = $newindex;
 
-        if ($DB->record_exists('stickynotes_note', array('id' => $noteid))) {
+        try {
+            $transaction = $DB->start_delegated_transaction();
+
+            $paramdb = array($newcolumnid, $newindex);
+            $DB->execute("UPDATE {stickynotes_note} SET ordernote = ordernote + 1
+                            WHERE stickycolid = ? AND ordernote >= ?", $paramdb);
+                            
             $DB->update_record('stickynotes_note', $newdata);
+
+            if ($oldcolumnid != $newcolumnid) {
+                $paramdb = array($oldcolumnid, $oldindex);
+                $DB->execute("UPDATE {stickynotes_note} SET ordernote = ordernote - 1
+                                WHERE stickycolid = ? AND ordernote > ?", $paramdb);
+            } 
+
+            $transaction->allow_commit();
+        
+        } catch(Exception $e) {
+            $transaction->rollback($e);
         }
 
         $sql = 'SELECT id, stickycolid FROM {stickynotes_note} WHERE id = ?';
@@ -52,19 +70,21 @@ class mod_stickynotes_external extends external_api {
         $dbresult = $DB->get_records_sql($sql, $paramsdb);
 
         return $dbresult;
-
     }
 
-    public static function changing_note_column_parameters() {
+    public static function changing_note_position_parameters() {
         return new external_function_parameters(
             array(
                 'noteid' => new external_value(PARAM_INT, VALUE_REQUIRED),
+                'oldcolumnid' => new external_value(PARAM_INT, VALUE_REQUIRED),
                 'newcolumnid' => new external_value(PARAM_INT, VALUE_REQUIRED),
+                'oldindex' => new external_value(PARAM_INT, VALUE_REQUIRED),
+                'newindex' => new external_value(PARAM_INT, VALUE_REQUIRED),
             )
         );
     }
 
-    public static function changing_note_column_returns() {
+    public static function changing_note_position_returns() {
         return new external_multiple_structure(
             new external_single_structure(
                 array(
