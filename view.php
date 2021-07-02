@@ -66,6 +66,11 @@ $PAGE->set_url('/mod/stickynotes/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
+
+$config = ['paths' => ['sortablejs' => '/mod/stickynotes/js/sortable.min']];
+$requirejs = 'require.config(' . json_encode($config) . ')';
+$PAGE->requires->js_amd_inline($requirejs);
+
 $PAGE->requires->js_call_amd('mod_stickynotes/dragndrop', 'init');
 
 // Define some capabilities.
