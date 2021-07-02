@@ -26,11 +26,11 @@ defined('MOODLE_INTERNAL') || die();
 
 $functions = array(
 
-        'mod_stickynotes_changing_note_column' => array(
+        'mod_stickynotes_changing_note_position' => array(
                 'classname'     => 'mod_stickynotes_external',
-                'methodname'    => 'changing_note_column',
+                'methodname'    => 'changing_note_position',
                 'classpath'     => 'mod/stickynotes/externallib.php',
-                'description'   => 'Changing note column via ajax',
+                'description'   => 'Changing note position via ajax',
                 'type'          => 'write',
                 'ajax'          => true,
                 'capabilities'  => 'mod/stickynotes:updateownnote'
