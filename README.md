@@ -15,7 +15,9 @@ When using the activity, users can create, update and delete their own notes in 
 
 When creating or editing a note, users can place it where he wants : they can choose column,
 and/or they can put it before or after another note.
-Changing place can be done througu the editing form, or directly using drag and drop.
+To change order for a note and/or put it in another column, you can use update interface, 
+but you can also move notes using drag and drop. Click on a note and move it with your mouse
+to its new place. Drag and drop also works on smartphones or tablets.
 
 It gives possibility to "like" notes just by cliking a little heart icon.
 
@@ -57,9 +59,10 @@ to complete the installation from the command line.
 
 2021 Olivier VALENTIN - Sebastien MEHR
 
-Main icon design by Alexandra CODINA
 JS Script - drag and drop dev : Sebastien MEHR.
 Drad and drop uses sortable.js.
+
+Main icon design by Alexandra CODINA
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
