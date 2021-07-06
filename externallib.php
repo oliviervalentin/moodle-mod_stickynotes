@@ -37,7 +37,8 @@ class mod_stickynotes_external extends external_api {
         global $DB;
 
         $params = self::validate_parameters(self::changing_note_position_parameters(),
-                array('noteid' => $noteid, 'oldcolumnid' => $oldcolumnid, 'newcolumnid' => $newcolumnid, 'oldindex' => $oldindex, 'newindex' => $newindex));
+                array('noteid' => $noteid, 'oldcolumnid' => $oldcolumnid, 'newcolumnid' => $newcolumnid,
+        'oldindex' => $oldindex, 'newindex' => $newindex));
 
         $newdata = new stdClass();
         $newdata->id = $noteid;
@@ -50,18 +51,18 @@ class mod_stickynotes_external extends external_api {
             $paramdb = array($newcolumnid, $newindex);
             $DB->execute("UPDATE {stickynotes_note} SET ordernote = ordernote + 1
                             WHERE stickycolid = ? AND ordernote >= ?", $paramdb);
-                            
+
             $DB->update_record('stickynotes_note', $newdata);
 
             if ($oldcolumnid != $newcolumnid) {
                 $paramdb = array($oldcolumnid, $oldindex);
                 $DB->execute("UPDATE {stickynotes_note} SET ordernote = ordernote - 1
                                 WHERE stickycolid = ? AND ordernote > ?", $paramdb);
-            } 
+            }
 
             $transaction->allow_commit();
-        
-        } catch(Exception $e) {
+
+        } catch (Exception $e) {
             $transaction->rollback($e);
         }
 
