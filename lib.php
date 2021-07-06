@@ -533,10 +533,7 @@ function update_column($data) {
 
     $res = $DB->update_record('stickynotes_column', $data);
 
-    $post = new StdClass;
-    $post->id = $data->instance;
-
-    return $post;
+    return true;
 }
  /**
   * Deletes a column.
