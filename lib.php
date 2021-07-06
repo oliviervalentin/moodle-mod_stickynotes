@@ -223,7 +223,7 @@ class form_note extends moodleform {
         global $CFG, $USER, $DB;
         $mform = $this->_form;
         $stickyid     = $this->_customdata['post'];
-
+// print_object($stickyid);
         if (isset($stickyid->create)) {
             $stickyid->color = 'color1';
         }
@@ -268,12 +268,62 @@ class form_note extends moodleform {
             $mform->setDefault('color',  'color1');
         }
 
-        if (isset($stickyid->stickyid)) {
+        if (isset($stickyid->edit)) {
             // If editing note, display menu to change column.
-            $req = $DB->get_records_select_menu('stickynotes_column', "stickyid =".$stickyid->stickyid, null, 'id', 'id,title');
-            $mform->addElement('select', 'stickycolid', get_string('changecolumn', 'stickynotes'), $req);
+
+			// Does the note stays at its place ?
+            $mform->addElement('advcheckbox', 'nomove', get_string('nomove', 'stickynotes'));
+            $mform->addHelpButton('nomove', 'nomove', 'stickynotes');
+            $mform->setDefault('nomove',  '0');
+			
+            $req = $DB->get_records('stickynotes_column', array('stickyid' => $stickyid->stickyid), 'id', 'id,title');
+            $options = [];
+            // $options[0] = "NO CHANGE";
+            foreach ($req as $new) {
+                $options[$new->id] = $new->title;
+            }
+// print_object($options);
+            $mform->disabledIf('stickycolid', 'nomove', '1');
+            $mform->addElement('select', 'stickycolid', get_string('changecolumn', 'stickynotes'), $options);
+            $mform->setType('stickycolid', PARAM_INT);
+            // $mform->setDefault('stickycolid', $options[0]);
+
+            $optionsorder = [];
+            $mform->disabledIf('selectorder', 'nomove', '1');
+            $mform->addElement('select', 'selectorder', 'Ordre', $optionsorder);
+            $mform->setType('selectorder', PARAM_INT);
+            $mform->setDefault('selectorder', 0);
+
+            $mform->addElement('hidden', 'ordernote');
+            $mform->setType('ordernote', PARAM_INT);
+			
+            $mform->addElement('hidden', 'oldrank');
+            $mform->setType('oldrank', PARAM_INT);	
+	        $mform->setDefault('oldrank', $stickyid->oldrank);
+			
+            $mform->addElement('hidden', 'oldcolumn');
+            $mform->setType('oldcolumn', PARAM_INT);
+	        $mform->setDefault('oldcolumn', $stickyid->oldcolumn);			
         } else {
-            // Else, default value for column.
+
+
+            // Else, hide column select and create ordernote select.
+            $sql = 'SELECT ordernote, message FROM {stickynotes_note} WHERE stickycolid = ? ORDER BY ordernote';
+            $paramsdb = array($stickyid->stickycolid);
+            $dbresult = $DB->get_records_sql($sql, $paramsdb);
+
+            $createorder[0] = get_string('lastplace', 'stickynotes');
+            $createorder[1] = get_string('firstplace', 'stickynotes');
+
+            foreach ($dbresult as $move) {
+                $neworder = $move->ordernote + 1;
+                $createorder[$neworder] = get_string('after', 'stickynotes')." '".$move->message."'";
+            }
+
+            $mform->addElement('select', 'ordernote', 'Ordre', $createorder);
+            $mform->setType('ordernote', PARAM_INT);
+            $mform->setDefault('ordernote', 1000);
+
             $mform->addElement('hidden', 'stickycolid');
             $mform->setType('stickycolid', PARAM_INT);
         }
@@ -283,6 +333,12 @@ class form_note extends moodleform {
 
         $mform->addElement('hidden', 'userid');
         $mform->setType('userid', PARAM_INT);
+
+        $mform->addElement('hidden', 'oldrank');
+        $mform->setType('oldrank', PARAM_INT);
+
+        $mform->addElement('hidden', 'oldcolumn');
+        $mform->setType('oldcolumn', PARAM_INT);
 
         // Are we creating a note?
         $mform->addElement('hidden', 'create');
@@ -391,6 +447,27 @@ function insert_stickynote($data) {
     $data = (object)$data;
     $data->timecreated = time();
 
+     // Check ordernote.
+    if ($data->ordernote == 0) {
+        // If ordernote is zero, user creates note at the end of the column.
+        // Calculate order : order of last note + 1.
+        $sql = 'SELECT ordernote FROM {stickynotes_note} WHERE stickycolid = ? ORDER BY ordernote DESC LIMIT 1';
+        $paramsdb = array($data->stickycolid);
+        $dbresult = $DB->get_field_sql($sql, $paramsdb);
+        $data->ordernote = $dbresult + 1;
+    } else {
+        // User creates a note at a specific place.
+        // First, all notes following are moved of one place BEFORE creating new note.
+        $sql = 'SELECT id, ordernote FROM {stickynotes_note} WHERE stickycolid = ? AND ordernote >= ? ORDER BY ordernote';
+        $paramsdb = array($data->stickycolid, $data->ordernote);
+        $dbresult = $DB->get_records_sql($sql, $paramsdb);
+        foreach ($dbresult as $note) {
+            $updatenotes = (object)$note;
+            $updatenotes->ordernote = $note->ordernote + 1;
+            $resnotes = $DB->update_record('stickynotes_note', $updatenotes);
+        }
+    }
+    // Finally, create the new note.
     $res = $DB->insert_record('stickynotes_note', $data);
     return $res;
 }
@@ -404,7 +481,21 @@ function update_stickynote($data) {
     global $DB, $USER;
     $data = (object)$data;
     $data->timemodified = time();
+// print_object($data);exit();
+    // First, retrieve all notes following the moved note BEFORE updating !
+    $sql = 'SELECT id, ordernote FROM {stickynotes_note} WHERE stickycolid = ? AND ordernote >= ? AND id != ? ORDER BY ordernote';
+    $paramsdb = array($data->stickycolid, $data->ordernote, $data->note);
+    $dbresult = $DB->get_records_sql($sql, $paramsdb);
+
+    // Now we can update the note at its new place.
     $res = $DB->update_record('stickynotes_note', $data);
+
+    // Finally, all notes following are moved of one place.
+    foreach ($dbresult as $note) {
+        $updatenotes = (object)$note;
+        $updatenotes->ordernote = $note->ordernote + 1;
+        $resnotes = $DB->update_record('stickynotes_note', $updatenotes);
+    }
 
     $post = new StdClass;
     $post->id = $data->instance;

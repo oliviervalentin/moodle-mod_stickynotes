@@ -119,6 +119,11 @@ $string['erroremptytitle'] = 'You must give a title to your column';
 $string['createnote_title'] = 'Create a new note in column ';
 $string['updatenote_title'] = 'Update note';
 $string['choosecolorbuttons'] = 'Choose background color';
+$string['after'] = 'After';
+$string['firstplace'] = 'First place in column';
+$string['lastplace'] = 'At the end of column';
+$string['nomove'] = 'Move this note ?';
+$string['nomove_help'] = 'If checked, enables the selection menus to move note in another rank and/or column.';
 
 // Mustache template strings.
 $string['createnote'] = 'Add new Sticky Note';

@@ -22,73 +22,47 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+import Sortable from 'sortablejs';
 import * as Ajax from 'core/ajax';
 
 export const init = () => {
     window.console.log('we have been started');
 
-    let dragged;
+    var columnnotes = document.getElementsByClassName('columnnote');
 
-    document.addEventListener("dragstart", function(event) {
-        window.console.log('Start dragging');
+    Array.from(columnnotes).forEach((column) => {
+        // Do stuff here
+        var sortable = Sortable.create(column, {
+            group: "columnnote",
+            draggable: ".sticky",
+            pull: "true",
 
-        // store a ref. on the dragged elem
-        dragged = event.target;
-        window.console.log(dragged);
-        // make it half transparent
-        event.target.style.opacity = .5;
-    }, false);
+            onEnd: function (/**Event*/evt) {
 
-    document.addEventListener("dragend", function(event) {
-        // reset the transparency
-        event.target.style.opacity = "";
-    }, false);
-
-    /* events fired on the drop targets */
-    document.addEventListener("dragover", function(event) {
-        // prevent default to allow drop
-        event.preventDefault();
-    }, false);
-
-    document.addEventListener("dragenter", function(event) {
-        // highlight potential drop target when the draggable element enters it
-        if (event.target.className == "columnnote") {
-            event.target.style.background = "#eee";
-        }
-
-    }, false);
-
-    document.addEventListener("dragleave", function(event) {
-        // reset background of potential drop target when the draggable element leaves it
-        if (event.target.className == "columnnote") {
-            event.target.style.background = "";
-        }
-
-    }, false);
-
-    document.addEventListener("drop", function(event) {
-        // prevent default action (open as link for some elements)
-        event.preventDefault();
-        // move dragged elem to the selected drop target
-        if (event.target.className == "columnnote") {
-            event.target.style.background = "";
-            dragged.parentNode.removeChild( dragged );
-
-            let noteid = dragged.id.replace('element', '').replace('container', '');
-            let columnid = event.target.id.replace('column', '');
-
-            event.target.appendChild( dragged );
-            var promise = Ajax.call([{
-                methodname: 'mod_stickynotes_changing_note_column',
-                args: {noteid: noteid, newcolumnid: columnid},
-            }]);
-            promise[0].done(function(response) {
-                window.console.log('mod_stickynotes/dragndrop success' + response);
-            }).fail(function(ex) {
-                window.console.log('mod_stickynotes/dragndrop erreur' + ex);
-            });
-
-        }
-
-    }, false);
-};
+                if ((evt.from === evt.to) && (evt.oldDraggableIndex === evt.newDraggableIndex)) {
+                    return;
+                 } else {
+                    var noteid = parseInt(evt.item.id.replace('element', '').replace('container', ''));
+                    var oldcolumnid = parseInt(evt.from.id.replace('column', ''));
+                    var newcolumnid = parseInt(evt.to.id.replace('column', ''));
+                    var oldindex = evt.oldDraggableIndex + 1;
+                    var newindex = evt.newDraggableIndex + 1;
+                    var promise = Ajax.call([{
+                        methodname: 'mod_stickynotes_changing_note_position',
+                        args: { noteid: noteid,
+                                oldcolumnid: oldcolumnid,
+                                newcolumnid: newcolumnid,
+                                oldindex: oldindex,
+                                newindex: newindex
+                            },
+                    }]);
+                    promise[0].done(function(response) {
+                        window.console.log('mod_stickynotes/dragndrop success' + JSON.stringify(response));
+                    }).fail(function(ex) {
+                        window.console.log('mod_stickynotes/dragndrop erreur' + JSON.stringify(ex));
+                    });
+                }
+            },
+        });
+    });
+ };

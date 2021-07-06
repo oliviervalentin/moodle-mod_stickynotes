@@ -75,6 +75,10 @@ div[id*="2container"] , div[id*="9container"] {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.headernote i {
+	float: inline-start;
+	color: #000;
+}
 .contentnote {
     font-size: 1.1em;
     font-weight: bold;

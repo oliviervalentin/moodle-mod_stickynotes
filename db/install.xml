@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/stickynotes/db" VERSION="20210504" COMMENT="XMLDB file for Moodle mod_stickynotes"
+<XMLDB PATH="mod/stickynotes/db" VERSION="20210521" COMMENT="XMLDB file for Moodle mod_stickynotes"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -60,6 +60,7 @@
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID of the user who created the note"/>
         <FIELD NAME="message" TYPE="char" LENGTH="200" NOTNULL="true" SEQUENCE="false" COMMENT="Content of the note"/>
         <FIELD NAME="color" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="color1" SEQUENCE="false" COMMENT="ID of the background color"/>
+        <FIELD NAME="ordernote" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Order number in column"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Timestamp of when the note was added"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Timestamp of when the note was modified"/>
       </FIELDS>
