@@ -67,12 +67,12 @@ if (!empty($create)) {
     // Case 1 : user creates a note
     // Retrieve the related coursemodule.
     if (!$cm = get_coursemodule_from_instance('stickynotes', $cm->instance)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
-        print_error('invalidcourseid');
+        throw new moodle_exception('invalidcourseid');
     }
 
     // Require a login and retrieve the modulecontext.
@@ -81,7 +81,7 @@ if (!empty($create)) {
 
     // Check capability.
     if (!has_capability('mod/stickynotes:createnote', $modulecontext)) {
-        print_error('cannotcreatenote', 'stickynotes');
+        throw new moodle_exception('cannotcreatenote', 'stickynotes');
     }
 
     $post = new stdClass();
@@ -99,17 +99,17 @@ if (!empty($create)) {
     // Case 2 : user edits a note
     // Retrieve the related coursemodule.
     if (!$cm = get_coursemodule_from_instance('stickynotes', $cm->instance)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
-        print_error('invalidcourseid');
+        throw new moodle_exception('invalidcourseid');
     }
 
     // Check if note exists.
     if (!$post = $DB->get_record('stickynotes_note', array('id' => $note))) {
-        print_error('cannotgetnote', 'stickynotes');
+        throw new moodle_exception('cannotgetnote', 'stickynotes');
     }
 
     // Require a login and retrieve the modulecontext.
@@ -121,7 +121,7 @@ if (!empty($create)) {
     $updateanynote = has_capability('mod/stickynotes:updateanynote', $modulecontext);
 
     if (!(($post->userid == $USER->id AND $updateownnote) OR $updateanynote)) {
-        print_error('cannotupdatenote', 'stickynotes');
+        throw new moodle_exception('cannotupdatenote', 'stickynotes');
     }
 
     // Defines variables.
@@ -139,17 +139,17 @@ if (!empty($create)) {
     // Case 3 : user deletes a note.
     // Retrieve the related coursemodule.
     if (!$cm = get_coursemodule_from_instance('stickynotes', $cm->instance)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
-        print_error('invalidcourseid');
+        throw new moodle_exception('invalidcourseid');
     }
 
     // Check if note exists.
     if (!$post = $DB->get_record('stickynotes_note', array('id' => $note))) {
-        print_error('cantgetnote', 'stickynotes');
+        throw new moodle_exception('cantgetnote', 'stickynotes');
     }
 
     // Require a login and retrieve the modulecontext.
@@ -161,7 +161,7 @@ if (!empty($create)) {
     $deleteanynote = has_capability('mod/stickynotes:deleteanynote', $modulecontext);
 
     if (!(($post->userid == $USER->id AND $deleteownnote) OR $deleteanynote)) {
-        print_error('cannotdeletenote', 'stickynotes');
+        throw new moodle_exception('cannotdeletenote', 'stickynotes');
     }
 
     // User has confirmed deletion : note is deleted.

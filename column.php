@@ -64,11 +64,11 @@ if (!empty($create)) {
     // Case 1 : manager wants to create a new column.
     // Retrieve the related coursemodule.
     if (!$cm = get_coursemodule_from_instance('stickynotes', $cm->instance)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
-        print_error('invalidcourseid');
+        throw new moodle_exception('invalidcourseid');
     }
 
     $post = new stdClass();
@@ -78,16 +78,16 @@ if (!empty($create)) {
     // Case 2 : manager wants updates column.
     // Retrieve the related coursemodule.
     if (!$cm = get_coursemodule_from_instance('stickynotes', $cm->instance)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
-        print_error('invalidcourseid');
+        throw new moodle_exception('invalidcourseid');
     }
 
     if (!$post = $DB->get_record('stickynotes_column', array('id' => $col))) {
-        print_error('cannotgetcolumn', 'stickynotes');
+        throw new moodle_exception('cannotgetcolumn', 'stickynotes');
     }
 
     // Require a login and retrieve the modulecontext.
@@ -96,7 +96,7 @@ if (!empty($create)) {
 
     // Check capability.
     if (!has_capability('mod/stickynotes:managecolumn', $modulecontext)) {
-        print_error('cannotmanagecolumn', 'stickynotes');
+        throw new moodle_exception('cannotmanagecolumn', 'stickynotes');
     }
 
     $post->edit = $edit;
@@ -108,17 +108,17 @@ if (!empty($create)) {
 
     // Retrieve the related coursemodule.
     if (!$cm = get_coursemodule_from_instance('stickynotes', $cm->instance)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
-        print_error('invalidcourseid');
+        throw new moodle_exception('invalidcourseid');
     }
 
     // Check if column exists.
     if (!$post = $DB->get_record('stickynotes_column', array('id' => $col))) {
-        print_error('cannotgetcolumn', 'stickynotes');
+        throw new moodle_exception('cannotgetcolumn', 'stickynotes');
     }
     // Require a login and retrieve the modulecontext.
     require_login($course, false, $cm);
@@ -126,7 +126,7 @@ if (!empty($create)) {
 
     // Check capability.
     if (!has_capability('mod/stickynotes:managecolumn', $modulecontext)) {
-        print_error('cannotmanagecolumn', 'stickynotes');
+        throw new moodle_exception('cannotmanagecolumn', 'stickynotes');
     }
 
     // User has confirmed deletion : column is deleted.

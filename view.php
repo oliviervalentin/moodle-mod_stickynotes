@@ -46,7 +46,7 @@ if ($id) {
     $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('stickynotes', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
-    print_error(get_string('missingidandcmid', 'mod_stickynotes'));
+    throw new moodle_exception(get_string('missingidandcmid', 'mod_stickynotes'));
 }
 
 require_login($course, true, $cm);
@@ -86,13 +86,13 @@ if ((!is_guest($modulecontext, $USER) && isloggedin()) && has_capability('mod/st
 
 // If user has just voted, first check capability.
 if ($vote && !$capabilityvote) {
-    print_error('cannotvote', 'stickynotes');
+    throw new moodle_exception('cannotvote', 'stickynotes');
 } else if ($vote && $capabilityvote) {
     // If vote limitation, first check if user is at max.
     if ($moduleinstance->limitvotes == 1) {
         $check = $DB->count_records('stickynotes_vote', array ('userid' => $USER->id, 'stickyid' => $cm->instance));
         if ($check >= $moduleinstance->maxlimitvotes && $action == 'add') {
-            print_error('cannotvotelimitreached', 'stickynotes');
+            throw new moodle_exception('cannotvotelimitreached', 'stickynotes');
         }
     }
     // Call vote function for the Like vote type.
