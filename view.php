@@ -220,9 +220,14 @@ if ($moduleinstance->votes == '0') {
 
 // If max limit of notes per user is enabled, check if user has reached maximum.
 if ($moduleinstance->limitstickynotes == 1) {
-    $notescreated = stickynote_count_notes($USER->id, $cm->instance);
-    if ($moduleinstance->maxstickynotes == $notescreated ) {
-        $all->maxnotesreached = 1;
+    // If user can view author, it's a teacher ! No creation limit for teachers.
+    if (has_capability('mod/stickynotes:viewauthor', $modulecontext)) {
+        $all->maxnotesreached = 0;
+    } else {
+        $notescreated = stickynote_count_notes($USER->id, $cm->instance);
+        if ($moduleinstance->maxstickynotes == $notescreated ) {
+            $all->maxnotesreached = 1;
+        }
     }
 }
 
