@@ -2,63 +2,62 @@
 /* @import url(https://fonts.googleapis.com/css2?family=Gloria+Hallelujah); */
 
 .sticky {
-  right: 0;
-  z-index: 150;
-  /* transform: rotate(5deg); */
-  width: 165px;
-  min-height: 120px;
-  max-height: 160px;
-  margin: -10px 10px 10px;
-  padding: 10px;
-  font-size: 14px;
-  color: #000;
-  background: rgba(255, 255, 51, 0.8);
-  box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
+    right: 0;
+    z-index: 150;
+    width: 165px;
+    min-height: 120px;
+    max-height: 160px;
+    margin: -10px 10px 10px;
+    padding: 10px;
+    font-size: 14px;
+    color: #000;
+    background: rgba(255, 255, 51, 0.8);
+    box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
 }
 div[id*="normal"] {
-  display: inline-block;
-  margin-top: 1px;
+    display: inline-block;
+    margin-top: 1px;
 }
 div[id*="1container"],  div[id*="7container"] {
-  transform:rotate(4deg);
-  margin-top:5px;
-  margin-left:5px;
-  display: inline-block;
+    transform:rotate(4deg);
+    margin-top:5px;
+    margin-left:5px;
+    display: inline-block;
 }
-div[id*="3container"] , div[id*="8container"], div[id*="0container"] {
-  transform:rotate(-5deg);
-   margin-top:5px;
-   margin-left:10px;
-   display: inline-block;
+div[id*="3container"], div[id*="8container"], div[id*="0container"] {
+    transform:rotate(-5deg);
+    margin-top:5px;
+    margin-left:10px;
+    display: inline-block;
 }
-div[id*="4container"] , div[id*="6container"] {
-  transform:rotate(3deg);
-   margin-top:-5px;
-   display: inline-block;
+div[id*="4container"], div[id*="6container"] {
+    transform:rotate(3deg);
+    margin-top:-5px;
+    display: inline-block;
 }
 div[id*="5container"] {
-  transform:rotate(-5deg);
-   margin-top:2px;
-   margin-right: -5px;
-   display: inline-block;
+    transform:rotate(-5deg);
+    margin-top:2px;
+    margin-right: -5px;
+    display: inline-block;
 }
-div[id*="2container"] , div[id*="9container"] {
-  transform:rotate(2deg);
-  margin-top:-5px;
-  margin-right: -5px;
-  display: inline-block;
+div[id*="2container"], div[id*="9container"] {
+    transform:rotate(2deg);
+    margin-top:-5px;
+    margin-right: -5px;
+    display: inline-block;
 }
 .sticky:before {
-  border-top: solid 8px #fff;
-  border-right: solid 8px #fff;
-  border-left: solid 8px transparent;
-  border-bottom: solid 8px transparent;
+    border-top: solid 8px #fff;
+    border-right: solid 8px #fff;
+    border-left: solid 8px transparent;
+    border-bottom: solid 8px transparent;
 }
 .sticky:after {
-  border-bottom: solid 8px #dddd33;
-  border-left: solid 8px #dddd33;
-  border-right: solid 8px transparent;
-  border-top: solid 8px transparent;
+    border-bottom: solid 8px #dddd33;
+    border-left: solid 8px #dddd33;
+    border-right: solid 8px transparent;
+    border-top: solid 8px transparent;
 }
 .createnote {
     background-color: #EEE;
@@ -88,44 +87,44 @@ div[id*="2container"] , div[id*="9container"] {
     padding-top: 5px;
 	overflow-wrap: break-word;
 }
-.footernote a, .footernote a:visited{
+.footernote a, .footernote a:visited {
     color: #000;
 }
-.columnnote{
+.columnnote {
     text-align: center;
 }
-.columnnote i{
+.columnnote i {
     font-size: 14px;
 }
-.editnote{
+.editnote {
     text-align: right;
 }
-.vote{
+.vote {
     text-align: left;
     float: left;
     font-size: 1em;
 }
-.vote .fa{
+.vote .fa {
     margin-right: 2px;
 }
 .grey {
     color: #EEE;
 }
-#id_color option[value='1']{
-    background-color: #EECC66;
+#id_color option[value='1'] {
+    background-color: #ec6;
 }
-#id_color option[value='2']{
-    background-color: #AACC24;
+#id_color option[value='2'] {
+    background-color: #aacc24;
 }
-#id_color option[value='3']{
-    background-color: #99DDFF;
+#id_color option[value='3'] {
+    background-color: #9df;
 }
-#id_color option[value='4']{
-    background-color: #6699CC;
+#id_color option[value='4'] {
+    background-color: #69c;
 }
-#id_color option[value='5']{
-    background-color: #EE8866;
+#id_color option[value='5'] {
+    background-color: #e86;
 }
-#id_color option[value='6']{
-    background-color: #BBBBBB;
+#id_color option[value='6'] {
+    background-color: #bbb;
 }
