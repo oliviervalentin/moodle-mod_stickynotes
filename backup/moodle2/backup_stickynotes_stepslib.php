@@ -93,8 +93,8 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
             array(backup::VAR_PARENTID));
 
             // All the rest of elements only happen if we are including user info.
-            $stickynotescolumn->set_source_table('stickynotescolumn', array('stickyid' => backup::VAR_ACTIVITYID));
-            $stickynotesnote->set_source_table('stickynotesnote', array('stickycolid' => backup::VAR_PARENTID));
+            $stickynotescolumn->set_source_table('stickynotes_column', array('stickyid' => backup::VAR_ACTIVITYID));
+            $stickynotesnote->set_source_table('stickynotes_note', array('stickycolid' => backup::VAR_PARENTID));
         }
 
         // Define id annotations.
