@@ -32,6 +32,10 @@ When creating an activity, teacher can define several features or limitation :
 This activity is anonymous for student : no names appears. But teachers can choose to view creator names
 for their own use.
 
+## Updates ##
+
+#21-10-2021 : fixed problem with backup files.
+
 ## Installing via uploaded ZIP file ##
 
 1. Log in to your Moodle site as an admin and go to _Site administration >
