@@ -34,7 +34,7 @@ for their own use.
 
 ## Updates ##
 
-#21-10-2021 : fixed problem with backup files.
+21-10-2021 : fixed problem with backup files.
 
 ## Installing via uploaded ZIP file ##
 
