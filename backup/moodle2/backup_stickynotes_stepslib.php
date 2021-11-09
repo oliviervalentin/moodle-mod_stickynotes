@@ -43,7 +43,7 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
         // To know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');
 
-        // Define the root element describing the moodleoverflow instance.
+        // Define the root element describing the stickynotes instance.
         $stickynotes = new backup_nested_element('stickynotes', array('id'),
                                               array('course',
                                                     'name',
