@@ -231,6 +231,59 @@ if ($moduleinstance->limitstickynotes == 1) {
     }
 }
 
+echo "<div id=descandcapt>";
+// If enabled, display button to show activity instructions.
+if ($moduleinstance->displaystickydesc == '1') {
+    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaydesc">'.get_string('buttondisplaystickydesc', 'mod_stickynotes').'</button>';
+} 
+
+// If enabled, display button to show legend.
+if ($moduleinstance->displaystickycaption == '1') {
+    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaycapt">'.get_string('buttondisplaystickycaption', 'mod_stickynotes').'</button>';
+}
+echo "</div>";
+
+// This next div is for displaying isntructions and caption if necessary;
+echo '<div style="margin-bottom: 3em;">';
+// If enabled, display activity instructions, i.e. description field.
+if ($moduleinstance->displaystickydesc == '1') {
+    $content = format_text($moduleinstance->intro);
+    echo '<div id="displaydesc" class="collapse">';
+    echo '<h3>'.get_string('titledisplaystickydesc', 'mod_stickynotes').'</h3>';
+    echo $content;
+    echo '</div>';
+} 
+
+// If enabled, display button to show legend.
+if ($moduleinstance->displaystickycaption == '1') {
+    // First, list the 6 colors.
+    $configcolor = array (
+        'color1',
+        'color2',
+        'color3',
+        'color4',
+        'color5',
+        'color6'
+    );
+    // Second, retrieve colors settings for this instance.
+    $retrievecolors = $DB->get_record('stickynotes', array('id' => $moduleinstance->id), '*', MUST_EXIST);
+
+    $colorarray = array();
+    echo '<div id="displaycapt" class="collapse">';
+    echo '<h3>'.get_string('titledisplaystickycaption', 'mod_stickynotes').'</h3>';
+    foreach ($configcolor as $color) {
+        if ($retrievecolors->$color == 1) {
+            // If a color is used in instance, design a colored square and add meaning if define.
+            $thiscolor = "<div><div style=\"display: inline-block;width:50px;margin-bottom:5px;margin-right:10px;background-color:".get_config('mod_stickynotes', $color)
+            ."\">&nbsp;</div>&nbsp;";
+            $thiscolor .= "<div style=\"display: inline-block\">".$DB->get_field('stickynotes', $color.'_meaning', array('id' => $moduleinstance->id));
+            $thiscolor .= "<br /></div></div>";
+            echo $thiscolor;
+        }
+    }
+    echo '</div>';
+}
+
 $output = $PAGE->get_renderer('mod_stickynotes');
 
 echo $output->render_notes_list($all);
