@@ -234,16 +234,18 @@ if ($moduleinstance->limitstickynotes == 1) {
 echo "<div id=descandcapt>";
 // If enabled, display button to show activity instructions.
 if ($moduleinstance->displaystickydesc == '1') {
-    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaydesc">'.get_string('buttondisplaystickydesc', 'mod_stickynotes').'</button>';
-} 
+    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaydesc">
+    '.get_string('buttondisplaystickydesc', 'mod_stickynotes').'</button>';
+}
 
 // If enabled, display button to show legend.
 if ($moduleinstance->displaystickycaption == '1') {
-    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaycapt">'.get_string('buttondisplaystickycaption', 'mod_stickynotes').'</button>';
+    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaycapt">
+    '.get_string('buttondisplaystickycaption', 'mod_stickynotes').'</button>';
 }
 echo "</div>";
 
-// This next div is for displaying isntructions and caption if necessary;
+// This next div is for displaying isntructions and caption if necessary.
 echo '<div style="margin-bottom: 3em;">';
 // If enabled, display activity instructions, i.e. description field.
 if ($moduleinstance->displaystickydesc == '1') {
@@ -252,7 +254,7 @@ if ($moduleinstance->displaystickydesc == '1') {
     echo '<h3>'.get_string('titledisplaystickydesc', 'mod_stickynotes').'</h3>';
     echo $content;
     echo '</div>';
-} 
+}
 
 // If enabled, display button to show legend.
 if ($moduleinstance->displaystickycaption == '1') {
@@ -274,9 +276,11 @@ if ($moduleinstance->displaystickycaption == '1') {
     foreach ($configcolor as $color) {
         if ($retrievecolors->$color == 1) {
             // If a color is used in instance, design a colored square and add meaning if define.
-            $thiscolor = "<div><div style=\"display: inline-block;width:50px;margin-bottom:5px;margin-right:10px;background-color:".get_config('mod_stickynotes', $color)
+            $thiscolor = "<div><div style=\"display: inline-block;width:50px;margin-bottom:5px;margin-right:10px;background-color:"
+            .get_config('mod_stickynotes', $color)
             ."\">&nbsp;</div>&nbsp;";
-            $thiscolor .= "<div style=\"display: inline-block\">".$DB->get_field('stickynotes', $color.'_meaning', array('id' => $moduleinstance->id));
+            $thiscolor .= "<div style=\"display: inline-block\">".$DB->get_field('stickynotes', $color.'_meaning',
+            array('id' => $moduleinstance->id));
             $thiscolor .= "<br /></div></div>";
             echo $thiscolor;
         }
