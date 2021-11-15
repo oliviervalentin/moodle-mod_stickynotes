@@ -45,7 +45,8 @@ require_capability('mod/stickynotes:export', $modulecontext);
 
 // Header for a new CSV document.
 header('Content-Type: text/csv;charset=utf-8');
-header("Content-disposition: attachment; filename=\"" . strip_tags($moduleinstance->name).'_stickynotes_'.date('YmdHis').'.csv' . "\"");
+header("Content-disposition: attachment; filename=\"" . strip_tags($moduleinstance->name).'_stickynotes_'.
+date('YmdHis').'.csv' . "\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 
@@ -62,23 +63,19 @@ foreach ($cols as $col) {
 
     $allnotes = new StdClass;
     $allnotes = array();
-	// For each note, retrieve and define all necessary information.
+    // For each note, retrieve and define all necessary information.
     foreach ($notes as $note) {
 
         $allnotes[] = (object)$note;
     }
     $notescol = new StdClass;
     $notescol->columnid = $col->id;
-	$notescol->title = $col->title;
+    $notescol->title = $col->title;
     $notescol->allnotes = $allnotes;
-	// $notescol->countnotes = count($notes);
 
     $allcols[] = (object)$notescol;
 }
 // All informations are set.
-// $all = new StdClass;
-// $all->allcols = $allcols;
-// print_object($allcols);
 
 $maxnotes = 0;
 $line = [];
@@ -86,7 +83,6 @@ $line = [];
 foreach ($allcols as $col) {
     $countnotes = count($col->allnotes);
     $maxnotes = $countnotes > $maxnotes ? $countnotes : $maxnotes;
-    // $maxnotes = $col->countnotes;
 
     array_push($line, $col->title);
 }
@@ -98,7 +94,7 @@ while ($noterow < $maxnotes) {
     $line = [];
     foreach ($allcols as $col) {
         $notes = array_values($col->allnotes);
-		array_push($line, isset($notes[$noterow]) ? $notes[$noterow]->message : '');
+        array_push($line, isset($notes[$noterow]) ? $notes[$noterow]->message : '');
     }
     $noterow++;
     fputcsv($fp, $line);
