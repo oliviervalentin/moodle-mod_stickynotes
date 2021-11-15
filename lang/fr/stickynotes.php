@@ -43,6 +43,7 @@ $string['stickynotes:deleteownnote'] = 'Supprimer sa propre note';
 $string['stickynotes:managecolumn'] = 'Gérer les colonnes';
 $string['stickynotes:vote'] = 'Voter pour une note';
 $string['stickynotes:viewauthor'] = 'Voir l\'auteur d\'une note';
+$string['stickynotes:export'] = 'Exporter les notes';
 
 // Settings strings.
 $string['stickynotesname'] = 'Nom de l\'activité';
@@ -74,6 +75,11 @@ $string['color5_meaning'] = 'Signification de la couleur 5';
 $string['color6_meaning'] = 'Signification de la couleur 6';
 $string['settings_colors'] = 'Gestion des couleurs';
 $string['settings_votes'] = 'Gestion des votes';
+$string['settings_notes'] = 'Gestion des notes';
+$string['displaystickydesc'] = 'Afficher la description dans l\'activité.';
+$string['displaystickydesc_help'] = 'Si activé, la description apparaitra dans l\'activité. Utilisez le champ Description pour ajouter par exemple les consignes de l\'exercice.';
+$string['displaystickycaption'] = 'Afficher la légende des couleurs.';
+$string['displaystickycaption_help'] = 'Si activé, rajoute la légende (couleurs et significations).';
 
 // Colors settings.
 $string['color1'] = '#EECC66';
@@ -124,11 +130,16 @@ $string['firstplace'] = 'Au début de la colonne';
 $string['lastplace'] = 'A la fin de la colonne';
 $string['nomove'] = 'Déplacer cette note ?';
 $string['nomove_help'] = 'Si coché, active les menus de sélection permettant de changer la place et l\'ordre de la note.';
+$string['selectorder'] = 'Order';
 
 // Mustache template strings.
 $string['createnote'] = 'Ajouter une Sticky Note';
 $string['editnote'] = 'Modifier cette note';
 $string['createcolumn'] = 'Ajouter une colonne';
+$string['titledisplaystickydesc'] = 'CONSIGNES';
+$string['titledisplaystickycaption'] = 'LÉGENDE';
+$string['buttondisplaystickydesc'] = 'Afficher les consignes';
+$string['buttondisplaystickycaption'] = 'Afficher la légende des couleurs';
 
 // Pix in mustache template.
 $string['heart_empty_pix'] = 'Ajouter un J\'aime';
@@ -147,3 +158,6 @@ $string['move_cross_pix'] = "Glisser-déposer cette note";
 $string['eventnotecreated'] = 'Sticky note créée';
 $string['eventnoteupdated'] = 'Sticky note modifiée';
 $string['eventnotedeleted'] = 'Sticky note supprimée';
+
+// Navigation.
+$string['export'] = 'Exporter les notes en CSV';
