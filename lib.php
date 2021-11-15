@@ -197,17 +197,21 @@ function stickynotes_extend_navigation($stickynotesnode, $course, $module, $cm) 
 }
 
 /**
- * Extends the settings navigation with the mod_stickynotes settings.
- *
- * This function is called when the context for the page is a mod_stickynotes module.
- * This is not called by AJAX so it is safe to rely on the $PAGE.
- *
- * @param settings_navigation $settingsnav {@see settings_navigation}
- * @param navigation_node $stickynotesnode {@see navigation_node}
+ * Extend navigation.
+ * @param object $settings
+ * @param object $stickynotesnode
  */
-function stickynotes_extend_settings_navigation($settingsnav, $stickynotesnode = null) {
-}
+function stickynotes_extend_settings_navigation($settings, $stickynotesnode) {
+    global $PAGE;
 
+    if (has_capability('mod/stickynotes:export', $PAGE->cm->context)) {
+        $node = navigation_node::create(get_string('export', 'stickynotes'),
+                new moodle_url('/mod/stickynotes/export_csv.php', array('id' => $PAGE->cm->id)),
+                navigation_node::TYPE_SETTING, null, null,
+                new pix_icon('i/export', ''));
+        $stickynotesnode->add_node($node);
+    }
+}
 
 /**
  * Generates form to create or update a note.
@@ -289,7 +293,7 @@ class form_note extends moodleform {
 
             $optionsorder = [];
             $mform->disabledIf('selectorder', 'nomove', '1');
-            $mform->addElement('select', 'selectorder', 'Ordre', $optionsorder);
+            $mform->addElement('select', 'selectorder', get_string('selectorder', 'stickynotes'), $optionsorder);
             $mform->setType('selectorder', PARAM_INT);
             $mform->setDefault('selectorder', 0);
 
@@ -317,7 +321,7 @@ class form_note extends moodleform {
                 $createorder[$neworder] = get_string('after', 'stickynotes')." '".$move->message."'";
             }
 
-            $mform->addElement('select', 'ordernote', 'Ordre', $createorder);
+            $mform->addElement('select', 'ordernote', get_string('selectorder', 'stickynotes'), $createorder);
             $mform->setType('ordernote', PARAM_INT);
             $mform->setDefault('ordernote', 1000);
 
