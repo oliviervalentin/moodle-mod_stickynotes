@@ -43,6 +43,7 @@ $string['stickynotes:deleteownnote'] = 'Delete own note';
 $string['stickynotes:managecolumn'] = 'Manage columns';
 $string['stickynotes:vote'] = 'Vote for a note';
 $string['stickynotes:viewauthor'] = 'View author for each note';
+$string['stickynotes:export'] = 'Export all notes';
 
 // Settings strings.
 $string['stickynotesname'] = 'Activity name';
@@ -74,6 +75,11 @@ $string['color5_meaning'] = 'Signification for color 5';
 $string['color6_meaning'] = 'Signification for color 6';
 $string['settings_colors'] = 'Colors settings';
 $string['settings_votes'] = 'Votes settings';
+$string['settings_notes'] = 'Notes settings';
+$string['displaystickydesc'] = 'Display description in activity.';
+$string['displaystickydesc_help'] = 'If enabled, description will appear on the top. This can be useful if you want to add instructions for activity.';
+$string['displaystickycaption'] = 'Display colors caption in activity.';
+$string['displaystickycaption_help'] = 'If enabled, adds a caption with colors and their meanings.';
 
 // Colors settings.
 $string['color1'] = '#EECC66';
@@ -124,11 +130,16 @@ $string['firstplace'] = 'First place in column';
 $string['lastplace'] = 'At the end of column';
 $string['nomove'] = 'Move this note ?';
 $string['nomove_help'] = 'If checked, enables the selection menus to move note in another rank and/or column.';
+$string['selectorder'] = 'Order';
 
 // Mustache template strings.
 $string['createnote'] = 'Add new Sticky Note';
 $string['editnote'] = 'Edit this Sticky Note';
 $string['createcolumn'] = 'Add new column';
+$string['titledisplaystickydesc'] = 'INSTRUCTIONS';
+$string['titledisplaystickycaption'] = 'CAPTION';
+$string['buttondisplaystickydesc'] = 'Display instructions';
+$string['buttondisplaystickycaption'] = 'Display color caption';
 
 // Pix in mustache template.
 $string['heart_empty_pix'] = 'Add a Like';
@@ -147,3 +158,6 @@ $string['move_cross_pix'] = "Drag and drop this note";
 $string['eventnotecreated'] = 'Sticky note created';
 $string['eventnoteupdated'] = 'Sticky note updated';
 $string['eventnotedeleted'] = 'Sticky note deleted';
+
+// Navigation.
+$string['export'] = 'Export notes in CSV';
