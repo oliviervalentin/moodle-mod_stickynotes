@@ -34,6 +34,8 @@
         <FIELD NAME="color6_meaning" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="If used, gives meaning for the use of color 6 in the activity."/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was added to the course."/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was last modified."/>
+        <FIELD NAME="displaystickydesc" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If enabled, displays description as instructions for activity."/>
+        <FIELD NAME="displaystickycaption" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If enabled, displays colors caption in activity."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
