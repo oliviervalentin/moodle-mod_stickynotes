@@ -65,6 +65,13 @@ class mod_stickynotes_mod_form extends moodleform_mod {
             $this->add_intro_editor();
         }
 
+        // Adding the "colors" fieldset.
+        $mform->addElement('header', 'settings_notes', get_string('settings_notes', 'stickynotes'));
+
+        // Display description in activity ?
+        $mform->addElement('advcheckbox', 'displaystickydesc', get_string('displaystickydesc', 'stickynotes'));
+        $mform->addHelpButton('displaystickydesc', 'displaystickydesc', 'stickynotes');
+
         // Enable the limitation of notes ?
         $mform->addElement('advcheckbox', 'limitstickynotes', get_string('limitstickynotes', 'stickynotes'));
         $mform->addHelpButton('limitstickynotes', 'limitstickynotes', 'stickynotes');
@@ -127,6 +134,10 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'colors', get_string('colors', 'stickynotes'));
         $mform->addHelpButton('colors', 'colors', 'stickynotes');
         $mform->setDefault('colors',  '1');
+
+        // Display caption in activity ?
+        $mform->addElement('advcheckbox', 'displaystickycaption', get_string('displaystickycaption', 'stickynotes'));
+        $mform->addHelpButton('displaystickycaption', 'displaystickycaption', 'stickynotes');
 
         // Text to introduce choice of colors and their meanings.
         $mform->addElement('static', 'color_show', '', get_string('choosecolors', 'stickynotes'));
