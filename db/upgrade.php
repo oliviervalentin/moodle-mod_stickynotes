@@ -60,7 +60,18 @@ function xmldb_stickynotes_upgrade($oldversion) {
             }
         }
     }
+    if ($oldversion < 2021110403) {
+        $table = new xmldb_table('stickynotes');
+        $field1 = $table->add_field('displaystickydesc', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $field2 = $table->add_field('displaystickycaption', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
 
+        if (!$dbman->field_exists($table, $field1)) {
+            $dbman->add_field($table, $field1);
+        }
+        if (!$dbman->field_exists($table, $field2)) {
+            $dbman->add_field($table, $field2);
+        }
+    }
     // Sticky notes savepoint reached.
-    upgrade_mod_savepoint(true, 2021051002, 'stickynotes');
+    upgrade_mod_savepoint(true, 2021110403, 'stickynotes');
 }
