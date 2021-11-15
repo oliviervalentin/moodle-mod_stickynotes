@@ -653,7 +653,7 @@ function stickynote_get_vote_like($userid, $note, $limit, $max, $instance) {
 /**
  * Defines action to trigge for a "Like" vote type.
  *
- * This function is related to the "Like" vote.
+ * This function is related to "Like" vote.
  * Triggers action if user is voting or retiring his vote.
  *
  * @param int $userid user id.
