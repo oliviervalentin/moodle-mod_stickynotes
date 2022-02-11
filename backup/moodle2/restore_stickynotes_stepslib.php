@@ -106,7 +106,23 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
         $newitemid = $DB->insert_record('stickynotes_note', $data);
         $this->set_mapping('stickynotes_note', $oldid, $newitemid);
     }
+    /**
+     * Process stickynotes_note
+     * @param object $data The data in object form
+     * @return void
+     * @throws dml_exception
+     */
+    protected function process_stickynotes_vote($data) {
+        global $DB;
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->stickyid = $this->get_new_parentid('stickynotes');
+        $data->stickynoteid = $this->get_new_parentid('stickynotes_note');
+        $data->userid = $this->get_mappingid('user', $data->userid);
 
+        $newitemid = $DB->insert_record('stickynotes_vote', $data);
+        $this->set_mapping('stickynotes_vote', $oldid, $newitemid);
+    }
     /**
      * Post-execution actions
      */
