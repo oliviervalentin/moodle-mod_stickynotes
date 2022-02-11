@@ -52,8 +52,7 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
             $paths[] = new restore_path_element('stickynotes_note',
                 '/activity/stickynotes/stickynotes_columns/stickynotes_column/stickynotes_notes/stickynotes_note');
             $paths[] = new restore_path_element('stickynotes_vote',
-                '/activity/stickynotes/stickynotes_columns/stickynotes_column/stickynotes_notes/stickynotes_note/
-                    stickynotes_votes/stickynotes_vote');
+                '/activity/stickynotes/stickynotes_columns/stickynotes_column/stickynotes_notes/stickynotes_note/stickynotes_votes/stickynotes_vote');
         }
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
@@ -107,7 +106,7 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
         $this->set_mapping('stickynotes_note', $oldid, $newitemid);
     }
     /**
-     * Process stickynotes_note
+     * Process stickynotes_vote
      * @param object $data The data in object form
      * @return void
      * @throws dml_exception
