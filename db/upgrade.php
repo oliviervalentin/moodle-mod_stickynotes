@@ -59,6 +59,9 @@ function xmldb_stickynotes_upgrade($oldversion) {
                 }
             }
         }
+        
+        // Sticky notes savepoint reached.
+        upgrade_mod_savepoint(true, 2021051002, 'stickynotes');
     }
     if ($oldversion < 2021110403) {
         $table = new xmldb_table('stickynotes');
@@ -71,7 +74,10 @@ function xmldb_stickynotes_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field2)) {
             $dbman->add_field($table, $field2);
         }
+        
+        // Sticky notes savepoint reached.
+        upgrade_mod_savepoint(true, 2021110403, 'stickynotes');
     }
-    // Sticky notes savepoint reached.
-    upgrade_mod_savepoint(true, 2021110404, 'stickynotes');
+    
+    return true;
 }
