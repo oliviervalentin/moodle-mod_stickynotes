@@ -249,7 +249,7 @@ echo "</div>";
 echo '<div style="margin-bottom: 3em;">';
 // If enabled, display activity instructions, i.e. description field.
 if ($moduleinstance->displaystickydesc == '1') {
-    $content = format_text($moduleinstance->intro);
+    $content = file_rewrite_pluginfile_urls($moduleinstance->intro, 'pluginfile.php', $modulecontext->id, 'mod_stickynotes', 'intro', null);
     echo '<div id="displaydesc" class="collapse">';
     echo '<h3>'.get_string('titledisplaystickydesc', 'mod_stickynotes').'</h3>';
     echo $content;
