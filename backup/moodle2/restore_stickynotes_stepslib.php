@@ -47,12 +47,12 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
         $paths[] = new restore_path_element('stickynotes', '/activity/stickynotes');
 
         if ($userinfo) {
-            $paths[] = new restore_path_element('stickynotes_column',
-                '/activity/stickynotes/stickynotes_columns/stickynotes_column');
-            $paths[] = new restore_path_element('stickynotes_note',
-                '/activity/stickynotes/stickynotes_columns/stickynotes_column/stickynotes_notes/stickynotes_note');
-            $paths[] = new restore_path_element('stickynotes_vote',
-                '/activity/stickynotes/stickynotes_columns/stickynotes_column/stickynotes_notes/stickynotes_note/stickynotes_votes/stickynotes_vote');
+            $paths[] = new restore_path_element('stickynotescolumn',
+                '/activity/stickynotes/stickynotescolumns/stickynotescolumn');
+            $paths[] = new restore_path_element('stickynotesnote',
+                '/activity/stickynotes/stickynotescolumns/stickynotescolumn/stickynotesnotes/stickynotesnote');
+            $paths[] = new restore_path_element('stickynotesvote',
+                '/activity/stickynotes/stickynotescolumns/stickynotescolumn/stickynotesnotes/stickynotesnote/stickynotesvotes/stickynotesvote');
         }
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
@@ -79,14 +79,14 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
      * @return void
      * @throws dml_exception
      */
-    protected function process_stickynotes_column($data) {
+    protected function process_stickynotescolumn($data) {
         global $DB;
         $data = (object)$data;
         $oldid = $data->id;
         $data->stickyid = $this->get_new_parentid('stickynotes');
 
         $newitemid = $DB->insert_record('stickynotes_column', $data);
-        $this->set_mapping('stickynotes_column', $oldid, $newitemid);
+        $this->set_mapping('stickynotescolumn', $oldid, $newitemid);
     }
     /**
      * Process stickynotes_note
@@ -94,16 +94,16 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
      * @return void
      * @throws dml_exception
      */
-    protected function process_stickynotes_note($data) {
+    protected function process_stickynotesnote($data) {
         global $DB;
         $data = (object)$data;
         $oldid = $data->id;
         $data->stickyid = $this->get_new_parentid('stickynotes');
-        $data->stickycolid = $this->get_new_parentid('stickynotes_column');
+        $data->stickycolid = $this->get_new_parentid('stickynotescolumn');
         $data->userid = $this->get_mappingid('user', $data->userid);
 
         $newitemid = $DB->insert_record('stickynotes_note', $data);
-        $this->set_mapping('stickynotes_note', $oldid, $newitemid);
+        $this->set_mapping('stickynotesnote', $oldid, $newitemid);
     }
     /**
      * Process stickynotes_vote
@@ -111,16 +111,16 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
      * @return void
      * @throws dml_exception
      */
-    protected function process_stickynotes_vote($data) {
+    protected function process_stickynotesvote($data) {
         global $DB;
         $data = (object)$data;
         $oldid = $data->id;
         $data->stickyid = $this->get_new_parentid('stickynotes');
-        $data->stickynoteid = $this->get_new_parentid('stickynotes_note');
+        $data->stickynoteid = $this->get_new_parentid('stickynotesnote');
         $data->userid = $this->get_mappingid('user', $data->userid);
 
         $newitemid = $DB->insert_record('stickynotes_vote', $data);
-        $this->set_mapping('stickynotes_vote', $oldid, $newitemid);
+        $this->set_mapping('stickynotesvote', $oldid, $newitemid);
     }
     /**
      * Post-execution actions
