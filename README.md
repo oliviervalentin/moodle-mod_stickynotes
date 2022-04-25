@@ -33,7 +33,7 @@ This activity is anonymous for student : no names appears. But teachers can choo
 for their own use.
 
 ## Updates ##
-
+25-04-2022 : fixed problem with restore and backup functions, and missing completion event.
 11-02-2022 : fixed problem with restore and backup functions.
 21-10-2021 : fixed problem with backup files.
 
