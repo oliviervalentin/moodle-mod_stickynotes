@@ -102,6 +102,9 @@ if ($vote && !$capabilityvote) {
     redirect("view.php?id=".$cm->id);
 }
 
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
+
 echo $OUTPUT->header();
 
 echo $OUTPUT->heading($moduleinstance->name);
@@ -249,7 +252,7 @@ echo "</div>";
 echo '<div style="margin-bottom: 3em;">';
 // If enabled, display activity instructions, i.e. description field.
 if ($moduleinstance->displaystickydesc == '1') {
-    $content = file_rewrite_pluginfile_urls($moduleinstance->intro, 'pluginfile.php', $modulecontext->id, 'mod_stickynotes', 'intro', null);
+    $content = format_text($moduleinstance->intro);
     echo '<div id="displaydesc" class="collapse">';
     echo '<h3>'.get_string('titledisplaystickydesc', 'mod_stickynotes').'</h3>';
     echo $content;
