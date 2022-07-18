@@ -148,9 +148,9 @@ foreach ($cols as $col) {
 
         // Check if rotate is enabled to apply the style with or without notes random rotation.
         if ($moduleinstance->rotate == 1) {
-            $note->elementidcontainer = 'element'.$note->id.'container';
+            $note->elementidstickycontent = 'element'.$note->id.'stickycontent';
         } else {
-            $note->elementidcontainer = 'element'.$note->id.'normal';
+            $note->elementidstickycontent = 'element'.$note->id.'stickynormal';
         }
         // Get background color from plugin settings.
         $getcolor = get_config('mod_stickynotes', $note->color);
