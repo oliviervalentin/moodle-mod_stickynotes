@@ -14,34 +14,34 @@
     background: rgba(255, 255, 51, 0.8);
     box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
 }
-div[id*="normal"] {
+div[id*="stickynormal"] {
     display: inline-block;
     margin-top: 1px;
 }
-div[id*="1container"],  div[id*="7container"] {
+div[id*="1stickycontent"],  div[id*="7stickycontent"] {
     transform:rotate(4deg);
     margin-top:5px;
     margin-left:5px;
     display: inline-block;
 }
-div[id*="3container"], div[id*="8container"], div[id*="0container"] {
+div[id*="3stickycontent"], div[id*="8stickycontent"], div[id*="0stickycontent"] {
     transform:rotate(-5deg);
     margin-top:5px;
     margin-left:10px;
     display: inline-block;
 }
-div[id*="4container"], div[id*="6container"] {
+div[id*="4stickycontent"], div[id*="6stickycontent"] {
     transform:rotate(3deg);
     margin-top:-5px;
     display: inline-block;
 }
-div[id*="5container"] {
+div[id*="5stickycontent"] {
     transform:rotate(-5deg);
     margin-top:2px;
     margin-right: -5px;
     display: inline-block;
 }
-div[id*="2container"], div[id*="9container"] {
+div[id*="2stickycontent"], div[id*="9stickycontent"] {
     transform:rotate(2deg);
     margin-top:-5px;
     margin-right: -5px;
