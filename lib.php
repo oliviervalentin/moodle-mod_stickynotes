@@ -207,7 +207,7 @@ function stickynotes_extend_settings_navigation($settings, $stickynotesnode) {
     if (has_capability('mod/stickynotes:export', $PAGE->cm->context)) {
         $node = navigation_node::create(get_string('export', 'stickynotes'),
                 new moodle_url('/mod/stickynotes/export_csv.php', array('id' => $PAGE->cm->id)),
-                navigation_node::TYPE_SETTING, null, null,
+                navigation_node::TYPE_SETTING,
                 new pix_icon('i/export', ''));
         $stickynotesnode->add_node($node);
     }
