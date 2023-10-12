@@ -1,7 +1,7 @@
 /* @import url(https://fonts.googleapis.com/css2?family=Permanent+Marker); */
 /* @import url(https://fonts.googleapis.com/css2?family=Gloria+Hallelujah); */
 
-.sticky {
+.stickynotemod {
     right: 0;
     z-index: 150;
     width: 165px;
@@ -47,13 +47,13 @@ div[id*="2stickycontent"], div[id*="9stickycontent"] {
     margin-right: -5px;
     display: inline-block;
 }
-.sticky:before {
+.stickynotemod:before {
     border-top: solid 8px #fff;
     border-right: solid 8px #fff;
     border-left: solid 8px transparent;
     border-bottom: solid 8px transparent;
 }
-.sticky:after {
+.stickynotemod:after {
     border-bottom: solid 8px #dddd33;
     border-left: solid 8px #dddd33;
     border-right: solid 8px transparent;

@@ -34,7 +34,7 @@ export const init = () => {
         // Do stuff here
         var sortable = Sortable.create(column, {
             group: "columnnote",
-            draggable: ".sticky",
+            draggable: ".stickynotemod",
             pull: "true",
 
             onEnd: function (/**Event*/evt) {

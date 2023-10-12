@@ -23,10 +23,10 @@
 
     {{#allnotes}}
 	        {{#capabilityupdatenote}}
-                <div id="{{elementidstickycontent}}" class="sticky" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
+                <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
             {{/capabilityupdatenote}}
             {{^capabilityupdatenote}}
-                <div id="{{elementidstickycontent}}" class="sticky note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
+                <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
             {{/capabilityupdatenote}}
                 <div id="{{elementid}}">
                     <div class="headernote">
