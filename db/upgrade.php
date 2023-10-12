@@ -87,15 +87,19 @@ function xmldb_stickynotes_upgrade($oldversion) {
     upgrade_mod_savepoint(true, 2022071804, 'stickynotes');
     }
     // Add feature to move all notes or not for students.
-    if ($oldversion < 2023101205) {
+    if ($oldversion < 2023101206) {
         $table = new xmldb_table('stickynotes');
-        $field = $table->add_field('moveallnotes', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $field1 = $table->add_field('moveallnotes', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $field2 = $table->add_field('seeallnotes', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '1');
 
-        if (!$dbman->field_exists($table, $field)) {
-            $dbman->add_field($table, $field);
+        if (!$dbman->field_exists($table, $field1)) {
+            $dbman->add_field($table, $field1);
+        }
+        if (!$dbman->field_exists($table, $field2)) {
+            $dbman->add_field($table, $field2);
         }
         // Sticky notes savepoint reached.
-        upgrade_mod_savepoint(true, 2023101205, 'stickynotes');
+        upgrade_mod_savepoint(true, 2023101206, 'stickynotes');
     }
     return true;
 }

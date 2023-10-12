@@ -82,6 +82,8 @@ $string['displaystickycaption'] = 'Display colors caption in activity.';
 $string['displaystickycaption_help'] = 'If enabled, adds a caption with colors and their meanings.';
 $string['moveallnotes'] = 'Students can move any notes';
 $string['moveallnotes_help'] = 'If enabled, students will be able to move all notes, and not only their owns. Though, students won\'t be able to modify content, color, delete note...';
+$string['seeallnotes'] = 'Students see all notes allover activity.';
+$string['seeallnotes_help'] = 'If not checked, student will only see what he has created. For a real collaborative experience, keep this box checked. Teacher will still see all notes.';
 
 // Colors settings.
 $string['color1'] = '#EECC66';

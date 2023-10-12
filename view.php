@@ -116,8 +116,21 @@ $allcols = array();
 
 // For each columns, retrieve all notes.
 foreach ($cols as $col) {
-    $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id),
-    'ordernote', '*');
+    // If user has supercapabilities, we show all notes.
+    if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
+            && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))) {
+                $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id),
+                'ordernote', '*');
+    } else {
+        // If user hasn't capabilities, check if he can see all notes through activity parameters.
+        if ($moduleinstance->seeallnotes == 1) {
+            $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id),
+            'ordernote', '*');
+        } else {
+            $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id, 'userid' => $USER->id),
+            'ordernote', '*');
+        }
+    }
 
     $allnotes = new StdClass;
     $allnotes = array();
