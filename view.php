@@ -78,6 +78,7 @@ $capabilitycreatenote = false;
 $capabilityvote = false;
 $capabilityupdatenote = false;
 $capabilitydeleteanynote = false;
+$capabilitymoveallnotes = false;
 if ((!is_guest($modulecontext, $USER) && isloggedin()) && has_capability('mod/stickynotes:vote', $modulecontext)
         && has_capability('mod/stickynotes:createnote', $modulecontext)) {
     $capabilitycreatenote = true;
@@ -157,8 +158,16 @@ foreach ($cols as $col) {
         $note->backgroundcolor = $getcolor;
 
         // Define capabilities for edit and delete note.
+        // If user can't update and delete everything, it's not an admin. Must check capacities for each note.
         if ((!has_capability('mod/stickynotes:updateanynote', $modulecontext))
             && (!has_capability('mod/stickynotes:deleteanynote', $modulecontext))) {
+            // First, check if setting to move all notes is enabled, to give or not this capability.
+            if ($moduleinstance->moveallnotes == 1) {
+                $note->capabilitymoveallnotes = true;
+            } else {
+                $note->capabilitymoveallnotes = false;
+            }
+            // Now, check if this note belongs to user to set update and delete capabilities.
             if ($note->userid == $USER->id) {
                 if (has_capability('mod/stickynotes:updateownnote', $modulecontext)) {
                     $note->capabilityupdatenote = true;

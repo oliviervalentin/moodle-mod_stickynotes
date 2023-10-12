@@ -86,6 +86,10 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'viewauthor', get_string('viewauthor', 'stickynotes'));
         $mform->addHelpButton('viewauthor', 'viewauthor', 'stickynotes');
 
+        // Students can move any notes ?
+        $mform->addElement('advcheckbox', 'moveallnotes', get_string('moveallnotes', 'stickynotes'));
+         $mform->addHelpButton('moveallnotes', 'moveallnotes', 'stickynotes');
+
         // Rotate notes ?
         $mform->addElement('advcheckbox', 'rotate', get_string('rotate', 'stickynotes'));
         $mform->addHelpButton('rotate', 'rotate', 'stickynotes');

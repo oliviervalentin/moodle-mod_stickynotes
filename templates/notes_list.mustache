@@ -22,20 +22,30 @@
         {{/capabilitycreatenote}}
 
     {{#allnotes}}
+        {{#capabilitymoveallnotes}}
+            <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
+        {{/capabilitymoveallnotes}}
+        {{^capabilitymoveallnotes}}
 	        {{#capabilityupdatenote}}
                 <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
             {{/capabilityupdatenote}}
             {{^capabilityupdatenote}}
                 <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
             {{/capabilityupdatenote}}
+        {{/capabilitymoveallnotes}}
                 <div id="{{elementid}}">
                     <div class="headernote">
-	                    {{#capabilityupdatenote}}
-                            <i class="fa fa-arrows fa-fw" title="{{#str}}move_cross_pix, stickynotes{{/str}}"></i>
-                        {{/capabilityupdatenote}}	
-						{{^capabilityupdatenote}}
-						    &nbsp;
-						{{/capabilityupdatenote}}
+                        {{#capabilitymoveallnotes}}
+                           <i class="fa fa-arrows fa-fw" title="{{#str}}move_cross_pix, stickynotes{{/str}}"></i>
+                        {{/capabilitymoveallnotes}}
+                        {{^capabilitymoveallnotes}}
+                            {{#capabilityupdatenote}}
+                                <i class="fa fa-arrows fa-fw" title="{{#str}}move_cross_pix, stickynotes{{/str}}"></i>
+                            {{/capabilityupdatenote}}	
+                            {{^capabilityupdatenote}}
+                                &nbsp;
+                            {{/capabilityupdatenote}}
+                        {{/capabilitymoveallnotes}}
                         {{#capability_viewauthor}}
                                {{fullname}}
                         {{/capability_viewauthor}}
@@ -82,10 +92,9 @@
                                 &nbsp;
                             {{/capability_deletenote}}
                         </div>
-                        
-                       </div>
-                   </div>  
-             </div>
+                    </div>
+                </div>  
+            </div>
     {{/allnotes}}
         </div>
     {{/allcols}}

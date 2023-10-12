@@ -80,6 +80,8 @@ $string['displaystickydesc'] = 'Display description in activity.';
 $string['displaystickydesc_help'] = 'If enabled, description will appear on the top. This can be useful if you want to add instructions for activity.';
 $string['displaystickycaption'] = 'Display colors caption in activity.';
 $string['displaystickycaption_help'] = 'If enabled, adds a caption with colors and their meanings.';
+$string['moveallnotes'] = 'Students can move any notes';
+$string['moveallnotes_help'] = 'If enabled, students will be able to move all notes, and not only their owns. Though, students won\'t be able to modify content, color, delete note...';
 
 // Colors settings.
 $string['color1'] = '#EECC66';

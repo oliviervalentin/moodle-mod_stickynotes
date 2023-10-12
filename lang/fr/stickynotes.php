@@ -80,6 +80,8 @@ $string['displaystickydesc'] = 'Afficher la description dans l\'activité.';
 $string['displaystickydesc_help'] = 'Si activé, la description apparaitra dans l\'activité. Utilisez le champ Description pour ajouter par exemple les consignes de l\'exercice.';
 $string['displaystickycaption'] = 'Afficher la légende des couleurs.';
 $string['displaystickycaption_help'] = 'Si activé, rajoute la légende (couleurs et significations).';
+$string['moveallnotes'] = 'Les étudiants peuvent déplacer n\'importe quelle note';
+$string['moveallnotes_help'] = 'Si activé, les étudiants peuvent déplacer toutes les notes de l\'activité, et non uniquement les leurs. Ils ne peuvent toutefois pas modifier le contenu, la couleur, supprimer une note...';
 
 // Colors settings.
 $string['color1'] = '#EECC66';
