@@ -128,3 +128,6 @@ div[id*="2stickycontent"], div[id*="9stickycontent"] {
 #id_color option[value='6'] {
     background-color: #bbb;
 }
+.note_nomove{
+    pointer-events: none;
+}
