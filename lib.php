@@ -651,7 +651,7 @@ function stickynote_get_vote_like($userid, $note, $limit, $max, $instance) {
     return $params;
 }
 /**
- * Defines action to trigge for a "Like" vote type.
+ * Defines action to trigger for a "Like" vote type.
  *
  * This function is related to "Like" vote.
  * Triggers action if user is voting or retiring his vote.
@@ -688,3 +688,88 @@ function stickynote_do_vote_like($userid, $note, $action, $instance) {
 
     return true;
 }
+
+/**
+ * Implementation of the function for printing the form elements that control
+ * whether the course reset functionality affects the Sticky Notes activity.
+ *
+ * @param $mform the course reset form that is being built.
+ */
+function stickynotes_reset_course_form_definition($mform) {
+    $mform->addElement('header', 'stickynotesheader', get_string('modulenameplural', 'stickynotes'));
+
+    $mform->addElement('advcheckbox', 'reset_stickynotes_all',
+            get_string('resetstickynotesall', 'stickynotes'));
+
+    $mform->addElement('advcheckbox', 'reset_stickynotes_notes',
+            get_string('resetstickynotesnotes', 'stickynotes'));
+    $mform->disabledIf('reset_stickynotes_notes', 'reset_stickynotes_all', 'checked');
+
+    $mform->addElement('advcheckbox', 'reset_stickynotes_votes',
+            get_string('resetstickynotesvotes', 'stickynotes'));
+    $mform->disabledIf('reset_stickynotes_votes', 'reset_stickynotes_all', 'checked');
+    $mform->disabledIf('reset_stickynotes_votes', 'reset_stickynotes_notes', 'checked');
+}
+
+/**
+ * Course reset form defaults.
+ * @return array the defaults.
+ */
+function stickynotes_reset_course_form_defaults($course) {
+    return array('reset_stickynotes_all' => 1,
+                 'reset_stickynotes_notes' => 1,
+                 'reset_stickynotes_votes' => 1);
+}
+
+/**
+ * Actual implementation of the reset course functionality, delete all contents,
+ * or only notes, or only votes.
+ *
+ * If delete all is selected, a start column will be created.
+ *
+ * @param object $data the data submitted from the reset course.
+ * @return array status array
+ */
+function stickynotes_reset_userdata($data) {
+    global $CFG, $DB;
+
+    $componentstr = get_string('modulenameplural', 'stickynotes');
+    $status = array();
+
+    $sql = "SELECT sn.id FROM {stickynotes} sn WHERE sn.course=".$data->courseid."";
+
+    // Remove all contents - columns, notes and votes.
+    if (!empty($data->reset_stickynotes_all)) {
+        // Delete all columns, notes and votes queries. 
+        $res_columns = $DB->delete_records_select('stickynotes_column', "stickyid IN ($sql)");
+        $res_notes = $DB->delete_records_select('stickynotes_note', "stickyid IN ($sql)");
+        $res_votes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
+
+        // Now columns are deleted, create a new default column for each activity.
+        $res_activities = $DB->get_records_sql($sql);
+        foreach ($res_activities as $recreate_column) {
+            $new = new stdClass();
+            $new->stickyid = $recreate_column->id;
+            $new->title = get_string('new_column_title', 'stickynotes');
+            insert_column($new);
+        }
+
+        $status[] = array('component'=>$componentstr, 'item'=>get_string('removeallresponse', 'stickynotes'), 'error'=>false);
+    }
+
+    // Remove notes and votes. Columns stay.
+    if (!empty($data->reset_stickynotes_notes)) {
+        $res_notes = $DB->delete_records_select('stickynotes_note', "stickyid IN ($sql)");
+        $res_votes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
+        $status[] = array('component'=>$componentstr, 'item'=>get_string('removenotesandvotesresponse', 'stickynotes'), 'error'=>false);
+    }
+
+    // Remove votes only
+    if (!empty($data->reset_stickynotes_votes)) {
+        $res_votes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
+        $status[] = array('component'=>$componentstr, 'item'=>get_string('removevotesresponse', 'stickynotes'), 'error'=>false);
+    }
+
+    return $status;
+}
+

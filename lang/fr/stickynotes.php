@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Sticky Notes';
 $string['modulename'] = 'Sticky Notes';
+$string['modulenameplural'] = 'Activités Sticky Notes';
 $string['pluginadministration'] = 'Sticky Notes Admin';
 $string['modulenameplural'] = 'Sticky Notes';
 $string['missingidandcmid'] = 'Paramètres manquants';
@@ -165,3 +166,11 @@ $string['eventnotedeleted'] = 'Sticky note supprimée';
 
 // Navigation.
 $string['export'] = 'Exporter les notes en CSV';
+
+// Reset functions.
+$string['resetstickynotesall'] = 'Réinitialiser toute l\'activité (colonnes et notes)';
+$string['resetstickynotesnotes'] = 'Réinitialiser les notes et les votes associés';
+$string['resetstickynotesvotes'] = 'Réinitialiser les votes';
+$string['removeallresponse'] = 'Sticky Notes réinitialisés';
+$string['removenotesandvotesresponse'] = 'Votes et notes réinitialisés';
+$string['removevotesresponse'] = 'Votes réinitialisés';
