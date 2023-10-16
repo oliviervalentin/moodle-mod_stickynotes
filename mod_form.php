@@ -93,6 +93,7 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         // Students can see all notes ?
         $mform->addElement('advcheckbox', 'seeallnotes', get_string('seeallnotes', 'stickynotes'));
         $mform->addHelpButton('seeallnotes', 'seeallnotes', 'stickynotes');
+        $mform->setDefault('seeallnotes',  '1');
 
         // Rotate notes ?
         $mform->addElement('advcheckbox', 'rotate', get_string('rotate', 'stickynotes'));

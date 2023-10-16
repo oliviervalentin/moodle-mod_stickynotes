@@ -772,4 +772,3 @@ function stickynotes_reset_userdata($data) {
 
     return $status;
 }
-
