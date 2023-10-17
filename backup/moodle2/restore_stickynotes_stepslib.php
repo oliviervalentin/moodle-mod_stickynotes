@@ -45,10 +45,10 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
         $userinfo = $this->get_setting_value('userinfo');
 
         $paths[] = new restore_path_element('stickynotes', '/activity/stickynotes');
+        $paths[] = new restore_path_element('stickynotescolumn',
+            '/activity/stickynotes/stickynotescolumns/stickynotescolumn');
 
         if ($userinfo) {
-            $paths[] = new restore_path_element('stickynotescolumn',
-                '/activity/stickynotes/stickynotescolumns/stickynotescolumn');
             $paths[] = new restore_path_element('stickynotesnote',
                 '/activity/stickynotes/stickynotescolumns/stickynotescolumn/stickynotesnotes/stickynotesnote');
             $paths[] = new restore_path_element('stickynotesvote',
