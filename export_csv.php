@@ -43,14 +43,7 @@ $modulecontext = context_module::instance($cm->id);
 
 require_capability('mod/stickynotes:export', $modulecontext);
 
-// Header for a new CSV document.
-header('Content-Type: text/csv;charset=utf-8');
-header("Content-disposition: attachment; filename=\"" . strip_tags($moduleinstance->name).'_stickynotes_'.
-date('YmdHis').'.csv' . "\"");
-header("Pragma: no-cache");
-header("Expires: 0");
 
-$fp = fopen('php://output', 'w');
 
 // Start to retrieve all columns for this instance.
 $cols = $DB->get_records('stickynotes_column', array('stickyid' => $moduleinstance->id), '', '*');
@@ -65,6 +58,13 @@ foreach ($cols as $col) {
     $allnotes = array();
     // For each note, retrieve and define all necessary information.
     foreach ($notes as $note) {
+        // Count votes for note.
+        $votes = $DB->count_records('stickynotes_vote', array('stickyid' => $moduleinstance->id, 'stickynoteid' => $note->id),'*');
+        // Retrieve author.
+        $getname = $DB->get_record('user', array('id' => $note->userid));
+        $author = $getname->lastname." ".$getname->firstname;
+        // Contact message, author and votes.
+        $note->final = $note->message.' ('.$author.' - '.$votes.' votes)';
 
         $allnotes[] = (object)$note;
     }
@@ -77,6 +77,14 @@ foreach ($cols as $col) {
 }
 // All informations are set.
 
+// Header for a new CSV document.
+header('Content-Type: text/csv;charset=utf-8');
+header("Content-disposition: attachment; filename=\"" . strip_tags($moduleinstance->name).'_stickynotes_'.
+date('YmdHis').'.csv' . "\"");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+$fp = fopen('php://output', 'w');
 $maxnotes = 0;
 $line = [];
 
@@ -94,7 +102,7 @@ while ($noterow < $maxnotes) {
     $line = [];
     foreach ($allcols as $col) {
         $notes = array_values($col->allnotes);
-        array_push($line, isset($notes[$noterow]) ? $notes[$noterow]->message : '');
+        array_push($line, isset($notes[$noterow]) ? $notes[$noterow]->final : '');
     }
     $noterow++;
     fputcsv($fp, $line);
