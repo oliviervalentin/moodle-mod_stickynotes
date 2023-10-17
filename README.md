@@ -27,12 +27,25 @@ When creating an activity, teacher can define several features or limitation :
 - add a meaning for every color
 - limit the number of notes a user can create 
 - limit the number of votes a user can do
+- decide either students see all notes or only their own
+- decide either students can move all notes or only their own
 - enable the rotate effect.
 
 This activity is anonymous for student : no names appears. But teachers can choose to view creator names
 for their own use.
 
 ## Updates ##
+17-10-2022 :
+    - solved bug for students could move any notes
+    - rename class .sticky due to conflicts with some templates (eg. Adaptable)
+    - activity duplication now duplicates columns titles
+    - implement data reset
+    - solved bug - problem in "single activity" course
+    - new features :
+        * teacher decides if students can see all notes or only their owns
+        * teacher decides if students can move any notes or only their owns
+    - CSV export now saves notes authors and number of likes.
+
 25-04-2022 : fixed problem with restore and backup functions, and missing completion event.
 11-02-2022 : fixed problem with restore and backup functions.
 21-10-2021 : fixed problem with backup files.
