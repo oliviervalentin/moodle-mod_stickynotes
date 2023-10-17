@@ -92,20 +92,21 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
 
         $stickynotes->set_source_table('stickynotes', array('id' => backup::VAR_ACTIVITYID));
 
-        // All the rest of elements only happen if we are including user info.
-        if ($userinfo) {
-            $stickynotescolumn->set_source_sql('
+        $stickynotescolumn->set_source_sql('
                 SELECT *
                 FROM {stickynotes_column}
                 WHERE stickyid = ?',
             array(backup::VAR_PARENTID));
-            $stickynotesnote->set_source_sql('
+        $stickynotesnote->set_source_sql('
                 SELECT *
                 FROM {stickynotes_note}
                 WHERE stickyid = ?',
             array(backup::VAR_PARENTID));
+        $stickynotescolumn->set_source_table('stickynotes_column', array('stickyid' => backup::VAR_ACTIVITYID));
+
+        // All the rest of elements only happen if we are including user info.
+        if ($this->get_task()->get_setting_value('userinfo')) {
             // All the rest of elements only happen if we are including user info.
-            $stickynotescolumn->set_source_table('stickynotes_column', array('stickyid' => backup::VAR_ACTIVITYID));
             $stickynotesnote->set_source_table('stickynotes_note', array('stickycolid' => backup::VAR_PARENTID));
             $stickynotesvote->set_source_table('stickynotes_vote', array('stickynoteid' => backup::VAR_PARENTID));
         }
