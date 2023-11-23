@@ -35,7 +35,10 @@ This activity is anonymous for student : no names appears. But teachers can choo
 for their own use.
 
 ## Updates ##
-17-10-2022 :
+17-10-2023 :
+    - add data privacy provider.
+
+17-10-2023 :
     - solved bug for students could move any notes
     - rename class .sticky due to conflicts with some templates (eg. Adaptable)
     - activity duplication now duplicates columns titles
