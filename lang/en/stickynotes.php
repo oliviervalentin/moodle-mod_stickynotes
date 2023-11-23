@@ -174,3 +174,20 @@ $string['resetstickynotesvotes'] = 'Reset votes only';
 $string['removeallresponse'] = 'Sticky contents deleted';
 $string['removenotesandvotesresponse'] = 'Notes and votes deleted';
 $string['removevotesresponse'] = 'Votes deleted';
+
+// Privacy.
+$string['privacy:metadata:stickynotes_note'] = 'Datas for user notes';
+$string['privacy:metadata:stickynotes_note:id'] = 'Note ID';
+$string['privacy:metadata:stickynotes_note:stickyid'] = 'Module ID';
+$string['privacy:metadata:stickynotes_note:stickycolid'] = 'Column ID in activity';
+$string['privacy:metadata:stickynotes_note:userid'] = 'User ID that has created this note';
+$string['privacy:metadata:stickynotes_note:message'] = 'Content of note';
+$string['privacy:metadata:stickynotes_note:timecreated'] = 'The time when the note was created';
+$string['privacy:metadata:stickynotes_note:timemodified'] = 'The time when the note was updated';
+$string['privacy:metadata:stickynotes_vote'] = 'Datas for user votes';
+$string['privacy:metadata:stickynotes_vote:id'] = 'Vote ID';
+$string['privacy:metadata:stickynotes_vote:stickyid'] = 'Module ID';
+$string['privacy:metadata:stickynotes_vote:stickynoteid'] = 'Note ID user has voted for';
+$string['privacy:metadata:stickynotes_vote:userid'] = 'User ID that has voted for this note';
+$string['privacy:metadata:stickynotes_vote:vote'] = 'Vote content';
+$string['privacy:metadata:stickynotes_vote:timecreated'] = 'The time when user has voted';

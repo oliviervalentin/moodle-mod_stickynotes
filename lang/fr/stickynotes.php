@@ -174,3 +174,20 @@ $string['resetstickynotesvotes'] = 'Réinitialiser les votes';
 $string['removeallresponse'] = 'Sticky Notes réinitialisés';
 $string['removenotesandvotesresponse'] = 'Votes et notes réinitialisés';
 $string['removevotesresponse'] = 'Votes réinitialisés';
+
+// Privacy.
+$string['privacy:metadata:stickynotes_note'] = 'Données concernant les notes créées par l\'utilisateur';
+$string['privacy:metadata:stickynotes_note:id'] = 'ID de la note';
+$string['privacy:metadata:stickynotes_note:stickyid'] = 'ID du module';
+$string['privacy:metadata:stickynotes_note:stickycolid'] = 'ID de la colonne dans le module';
+$string['privacy:metadata:stickynotes_note:userid'] = 'ID de l\'utilisateur qui a créé la note';
+$string['privacy:metadata:stickynotes_note:message'] = 'Contenu de la note';
+$string['privacy:metadata:stickynotes_note:timecreated'] = 'Horodatage de la création de la note';
+$string['privacy:metadata:stickynotes_note:timemodified'] = 'Horodatage de la modification de la note';
+$string['privacy:metadata:stickynotes_vote'] = 'Données concernant les votes de l\'utilisateur';
+$string['privacy:metadata:stickynotes_vote:id'] = 'ID du vote';
+$string['privacy:metadata:stickynotes_vote:stickyid'] = 'ID du module';
+$string['privacy:metadata:stickynotes_vote:stickynoteid'] = 'ID de la note pour laquelle l\'utilisateur a voté';
+$string['privacy:metadata:stickynotes_vote:userid'] = 'ID de l\'utilisateur qui a voté pour la note';
+$string['privacy:metadata:stickynotes_vote:vote'] = 'Contenu du vote';
+$string['privacy:metadata:stickynotes_vote:timecreated'] = 'Horodatage du vote';
