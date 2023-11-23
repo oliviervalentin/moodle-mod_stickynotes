@@ -101,5 +101,9 @@ function xmldb_stickynotes_upgrade($oldversion) {
         // Sticky notes savepoint reached.
         upgrade_mod_savepoint(true, 2023101706, 'stickynotes');
     }
+    if ($oldversion < 2023101706) {
+        // Upgrade code.
+        upgrade_mod_savepoint(true, 2023112307, 'stickynotes');
+        }
     return true;
 }
