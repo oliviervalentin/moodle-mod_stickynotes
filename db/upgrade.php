@@ -101,9 +101,20 @@ function xmldb_stickynotes_upgrade($oldversion) {
         // Sticky notes savepoint reached.
         upgrade_mod_savepoint(true, 2023101706, 'stickynotes');
     }
-    if ($oldversion < 2023101706) {
+    if ($oldversion < 2023101707) {
         // Upgrade code.
         upgrade_mod_savepoint(true, 2023112307, 'stickynotes');
         }
+    // Add completion on notes creation.
+    if ($oldversion < 2023112312) {
+        $table = new xmldb_table('stickynotes');
+        $field = $table->add_field('completionstickynotes', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        // Sticky notes savepoint reached.
+        upgrade_mod_savepoint(true, 2023112312, 'stickynotes');
+    }
     return true;
 }

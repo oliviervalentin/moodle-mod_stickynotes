@@ -84,7 +84,9 @@ $string['displaystickycaption_help'] = 'If enabled, adds a caption with colors a
 $string['moveallnotes'] = 'Students can move any notes';
 $string['moveallnotes_help'] = 'If enabled, students will be able to move all notes, and not only their owns. Though, students won\'t be able to modify content, color, delete note...';
 $string['seeallnotes'] = 'Students see all notes allover activity.';
-$string['seeallnotes_help'] = 'If not checked, student will only see what he has created. For a real collaborative experience, keep this box checked. Teacher will still see all notes.';
+$string['completionstickynotesenabled'] = 'Students must create this number of sticky notes to complete the activity.';
+$string['completionstickynotesgroup'] = 'Require notes';
+$string['completionstickynotesdetail:notes'] = 'Add sticky notes: {$a}';
 
 // Colors settings.
 $string['color1'] = '#EECC66';

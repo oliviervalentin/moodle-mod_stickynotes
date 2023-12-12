@@ -57,8 +57,26 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
                                                     'maxstickynotes',
                                                     'orderstickynotes',
                                                     'viewauthor',
+                                                    'rotate',
+                                                    'color1',
+                                                    'color1_meaning',
+                                                    'color2',
+                                                    'color2_meaning',
+                                                    'color3',
+                                                    'color3_meaning',
+                                                    'color4',
+                                                    'color4_meaning',
+                                                    'color5',
+                                                    'color5_meaning',
+                                                    'color6',
+                                                    'color6_meaning',
                                                     'timecreated',
-                                                    'timemodified'));
+                                                    'timemodified',
+                                                    'displaystickydesc',
+                                                    'displaystickycaption',
+                                                    'moveallnotes',
+                                                    'seeallnotes',
+                                                    'completionstickynotes'));
 
         // Define each element separated.
         $stickynotescolumns = new backup_nested_element('stickynotescolumns');

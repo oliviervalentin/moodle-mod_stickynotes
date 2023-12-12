@@ -85,6 +85,9 @@ $string['moveallnotes'] = 'Les étudiants peuvent déplacer n\'importe quelle no
 $string['moveallnotes_help'] = 'Si activé, les étudiants peuvent déplacer toutes les notes de l\'activité, et non uniquement les leurs. Ils ne peuvent toutefois pas modifier le contenu, la couleur, supprimer une note...';
 $string['seeallnotes'] = 'Les étudiants peuvent voir toutes les notes de l\'activité';
 $string['seeallnotes_help'] = 'En décochant cette case, chaque étudiant ne verra que ce qu\'il a créé. Pour une activité collaborative, laisser cette case cochée. L\'enseignant continue de voir toutes les notes.';
+$string['completionstickynotesenabled'] = 'Les étudiants doivent créer un nombre de nots pour compléter l\'activité.';
+$string['completionstickynotesgroup'] = 'Création de notes requise';
+$string['completionstickynotesdetail:notes'] = 'Ajouter des notes : {$a}';
 
 // Colors settings.
 $string['color1'] = '#EECC66';

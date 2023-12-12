@@ -223,4 +223,77 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         // Add standard buttons.
         $this->add_action_buttons();
     }
+
+    /**
+     * Preprocess data.
+     * @param array $defaultvalues
+     */
+    public function data_preprocessing(&$defaultvalues) {
+        $defaultvalues['completionstickynotesenabled'] = !empty($defaultvalues['completionstickynotes']) ? 1 : 0;
+    }
+
+    /**
+     * Add elements for setting the custom completion rules.
+     *
+     * @category completion
+     * @return array List of added element names, or names of wrapping group elements.
+     */
+
+    public function add_completion_rules() {
+        $mform = $this->_form;
+
+        $group = [
+            $mform->createElement(
+            'checkbox',
+            'completionstickynotesenabled',
+            ' ',
+            get_string('completionstickynotesenabled', 'mod_stickynotes')
+            ),
+            $mform->createElement(
+                'text',
+                'completionstickynotes',
+                ' ',
+                ['size' => 3]
+            ),
+        ];
+        $mform->setType('completionstickynotes', PARAM_INT);
+        $mform->addGroup(
+            $group,
+            'completionstickynotesgroup',
+            get_string('completionstickynotesgroup', 'mod_stickynotes'),
+            [' '],
+            false);
+        $mform->disabledIf('completionstickynotes', 'completionstickynotesenabled', 'notchecked');
+
+        return ['completionstickynotesgroup'];
+    }
+
+    /**
+     * Determines if completion is enabled for this module.
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function completion_rule_enabled($data) {
+        return (!empty($data['completionstickynotesenabled']) && $data['completionstickynotes'] != 0);
+    }
+
+    /**
+     * Allows module to modify the data returned by form get_data().
+     * This method is also called in the bulk activity completion form.
+     *
+     * Only available on moodleform_mod.
+     *
+     * @param stdClass $data the form data to be modified.
+     */
+    public function data_postprocessing($data) {
+        parent::data_postprocessing($data);
+        // Turn off completion settings if the checkboxes aren't ticked.
+        if (!empty($data->completionunlocked)) {
+            $autocompletion = !empty($data->completion) && $data->completion == COMPLETION_TRACKING_AUTOMATIC;
+            if (empty($data->completionstickynotesenabled) || !$autocompletion) {
+                $data->completionstickynotes = 0;
+            }
+        }
+    }
 }

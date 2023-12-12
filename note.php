@@ -166,7 +166,7 @@ if (!empty($create)) {
 
     // User has confirmed deletion : note is deleted.
     if (!empty($confirm) AND confirm_sesskey()) {
-        delete_stickynote($note, $modulecontext);
+        delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm);
 
         // Trigger note deleted event.
         $params = array(
@@ -282,7 +282,7 @@ if ($fromform = $mformnote->get_data()) {
         $fromform->ordernote = $ordernote;
 
         // Finally, we can create note.
-        $createnote = insert_stickynote($fromform);
+        $createnote = insert_stickynote($fromform, $moduleinstance, $course, $cm);
 
         // Trigger note created event.
         $params = array(

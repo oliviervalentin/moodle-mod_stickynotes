@@ -42,6 +42,8 @@ function stickynotes_supports($feature) {
             return true;
         case FEATURE_COMPLETION_TRACKS_VIEWS:
             return true;
+        case FEATURE_COMPLETION_HAS_RULES:
+            return true;
         case FEATURE_BACKUP_MOODLE2:
             return true;
         case FEATURE_SHOW_DESCRIPTION:
@@ -442,7 +444,7 @@ class form_column extends moodleform {
   *
   * @return bool True if successful, false otherwise.
   */
-function insert_stickynote($data) {
+function insert_stickynote($data, $moduleinstance, $course, $cm) {
     global $DB, $USER;
     $id = required_param('id', PARAM_INT);
     $data = (object)$data;
@@ -470,6 +472,13 @@ function insert_stickynote($data) {
     }
     // Finally, create the new note.
     $res = $DB->insert_record('stickynotes_note', $data);
+
+    // Activates completion checking.
+    $completion = new \completion_info($course);
+    if ($completion->is_enabled($cm) && $moduleinstance->completionstickynotes) {
+        $completion->update_state($cm);
+    }
+
     return $res;
 }
  /**
@@ -557,10 +566,16 @@ function delete_column($col, $modulecontext) {
   * @param int $modulecontext  Activity id
   * @return bool True if successful, false otherwise.
   */
-function delete_stickynote($note, $modulecontext) {
+function delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm) {
     global $DB;
     if (!$DB->delete_records('stickynotes_note', array('id' => $note))) {
         $result = false;
+    }
+
+    // Activates completion checking.
+    $completion = new \completion_info($course);
+    if ($completion->is_enabled($cm) && $moduleinstance->completionstickynotes) {
+        $completion->update_state($cm);
     }
 }
  /**
@@ -771,4 +786,106 @@ function stickynotes_reset_userdata($data) {
     }
 
     return $status;
+}
+
+/**
+ * Add a get_coursemodule_info function in case any stickynotes type wants to add 'extra' information
+ * for the course (see resource).
+ *
+ * Given a course_module object, this function returns any "extra" information that may be needed
+ * when printing this activity in a course listing.  See get_array_of_activities() in course/lib.php.
+ *
+ * @param stdClass $coursemodule The coursemodule object (record).
+ * @return cached_cm_info An object on information that the courses
+ *                        will know about (most noticeably, an icon).
+ */
+function stickynotes_get_coursemodule_info($coursemodule) {
+    global $DB;
+
+    $dbparams = ['id' => $coursemodule->instance];
+    $fields = 'id, name, intro, introformat, completionstickynotes';
+    if (!$stickynotes = $DB->get_record('stickynotes', $dbparams, $fields)) {
+        return false;
+    }
+
+    $result = new cached_cm_info();
+    $result->name = $stickynotes->name;
+
+    if ($coursemodule->showdescription) {
+        // Convert intro to html. Do not filter cached version, filters run at display time.
+        $result->content = format_module_intro('stickynotes', $stickynotes, $coursemodule->id, false);
+    }
+
+    // Populate the custom completion rules as key => value pairs, but only if the completion mode is 'automatic'.
+    if ($coursemodule->completion == COMPLETION_TRACKING_AUTOMATIC) {
+        $result->customdata['customcompletionrules']['completionstickynotes'] = $stickynotes->completionstickynotes;
+    }
+
+    return $result;
+}
+
+/**
+ * Obtains the automatic completion state for this stickynotes on any conditions
+ * in stickynotes settings
+ *
+ * @param object $course Course
+ * @param object $cm Course-module
+ * @param int $userid User ID
+ * @param bool $type Type of comparison (or/and; can be used as return value if no conditions)
+ * @return bool True if completed, false if not. (If no conditions, then return
+ *   value depends on comparison type)
+ */
+function stickynotes_get_completion_state($course, $cm, $userid, $type) {
+    global $DB;
+
+    $stickynotesid = $cm->instance;
+
+    if (!$stickynotes = $DB->get_record('stickynotes', ['id' => $stickynotesid])) {
+        throw new \moodle_exception('Unable to find stickynotes activity with id ' . $stickynotesid);
+    }
+
+    $params = ['userid' => $userid, 'stickyid' => $stickynotesid];
+    $sql = "SELECT COUNT(*)
+                FROM {stickynotes_note} sn
+                JOIN {stickynotes_column} sc ON sn.stickycolid = sc.id
+                WHERE sn.userid = :userid
+                AND sc.stickyid = :stickyid";
+
+    if ($stickynotes->completionstickynotes) {
+        $stickynotes = $DB->get_field_sql($sql, $params);
+        if ($stickynotes) {
+            return ($stickynotes >= $stickynotes->completionstickynotes) ? COMPLETION_COMPLETE : COMPLETION_INCOMPLETE;
+        } else {
+            return COMPLETION_INCOMPLETE;
+        }
+    }
+    return $type;
+}
+
+/**
+ * Callback which returns human-readable strings describing the active completion custom rules for the stickynotes module instance.
+ *
+ * @param cm_info|stdClass $cm object with fields ->completion and ->customdata['customcompletionrules']
+ * @return array $descriptions the array of descriptions for the custom rules.
+ */
+function mod_stickynotes_get_completion_active_rule_descriptions($cm) {
+    // Values will be present in cm_info, and we assume these are up to date.
+    if (empty($cm->customdata['customcompletionrules'])
+        || $cm->completion != COMPLETION_TRACKING_AUTOMATIC) {
+        return [];
+    }
+
+    $descriptions = [];
+    foreach ($cm->customdata['customcompletionrules'] as $key => $val) {
+        switch ($key) {
+            case 'completionstickynotes':
+                if (!empty($val)) {
+                    $descriptions[] = get_string('completionstickynotesdesc', 'mod_stickynotes', $val);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return $descriptions;
 }
