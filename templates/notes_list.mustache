@@ -10,87 +10,120 @@
             <a href="{{editcolumnurl}}"><i class="fa fa-pencil" title="{{#str}}edit_column_pix, stickynotes{{/str}}"></i></a> <a href="{{deletecolumnurl}}"><i class="fa fa-trash" title="{{#str}}delete_column_pix, stickynotes{{/str}}"></i></a>
         {{/capability_managecolumn}}
         </h4>
-        {{#capabilitycreatenote}}
-        <div class="createnote">
-            {{^maxnotesreached}}
-                <a href="{{createnoteurl}}"><i class="fa fa-plus-square" title="{{#str}}create_note_pix, stickynotes{{/str}}"></i></a>
-            {{/maxnotesreached}}
-            {{#maxnotesreached}}
-                <i class="fa fa-times-circle" title="{{#str}}max_notes_reached_pix, stickynotes{{/str}}"></i></a>
-            {{/maxnotesreached}}
-        </div>
-        {{/capabilitycreatenote}}
+        {{^locknotes}}
+            {{#capabilitycreatenote}}
+                <div class="createnote">
+                    {{^maxnotesreached}}
+                        <a href="{{createnoteurl}}"><i class="fa fa-plus-square" title="{{#str}}create_note_pix, stickynotes{{/str}}"></i></a>
+                    {{/maxnotesreached}}
+                    {{#maxnotesreached}}
+                        <i class="fa fa-times-circle" title="{{#str}}max_notes_reached_pix, stickynotes{{/str}}"></i></a>
+                    {{/maxnotesreached}}
+                </div>
+            {{/capabilitycreatenote}}
+        {{/locknotes}}
+
+        {{#locknotes}}
+            {{#capabilitycreatenote}}
+                <div class="createnote">
+                        <a href="{{createnoteurl}}"><i class="fa fa-plus-square" title="{{#str}}create_note_pix, stickynotes{{/str}}"></i></a>
+                </div>
+            {{/capabilitycreatenote}}
+            {{^capabilitycreatenote}}
+                <div class="createnote">
+                        <i class="fa fa-lock" title="{{#str}}createnotelocked, stickynotes{{/str}}"></i></a>
+                </div>
+            {{/capabilitycreatenote}}
+        {{/locknotes}}
 
     {{#allnotes}}
         {{#capabilitymoveallnotes}}
             <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
         {{/capabilitymoveallnotes}}
         {{^capabilitymoveallnotes}}
-	        {{#capabilityupdatenote}}
-                <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
-            {{/capabilityupdatenote}}
-            {{^capabilityupdatenote}}
+            {{^locknotes}}
+                {{#capabilityupdatenote}}
+                    <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
+                {{/capabilityupdatenote}}
+                {{^capabilityupdatenote}}
+                    <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
+                {{/capabilityupdatenote}}
+            {{/locknotes}}
+            {{#locknotes}}
                 <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
-            {{/capabilityupdatenote}}
+            {{/locknotes}}
         {{/capabilitymoveallnotes}}
                 <div id="{{elementid}}">
                     <div class="headernote">
-                        {{#capabilitymoveallnotes}}
-                           <i class="fa fa-arrows fa-fw" title="{{#str}}move_cross_pix, stickynotes{{/str}}"></i>
-                        {{/capabilitymoveallnotes}}
-                        {{^capabilitymoveallnotes}}
-                            {{#capabilityupdatenote}}
-                                <i class="fa fa-arrows fa-fw" title="{{#str}}move_cross_pix, stickynotes{{/str}}"></i>
-                            {{/capabilityupdatenote}}	
-                            {{^capabilityupdatenote}}
-                                &nbsp;
-                            {{/capabilityupdatenote}}
-                        {{/capabilitymoveallnotes}}
+                        {{^locknotes}}
+                            {{#capabilitymoveallnotes}}
+                            <i class="fa fa-arrows fa-fw" title="{{#str}}move_cross_pix, stickynotes{{/str}}"></i>
+                            {{/capabilitymoveallnotes}}
+                            {{^capabilitymoveallnotes}}
+                                {{#capabilityupdatenote}}
+                                    <i class="fa fa-arrows fa-fw" title="{{#str}}move_cross_pix, stickynotes{{/str}}"></i>
+                                {{/capabilityupdatenote}}	
+                                {{^capabilityupdatenote}}
+                                    &nbsp;
+                                {{/capabilityupdatenote}}
+                            {{/capabilitymoveallnotes}}
+                        {{/locknotes}}
+                        {{#locknotes}}
+                            &nbsp;
+                        {{/locknotes}}
                         {{#capability_viewauthor}}
                                {{fullname}}
                         {{/capability_viewauthor}}
                     </div>
                     <div class="contentnote">
-                    {{message}}
-                       </div>
+                        {{message}}
+                    </div>
                     <div class="footernote">
                         <div class="vote">
                         {{#capabilityvote}}
-                        {{#voteenabled}}
-                            {{#myvote}}
-                                <a href="{{voteurl}}"><i class="fa fa-heart" title="{{#str}}heart_full_pix, stickynotes{{/str}}"></i></a>
-                            {{/myvote}}
-                            {{^myvote}}
-                                {{#limitedvote}}
-                                    <i class="fa fa-heart-o grey" title="{{#str}}heart_limited_pix, stickynotes{{/str}}"></i>
-                                {{/limitedvote}}
-                                {{^limitedvote}}
-                                    <a href="{{voteurl}}"><i class="fa fa-heart-o" title="{{#str}}heart_empty_pix, stickynotes{{/str}}"></i></a>
-                                {{/limitedvote}}
-                            {{/myvote}}
-                        {{totalvotes}}
-                        {{/voteenabled}}
-                        {{^voteenabled}}
-                            {{! No vote enabled : nothing !}}
-                        {{/voteenabled}}
+                            {{#voteenabled}}
+                                {{#myvote}}
+                                    <a href="{{voteurl}}"><i class="fa fa-heart" title="{{#str}}heart_full_pix, stickynotes{{/str}}"></i></a>
+                                {{/myvote}}
+                                {{^myvote}}
+                                    {{#limitedvote}}
+                                        <i class="fa fa-heart-o grey" title="{{#str}}heart_limited_pix, stickynotes{{/str}}"></i>
+                                    {{/limitedvote}}
+                                    {{^limitedvote}}
+                                        <a href="{{voteurl}}"><i class="fa fa-heart-o" title="{{#str}}heart_empty_pix, stickynotes{{/str}}"></i></a>
+                                    {{/limitedvote}}
+                                {{/myvote}}
+                            {{totalvotes}}
+                            {{/voteenabled}}
+                            {{^voteenabled}}
+                                {{! No vote enabled : nothing !}}
+                            {{/voteenabled}}
+                        {{/capabilityvote}}
+                        {{^capabilityvote}}
+                            {{! Vote is locked : nothing !}}
                         {{/capabilityvote}}
                         </div>
                         
                         <div class="editnote">
-                            {{#capabilityupdatenote}}
-                                <a href="{{editnoteurl}}"><i class="fa fa-pencil" title="{{#str}}edit_note_pix, stickynotes{{/str}}"></i></a>
-                            {{/capabilityupdatenote}}
-                            {{#capability_deletenote}}
-                                 <a href="{{deletenoteurl}}"><i class="fa fa-trash" title="{{#str}}delete_note_pix, stickynotes{{/str}}"></i></a>
-                            {{/capability_deletenote}}
-                            
-                            {{! If user cannot edit note, fill with a blank space. If note, the editnote DIV creates an alignment problem }}
-                            {{^capabilityupdatenote}}
+                            {{^locknotes}}
+                                {{#capabilityupdatenote}}
+                                    <a href="{{editnoteurl}}"><i class="fa fa-pencil" title="{{#str}}edit_note_pix, stickynotes{{/str}}"></i></a>
+                                {{/capabilityupdatenote}}
+                                {{#capability_deletenote}}
+                                    <a href="{{deletenoteurl}}"><i class="fa fa-trash" title="{{#str}}delete_note_pix, stickynotes{{/str}}"></i></a>
+                                {{/capability_deletenote}}
+                                
+                                {{! If user cannot edit note, fill with a blank space. If note, the editnote DIV creates an alignment problem }}
+                                {{^capabilityupdatenote}}
+                                    &nbsp;
+                                {{/capabilityupdatenote}}
+                                {{^capability_deletenote}}
+                                    &nbsp;
+                                {{/capability_deletenote}}
+                            {{/locknotes}}
+                            {{#locknotes}}
                                 &nbsp;
-                            {{/capabilityupdatenote}}
-                            {{^capability_deletenote}}
-                                &nbsp;
-                            {{/capability_deletenote}}
+                            {{/locknotes}}
                         </div>
                     </div>
                 </div>  

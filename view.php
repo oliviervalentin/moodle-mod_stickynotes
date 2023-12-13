@@ -36,6 +36,8 @@ $s = optional_param('s', 0, PARAM_INT);
 $vote = optional_param('vote', 0, PARAM_INT);
 $note = optional_param('note', 0, PARAM_INT);
 $action = optional_param('action', 0, PARAM_RAW);
+$lock = optional_param('lock', 0, PARAM_RAW);
+$lockvalue = optional_param('lockvalue', 0, PARAM_RAW);
 
 if ($id) {
     $cm = get_coursemodule_from_id('stickynotes', $id, 0, false, MUST_EXIST);
@@ -79,16 +81,44 @@ $capabilityvote = false;
 $capabilityupdatenote = false;
 $capabilitydeleteanynote = false;
 $capabilitymoveallnotes = false;
-if ((!is_guest($modulecontext, $USER) && isloggedin()) && has_capability('mod/stickynotes:vote', $modulecontext)
-        && has_capability('mod/stickynotes:createnote', $modulecontext)) {
+
+// Check capability for notes creation and votes. Two possibilities.
+// 1) user is admin. He can always create or vote.
+if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
+    && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))) {
     $capabilitycreatenote = true;
     $capabilityvote = true;
+    $is_admin = 1;
+} else if ((!is_guest($modulecontext, $USER) && isloggedin())
+        && has_capability('mod/stickynotes:vote', $modulecontext)
+        && has_capability('mod/stickynotes:createnote', $modulecontext)) {
+    // 2) user is a logged student. Check if note creation and votes are not locked before giving capability.
+    // Check notes lock.
+    if ($moduleinstance->locknotes == 1) {
+        $locknotes = true;
+        $capabilitycreatenote = false;
+    } else  {
+        $locknotes = false;
+        $capabilitycreatenote = true;
+    }
+    // Check votes lock.
+    if ($moduleinstance->lockvotes == 1) {
+        $capabilityvote = false;
+        $lockvotes = true;
+    }  else  {
+        $capabilityvote = true;
+        $lockvotes = false;
+    }     
 }
 
 // If user has just voted, first check capability.
 if ($vote && !$capabilityvote) {
     throw new moodle_exception('cannotvote', 'stickynotes');
 } else if ($vote && $capabilityvote) {
+    // Check if vote is locked.
+    if ($moduleinstance->lockvotes == 1) {
+        throw new moodle_exception('activelockvotes', 'stickynotes');
+    }
     // If vote limitation, first check if user is at max.
     if ($moduleinstance->limitvotes == 1) {
         $check = $DB->count_records('stickynotes_vote', array ('userid' => $USER->id, 'stickyid' => $cm->instance));
@@ -100,6 +130,14 @@ if ($vote && !$capabilityvote) {
     if ($moduleinstance->votes == 1) {
         $dovote = stickynote_do_vote_like($USER->id, $note, $action, $cm->instance);
     }
+    redirect("view.php?id=".$cm->id);
+}
+
+// If admin locks votes or notes, first check capability.
+if ($lock && $is_admin == 0) {
+    throw new moodle_exception('activelock', 'stickynotes');
+} else if ($lock && $is_admin == 1) {
+    $updatelock = update_lock($cm->instance, $lock, $lockvalue);
     redirect("view.php?id=".$cm->id);
 }
 
@@ -137,7 +175,7 @@ foreach ($cols as $col) {
 
     // For each note, retrieve and define all necessary information.
     foreach ($notes as $note) {
-        // Retieve author of the note.
+        // Retrieve author of the note.
         $getname = $DB->get_record('user', array('id' => $note->userid));
         $note->fullname = $getname->lastname." ".$getname->firstname;
         // Count number of votes for this note.
@@ -230,6 +268,8 @@ if (has_capability('mod/stickynotes:managecolumn', $modulecontext)) {
 }
 $all->capabilitycreatenote = $capabilitycreatenote;
 $all->capabilityvote = $capabilityvote;
+$all->locknotes = $locknotes;
+$all->lockvotes = $lockvotes;
 
 // Check capability for view author and if option is enabled.
 if (has_capability('mod/stickynotes:viewauthor', $modulecontext) && $moduleinstance->viewauthor) {
@@ -256,17 +296,38 @@ if ($moduleinstance->limitstickynotes == 1) {
     }
 }
 
-echo "<div id=descandcapt>";
+echo "<div id='descandcapt' style='margin-bottom: 1em'>";
 // If enabled, display button to show activity instructions.
 if ($moduleinstance->displaystickydesc == '1') {
-    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaydesc">
-    '.get_string('buttondisplaystickydesc', 'mod_stickynotes').'</button>';
+    echo '<button class="btn btn-primary" id="buttondesc" data-toggle="collapse" data-target="#displaydesc">
+    '.get_string('buttondisplaystickydesc', 'mod_stickynotes').'</button> &nbsp;';
 }
 
 // If enabled, display button to show legend.
 if ($moduleinstance->displaystickycaption == '1') {
-    echo '<button class="btn" id="buttondesc" data-toggle="collapse" data-target="#displaycapt">
+    echo '<button class="btn btn-primary" id="buttondesc" data-toggle="collapse" data-target="#displaycapt">
     '.get_string('buttondisplaystickycaption', 'mod_stickynotes').'</button>';
+}
+if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
+    && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))){
+    echo "<div style='float: right;'>";
+    if ($moduleinstance->locknotes == 0) {
+        $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=locknotes&lockvalue=1';
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> Verrouiller les notes</button></a>&nbsp;";
+    } else {
+        $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=locknotes&lockvalue=0';
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> Déverrouiller les notes</button>&nbsp;";
+    }
+    if ($moduleinstance->lockvotes == 0) {
+        $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=lockvotes&lockvalue=1';
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> Verrouiller les votes</button></a>";
+    } else {
+        $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=lockvotes&lockvalue=0';
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> Déverrouiller les votes</button></a>";
+    }
+        
+        
+    echo "</div>";
 }
 echo "</div>";
 

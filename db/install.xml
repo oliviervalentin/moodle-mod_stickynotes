@@ -38,7 +38,9 @@
         <FIELD NAME="displaystickycaption" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If enabled, displays colors caption in activity."/>
         <FIELD NAME="moveallnotes" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If enabled, students can move all notes and not only their owns."/>
         <FIELD NAME="seeallnotes" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="If not enabled, student sees only his own notes, independently of other contributions."/>
-        <FIELD NAME="completionstickynotes" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Number of notes student must create to complete activity."/>
+        <FIELD NAME="completionstickynotes" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Number of notes student must create to complete activity."/>
+        <FIELD NAME="locknotes" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If enabled, locks notes creation for students."/>
+        <FIELD NAME="lockvotes" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="If enabled, locks votes for students."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

@@ -138,6 +138,9 @@ $string['lastplace'] = 'At the end of column';
 $string['nomove'] = 'Move this note ?';
 $string['nomove_help'] = 'If checked, enables the selection menus to move note in another rank and/or column.';
 $string['selectorder'] = 'Order';
+$string['activelock'] = 'Notes and/or votes are locked';
+$string['activelocknotes'] = 'Notes creation is locked';
+$string['activelockvotes'] = 'Vote is locked';
 
 // Mustache template strings.
 $string['createnote'] = 'Add new Sticky Note';
@@ -160,6 +163,7 @@ $string['delete_column_pix'] = 'Delete this column';
 $string['edit_note_pix'] = 'Edit this note';
 $string['delete_note_pix'] = 'Delete this note';
 $string['move_cross_pix'] = "Drag and drop this note";
+$string['createnotelocked'] = "Note creation locked";
 
 // Events.
 $string['eventnotecreated'] = 'Sticky note created';

@@ -138,7 +138,10 @@ $string['firstplace'] = 'Au début de la colonne';
 $string['lastplace'] = 'A la fin de la colonne';
 $string['nomove'] = 'Déplacer cette note ?';
 $string['nomove_help'] = 'Si coché, active les menus de sélection permettant de changer la place et l\'ordre de la note.';
-$string['selectorder'] = 'Order';
+$string['selectorder'] = 'Ordre';
+$string['activelock'] = 'Création des notes et/ou vote verrouillés';
+$string['activelocknotes'] = 'La création des notes est verrouillées';
+$string['activelockvotes'] = 'Le vote est verrouillé';
 
 // Mustache template strings.
 $string['createnote'] = 'Ajouter une Sticky Note';
@@ -161,6 +164,7 @@ $string['delete_column_pix'] = 'Supprimer cette colonne';
 $string['edit_note_pix'] = 'Modifier cette note';
 $string['delete_note_pix'] = 'Supprimer cette note';
 $string['move_cross_pix'] = "Glisser-déposer cette note";
+$string['createnotelocked'] = "Création des notes verrouillée";
 
 // Events.
 $string['eventnotecreated'] = 'Sticky note créée';

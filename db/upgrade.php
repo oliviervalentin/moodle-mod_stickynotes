@@ -116,5 +116,20 @@ function xmldb_stickynotes_upgrade($oldversion) {
         // Sticky notes savepoint reached.
         upgrade_mod_savepoint(true, 2023112312, 'stickynotes');
     }
+    // Add locks functions for notes creation and votes.
+    if ($oldversion < 2023121301) {
+        $table = new xmldb_table('stickynotes');
+        $field1 = $table->add_field('locknotes', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $field2 = $table->add_field('lockvotes', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+
+        if (!$dbman->field_exists($table, $field1)) {
+            $dbman->add_field($table, $field1);
+        }
+        if (!$dbman->field_exists($table, $field2)) {
+            $dbman->add_field($table, $field2);
+        }
+        // Sticky notes savepoint reached.
+        upgrade_mod_savepoint(true, 2023121301, 'stickynotes');
+    }
     return true;
 }

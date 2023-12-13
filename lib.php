@@ -687,7 +687,7 @@ function stickynote_do_vote_like($userid, $note, $action, $instance) {
         $data->vote = 1;
         $data->stickynoteid = $note;
         $data->stickyid = $instance;
-         $data->timecreated = time();
+        $data->timecreated = time();
 
         if (!$DB->insert_record('stickynotes_vote', $data)) {
             $result = false;
@@ -888,4 +888,20 @@ function mod_stickynotes_get_completion_active_rule_descriptions($cm) {
         }
     }
     return $descriptions;
+}
+
+ /**
+  * Updates locks parameters.
+  * @param object $data  Datas from the form
+  * @return post The id of the activity.
+  */
+  function update_lock($instance, $lock, $lockvalue) {
+    global $DB;
+    $data = (object)$data;
+    $data->id = $instance;
+    $data->$lock = $lockvalue;
+
+    $res = $DB->update_record('stickynotes', $data);
+
+    return true;
 }

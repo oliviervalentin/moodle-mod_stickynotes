@@ -75,6 +75,11 @@ if (!empty($create)) {
         throw new moodle_exception('invalidcourseid');
     }
 
+    // Check if notes creation is locked.
+    if ($moduleinstance->locknotes == 1) {
+        throw new moodle_exception('activelocknotes', 'stickynotes');
+    }
+
     // Require a login and retrieve the modulecontext.
     require_login($course, false, $cm);
     $modulecontext = context_module::instance($cm->id);
@@ -105,6 +110,11 @@ if (!empty($create)) {
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
         throw new moodle_exception('invalidcourseid');
+    }
+
+    // Check if notes creation is locked.
+    if ($moduleinstance->locknotes == 1) {
+        throw new moodle_exception('activelocknotes', 'stickynotes');
     }
 
     // Check if note exists.
@@ -145,6 +155,11 @@ if (!empty($create)) {
     // Check if the instance is part of a course.
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
         throw new moodle_exception('invalidcourseid');
+    }
+
+    // Check if notes creation is locked.
+    if ($moduleinstance->locknotes == 1) {
+        throw new moodle_exception('activelocknotes', 'stickynotes');
     }
 
     // Check if note exists.
