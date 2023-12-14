@@ -150,6 +150,10 @@ $string['titledisplaystickydesc'] = 'INSTRUCTIONS';
 $string['titledisplaystickycaption'] = 'CAPTION';
 $string['buttondisplaystickydesc'] = 'Display instructions';
 $string['buttondisplaystickycaption'] = 'Display color caption';
+$string['buttonlocknotes'] = 'Lock notes';
+$string['buttonlockvotes'] = 'Lock votes';
+$string['buttonunlocknotes'] = 'Unlock notes';
+$string['buttonunlockvotes'] = 'Unlock votes';
 
 // Pix in mustache template.
 $string['heart_empty_pix'] = 'Add a Like';

@@ -151,6 +151,10 @@ $string['titledisplaystickydesc'] = 'CONSIGNES';
 $string['titledisplaystickycaption'] = 'LÉGENDE';
 $string['buttondisplaystickydesc'] = 'Afficher les consignes';
 $string['buttondisplaystickycaption'] = 'Afficher la légende des couleurs';
+$string['buttonlocknotes'] = 'Verrouiller les notes';
+$string['buttonlockvotes'] = 'Verrouiller les votes';
+$string['buttonunlocknotes'] = 'Déverrouiller les notes';
+$string['buttonunlockvotes'] = 'Déverrouiller les votes';
 
 // Pix in mustache template.
 $string['heart_empty_pix'] = 'Ajouter un J\'aime';

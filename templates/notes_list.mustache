@@ -1,5 +1,5 @@
-<div id="activite">                                                                                                                                                                                                                           
-    <div id="columns" style="display:flex;" >
+<div id="activite">
+    <div id="columns">
     <div id="contents" style="display:flex; width: 98%;" >
     {{#allcols}}
         <div id="column{{columnid}}" class="columnnote" style="width: 100%;">
@@ -131,7 +131,7 @@
     {{/allnotes}}
         </div>
     {{/allcols}}
-    </div>
+    
     <div id="addcolumn">
     {{#capability_managecolumn}}
         <a href="{{createcolumnurl}}">
@@ -139,7 +139,6 @@
         </a>
     {{/capability_managecolumn}}
     </div>
-    
     </div>
-    
+    </div>
 </div>

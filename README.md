@@ -29,12 +29,18 @@ When creating an activity, teacher can define several features or limitation :
 - limit the number of votes a user can do
 - decide either students see all notes or only their own
 - decide either students can move all notes or only their own
-- enable the rotate effect.
+- enable the rotate effect
+- lock notes creation and/or votes when needed.
 
 This activity is anonymous for student : no names appears. But teachers can choose to view creator names
 for their own use.
 
 ## Updates ##
+14-12-2023 :
+    - add activity completion based on notes creation.
+    - add functions for teachers to lock notes and/or votes.
+    - debug template.
+
 17-10-2023 :
     - add data privacy provider.
 

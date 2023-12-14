@@ -310,7 +310,7 @@ if ($moduleinstance->displaystickycaption == '1') {
 }
 if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
     && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))){
-    echo "<div style='float: right;'>";
+    echo "<div style='float: right; margin-bottom: 1em'>";
     if ($moduleinstance->locknotes == 0) {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=locknotes&lockvalue=1';
         echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> Verrouiller les notes</button></a>&nbsp;";
@@ -325,8 +325,7 @@ if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=lockvotes&lockvalue=0';
         echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> Déverrouiller les votes</button></a>";
     }
-        
-        
+
     echo "</div>";
 }
 echo "</div>";
