@@ -38,7 +38,12 @@
 
     {{#allnotes}}
         {{#capabilitymoveallnotes}}
-            <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
+            {{^locknotes}}
+				<div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
+			{{/locknotes}}
+			{{#locknotes}}
+				<div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
+			{{/locknotes}}
         {{/capabilitymoveallnotes}}
         {{^capabilitymoveallnotes}}
             {{^locknotes}}
