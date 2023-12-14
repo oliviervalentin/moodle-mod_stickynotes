@@ -169,6 +169,7 @@ $string['edit_note_pix'] = 'Modifier cette note';
 $string['delete_note_pix'] = 'Supprimer cette note';
 $string['move_cross_pix'] = "Glisser-déposer cette note";
 $string['createnotelocked'] = "Création des notes verrouillée";
+$string['votelockedpix'] = 'Vote verrouillé';
 
 // Events.
 $string['eventnotecreated'] = 'Sticky note créée';

@@ -105,7 +105,8 @@
                             {{/voteenabled}}
                         {{/capabilityvote}}
                         {{^capabilityvote}}
-                            {{! Vote is locked : nothing !}}
+                            <i class="fa fa-heart-o grey" title="{{#str}}votelockedpix, stickynotes{{/str}}"></i>
+							{{totalvotes}}
                         {{/capabilityvote}}
                         </div>
                         

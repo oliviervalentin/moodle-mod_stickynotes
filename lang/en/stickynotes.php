@@ -168,6 +168,7 @@ $string['edit_note_pix'] = 'Edit this note';
 $string['delete_note_pix'] = 'Delete this note';
 $string['move_cross_pix'] = "Drag and drop this note";
 $string['createnotelocked'] = "Note creation locked";
+$string['votelockedpix'] = 'Vote locked';
 
 // Events.
 $string['eventnotecreated'] = 'Sticky note created';
