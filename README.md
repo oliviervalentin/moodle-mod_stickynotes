@@ -39,6 +39,7 @@ for their own use.
 14-12-2023 :
     - add activity completion based on notes creation.
     - add functions for teachers to lock notes and/or votes.
+    - add icon for Moodle 4.
     - debug template.
 
 17-10-2023 :
