@@ -81,6 +81,8 @@ $capabilityvote = false;
 $capabilityupdatenote = false;
 $capabilitydeleteanynote = false;
 $capabilitymoveallnotes = false;
+$locknotes = false;
+$lockvotes = false;
 
 // Check capability for notes creation and votes. Two possibilities.
 // 1) user is admin. He can always create or vote.

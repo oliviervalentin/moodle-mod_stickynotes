@@ -181,7 +181,7 @@ if (!empty($create)) {
 
     // User has confirmed deletion : note is deleted.
     if (!empty($confirm) AND confirm_sesskey()) {
-        delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm);
+        delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm, $post->userid);
 
         // Trigger note deleted event.
         $params = array(

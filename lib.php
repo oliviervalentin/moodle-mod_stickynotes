@@ -568,7 +568,7 @@ function delete_column($col, $modulecontext) {
   * @param int $modulecontext  Activity id
   * @return bool True if successful, false otherwise.
   */
-function delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm) {
+function delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm,$user) {
     global $DB;
     if (!$DB->delete_records('stickynotes_note', array('id' => $note))) {
         $result = false;
@@ -576,8 +576,8 @@ function delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm)
 
     // Activates completion checking.
     $completion = new \completion_info($course);
-    if ($completion->is_enabled($cm) && $moduleinstance->completionstickynotes) {
-        $completion->update_state($cm);
+    if ($completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC && $moduleinstance->completionstickynotes) {
+        $completion->update_state($cm, COMPLETION_INCOMPLETE, $user);
     }
 }
  /**

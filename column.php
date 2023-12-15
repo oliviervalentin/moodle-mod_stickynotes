@@ -155,10 +155,11 @@ if (!empty($create)) {
 
         // Then, every note in selected column is deleted.
         foreach ($notestodelete as $notetodelete) {
-            $deletenote = delete_stickynote($notetodelete->id, $modulecontext);
+            $deletenote = delete_stickynote($notetodelete->id, $modulecontext, $moduleinstance, $course, $cm, $notetodelete->userid);
         }
-        // Finally, delete column..
+        // Finally, delete column.
         $deletecolumn = delete_column($col, $modulecontext);
+
         $returnurl = "view.php?id=".$cm->id;
         redirect($returnurl);
     } else {
