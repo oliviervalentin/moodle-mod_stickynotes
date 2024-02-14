@@ -315,17 +315,17 @@ if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
     echo "<div style='float: right; margin-bottom: 1em'>";
     if ($moduleinstance->locknotes == 0) {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=locknotes&lockvalue=1';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> Verrouiller les notes</button></a>&nbsp;";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> ".get_string('buttonlocknotes', 'mod_stickynotes')."</button></a>&nbsp;";
     } else {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=locknotes&lockvalue=0';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> Déverrouiller les notes</button>&nbsp;";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> ".get_string('buttonunlocknotes', 'mod_stickynotes')."</button>&nbsp;";
     }
     if ($moduleinstance->lockvotes == 0) {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=lockvotes&lockvalue=1';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> Verrouiller les votes</button></a>";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> ".get_string('buttonlockvotes', 'mod_stickynotes')."</button></a>";
     } else {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=lockvotes&lockvalue=0';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> Déverrouiller les votes</button></a>";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> ".get_string('buttonunlockvotes', 'mod_stickynotes')."</button></a>";
     }
 
     echo "</div>";
