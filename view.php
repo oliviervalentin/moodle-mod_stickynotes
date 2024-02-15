@@ -298,11 +298,6 @@ if ($moduleinstance->limitstickynotes == 1) {
 }
 
 echo "<div id='descandcapt' style='margin-bottom: 1em'>";
-// If enabled, display button to show activity instructions.
-if ($moduleinstance->displaystickydesc == '1') {
-    echo '<button class="btn btn-primary" id="buttondesc" data-toggle="collapse" data-target="#displaydesc">
-    '.get_string('buttondisplaystickydesc', 'mod_stickynotes').'</button> &nbsp;';
-}
 
 // If enabled, display button to show legend.
 if ($moduleinstance->displaystickycaption == '1') {
@@ -333,14 +328,6 @@ echo "</div>";
 
 // This next div is for displaying isntructions and caption if necessary.
 echo '<div style="margin-bottom: 3em;">';
-// If enabled, display activity instructions, i.e. description field.
-if ($moduleinstance->displaystickydesc == '1') {
-    $content = format_text($moduleinstance->intro);
-    echo '<div id="displaydesc" class="collapse">';
-    echo '<h3>'.get_string('titledisplaystickydesc', 'mod_stickynotes').'</h3>';
-    echo $content;
-    echo '</div>';
-}
 
 // If enabled, display button to show legend.
 if ($moduleinstance->displaystickycaption == '1') {

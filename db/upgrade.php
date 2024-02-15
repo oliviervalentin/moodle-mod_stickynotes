@@ -131,5 +131,15 @@ function xmldb_stickynotes_upgrade($oldversion) {
         // Sticky notes savepoint reached.
         upgrade_mod_savepoint(true, 2023121301, 'stickynotes');
     }
+    // Upgrade version - Text color and strings bug.
+    // Delete field to display description - function deleted in settings.
+    if ($oldversion < 2024021501) {
+        $table = new xmldb_table('stickynotes');
+        $field = new xmldb_field('displaystickydesc');
+        // Launch displaystickydesc field.
+        $dbman->drop_field($table, $field);
+        // Sticky notes savepoint reached.
+        upgrade_mod_savepoint(true, 2024021501, 'stickynotes');
+    }
     return true;
 }

@@ -72,7 +72,6 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
                                                     'color6_meaning',
                                                     'timecreated',
                                                     'timemodified',
-                                                    'displaystickydesc',
                                                     'displaystickycaption',
                                                     'moveallnotes',
                                                     'seeallnotes',
