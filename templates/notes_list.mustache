@@ -39,23 +39,23 @@
     {{#allnotes}}
         {{#capabilitymoveallnotes}}
             {{^locknotes}}
-				<div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
+				<div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
 			{{/locknotes}}
 			{{#locknotes}}
-				<div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
+				<div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
 			{{/locknotes}}
         {{/capabilitymoveallnotes}}
         {{^capabilitymoveallnotes}}
             {{^locknotes}}
                 {{#capabilityupdatenote}}
-                    <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}};">
+                    <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
                 {{/capabilityupdatenote}}
                 {{^capabilityupdatenote}}
-                    <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
+                    <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
                 {{/capabilityupdatenote}}
             {{/locknotes}}
             {{#locknotes}}
-                <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}};">
+                <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
             {{/locknotes}}
         {{/capabilitymoveallnotes}}
                 <div id="{{elementid}}">
@@ -88,14 +88,14 @@
                         {{#capabilityvote}}
                             {{#voteenabled}}
                                 {{#myvote}}
-                                    <a href="{{voteurl}}"><i class="fa fa-heart" title="{{#str}}heart_full_pix, stickynotes{{/str}}"></i></a>
+                                    <a href="{{voteurl}}"><i class="fa fa-heart" style="color:{{textcolor}};" title="{{#str}}heart_full_pix, stickynotes{{/str}}"></i></a>
                                 {{/myvote}}
                                 {{^myvote}}
                                     {{#limitedvote}}
-                                        <i class="fa fa-heart-o grey" title="{{#str}}heart_limited_pix, stickynotes{{/str}}"></i>
+                                        <i class="fa fa-heart-o grey" style="color:{{textcolor}};" title="{{#str}}heart_limited_pix, stickynotes{{/str}}"></i>
                                     {{/limitedvote}}
                                     {{^limitedvote}}
-                                        <a href="{{voteurl}}"><i class="fa fa-heart-o" title="{{#str}}heart_empty_pix, stickynotes{{/str}}"></i></a>
+                                        <a href="{{voteurl}}"><i class="fa fa-heart-o" style="color:{{textcolor}};" title="{{#str}}heart_empty_pix, stickynotes{{/str}}"></i></a>
                                     {{/limitedvote}}
                                 {{/myvote}}
                             {{totalvotes}}
@@ -105,7 +105,7 @@
                             {{/voteenabled}}
                         {{/capabilityvote}}
                         {{^capabilityvote}}
-                            <i class="fa fa-heart-o grey" title="{{#str}}votelockedpix, stickynotes{{/str}}"></i>
+                            <i class="fa fa-heart-o grey" style="color:{{textcolor}};" title="{{#str}}votelockedpix, stickynotes{{/str}}"></i>
 							{{totalvotes}}
                         {{/capabilityvote}}
                         </div>
@@ -113,10 +113,10 @@
                         <div class="editnote">
                             {{^locknotes}}
                                 {{#capabilityupdatenote}}
-                                    <a href="{{editnoteurl}}"><i class="fa fa-pencil" title="{{#str}}edit_note_pix, stickynotes{{/str}}"></i></a>
+                                    <a href="{{editnoteurl}}" style="color:{{textcolor}};"><i class="fa fa-pencil" title="{{#str}}edit_note_pix, stickynotes{{/str}}"></i></a>
                                 {{/capabilityupdatenote}}
                                 {{#capability_deletenote}}
-                                    <a href="{{deletenoteurl}}"><i class="fa fa-trash" title="{{#str}}delete_note_pix, stickynotes{{/str}}"></i></a>
+                                    <a href="{{deletenoteurl}}" style="color:{{textcolor}};"><i class="fa fa-trash" title="{{#str}}delete_note_pix, stickynotes{{/str}}"></i></a>
                                 {{/capability_deletenote}}
                                 
                                 {{! If user cannot edit note, fill with a blank space. If note, the editnote DIV creates an alignment problem }}

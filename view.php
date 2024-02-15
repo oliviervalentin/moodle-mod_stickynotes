@@ -209,6 +209,7 @@ foreach ($cols as $col) {
         // Get background color from plugin settings.
         $getcolor = get_config('mod_stickynotes', $note->color);
         $note->backgroundcolor = $getcolor;
+        $note->textcolor = getcontrastcolor($getcolor);
 
         // Define capabilities for edit and delete note.
         // If user can't update and delete everything, it's not an admin. Must check capacities for each note.
