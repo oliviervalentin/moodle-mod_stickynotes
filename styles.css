@@ -67,16 +67,16 @@ div[id*="2stickycontent"], div[id*="9stickycontent"] {
     border: 2px solid #FFF;
 }
 .headernote {
-    font-size: 10px;
+    font-size: 0.8em;
     text-align: right;
-    color: #FFF;
+    /* color: #FFF;*/
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .headernote i {
 	float: inline-start;
-	color: #000;
+	/* color: #000; */
 }
 .contentnote {
     font-size: 1.1em;
