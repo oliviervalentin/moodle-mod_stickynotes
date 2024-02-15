@@ -67,7 +67,7 @@ div[id*="2stickycontent"], div[id*="9stickycontent"] {
     border: 2px solid #FFF;
 }
 .headernote {
-    font-size: 0.8em;
+    font-size: 1em;
     text-align: right;
     /* color: #FFF;*/
     white-space: nowrap;
@@ -79,13 +79,16 @@ div[id*="2stickycontent"], div[id*="9stickycontent"] {
 	/* color: #000; */
 }
 .contentnote {
-    font-size: 1.1em;
+    font-size: 1.2em;
     font-weight: bold;
     font-family: inherit;
     text-align: center;
-    min-height: 83px;
+    height: 83px;
     padding-top: 5px;
-	overflow-wrap: break-word;
+	overflow-x: auto;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: black transparent;
 }
 .footernote a, .footernote a:visited {
     color: #000;
