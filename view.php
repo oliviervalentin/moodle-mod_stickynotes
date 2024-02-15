@@ -148,8 +148,6 @@ $completion->set_module_viewed($cm);
 
 echo $OUTPUT->header();
 
-echo $OUTPUT->heading($moduleinstance->name);
-
 // Start to retrieve all columns for this instance.
 $cols = $DB->get_records('stickynotes_column', array('stickyid' => $moduleinstance->id), '', '*');
 $allcols = array();
