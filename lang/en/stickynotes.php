@@ -82,6 +82,7 @@ $string['displaystickycaption_help'] = 'If enabled, adds a caption with colors a
 $string['moveallnotes'] = 'Students can move any notes';
 $string['moveallnotes_help'] = 'If enabled, students will be able to move all notes, and not only their owns. Though, students won\'t be able to modify content, color, delete note...';
 $string['seeallnotes'] = 'Students see all notes allover activity.';
+$string['seeallnotes_help'] = 'If enabled, students will see all notes in activity. Let it enabled for a cooperative work. Note that teacher always sees all notes.';
 $string['completionstickynotesenabled'] = 'Students must create this number of sticky notes to complete the activity.';
 $string['completionstickynotesgroup'] = 'Require notes';
 $string['completionstickynotesdetail:notes'] = 'Add sticky notes: {$a}';
