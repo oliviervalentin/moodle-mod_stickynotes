@@ -899,7 +899,7 @@ function mod_stickynotes_get_completion_active_rule_descriptions($cm) {
   */
   function update_lock($instance, $lock, $lockvalue) {
     global $DB;
-    $data = (object)$data;
+    $data = new stdClass;
     $data->id = $instance;
     $data->$lock = $lockvalue;
 

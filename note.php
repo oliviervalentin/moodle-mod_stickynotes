@@ -97,8 +97,10 @@ if (!empty($create)) {
     $post->stickycolid = $col;
 
     // Define the page title for creating form.
-    $settitle = get_column_title($col);
-    $pagetitle = (get_string('createnote_title', 'stickynotes')).'"'.$settitle['title'].'"';
+    if (!empty($col)) {
+        $settitle = get_column_title($col);
+        $pagetitle = (get_string('createnote_title', 'stickynotes')).'"'.$settitle['title'].'"';
+    }
 
 } else if ($edit) {
     // Case 2 : user edits a note
