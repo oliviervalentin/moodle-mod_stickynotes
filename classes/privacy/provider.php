@@ -148,7 +148,7 @@ class provider implements
 
         $params = [
             'instanceid'    => $context->instanceid,
-            'modulename'    => 'stickynotes',
+            'modname'    => 'stickynotes',
         ];
 
         // Notes authors.
