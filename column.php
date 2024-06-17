@@ -36,7 +36,7 @@ $col = optional_param('col', 0, PARAM_INT);
 $confirm = optional_param('confirm', 0, PARAM_INT);
 
 // These params will be passed as hidden variables later in the form.
-$pageparams = array('edit' => $edit, 'create' => $create);
+$pageparams = ['edit' => $edit, 'create' => $create];
 
 // Course module id.
 $id = optional_param('id', 0, PARAM_INT);
@@ -49,14 +49,14 @@ $systemcontext = context_system::instance();
 
 if ($id) {
     $cm = get_coursemodule_from_id('stickynotes', $id, 0, false, MUST_EXIST);
-    $moduleinstance = $DB->get_record('stickynotes', array('id' => $cm->instance), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('stickynotes', ['id' => $cm->instance], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 }
 
-$PAGE->set_url('/mod/stickynnotes/column.php', array(
+$PAGE->set_url('/mod/stickynnotes/column.php', [
     'edit'           => $edit,
     'create'         => $create,
-));
+]);
 
 require_login(0, false);
 
@@ -67,7 +67,7 @@ if (!empty($create)) {
         throw new moodle_exception('invalidcoursemodule');
     }
     // Check if the instance is part of a course.
-    if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    if (!$course = $DB->get_record('course', ['id' => $cm->course])) {
         throw new moodle_exception('invalidcourseid');
     }
 
@@ -82,11 +82,11 @@ if (!empty($create)) {
     }
 
     // Check if the instance is part of a course.
-    if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    if (!$course = $DB->get_record('course', ['id' => $cm->course])) {
         throw new moodle_exception('invalidcourseid');
     }
 
-    if (!$post = $DB->get_record('stickynotes_column', array('id' => $col))) {
+    if (!$post = $DB->get_record('stickynotes_column', ['id' => $col])) {
         throw new moodle_exception('cannotgetcolumn', 'stickynotes');
     }
 
@@ -112,12 +112,12 @@ if (!empty($create)) {
     }
 
     // Check if the instance is part of a course.
-    if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    if (!$course = $DB->get_record('course', ['id' => $cm->course])) {
         throw new moodle_exception('invalidcourseid');
     }
 
     // Check if column exists.
-    if (!$post = $DB->get_record('stickynotes_column', array('id' => $col))) {
+    if (!$post = $DB->get_record('stickynotes_column', ['id' => $col])) {
         throw new moodle_exception('cannotgetcolumn', 'stickynotes');
     }
     // Require a login and retrieve the modulecontext.
@@ -130,19 +130,20 @@ if (!empty($create)) {
     }
 
     // User has confirmed deletion : column is deleted.
-    if (!empty($confirm) AND confirm_sesskey()) {
+    if (!empty($confirm) && confirm_sesskey()) {
         // First, retrieve all notes in selected column.
-        $notestodelete = $DB->get_records('stickynotes_note', array('stickyid' => $cm->instance, 'stickycolid' => $col), '', '*');
+        $notestodelete = $DB->get_records('stickynotes_note', ['stickyid' => $cm->instance, 'stickycolid' => $col], '', '*');
 
         // Then, get infos about column to be deleted.
-        $coltodelete = $DB->get_record('stickynotes_column', array('id' => $col));
+        $coltodelete = $DB->get_record('stickynotes_column', ['id' => $col]);
 
         // Third, retrieve all columns for which order rank is superior at selected column.
         $sql = "SELECT *
                 FROM {stickynotes_column} snc
                 WHERE stickyid = :instanceid AND column_order > :delcolorder";
-        $params          = array('instanceid' => $cm->instance,
-                                 'delcolorder' => $coltodelete->column_order);
+        $params          = ['instanceid' => $cm->instance,
+                            'delcolorder' => $coltodelete->column_order,
+                        ];
         $colstochange = $DB->get_records_sql($sql, $params);
 
         // Update all superior columns : decrease rank of each superior columns by 1.
@@ -155,7 +156,8 @@ if (!empty($create)) {
 
         // Then, every note in selected column is deleted.
         foreach ($notestodelete as $notetodelete) {
-            $deletenote = delete_stickynote($notetodelete->id, $modulecontext, $moduleinstance, $course, $cm, $notetodelete->userid);
+            $deletenote = delete_stickynote($notetodelete->id, $modulecontext, $moduleinstance,
+            $course, $cm, $notetodelete->userid);
         }
         // Finally, delete column.
         $deletecolumn = delete_column($col, $modulecontext);
@@ -192,7 +194,7 @@ $coursecontext = context_course::instance($course->id);
 $postcol = empty($post->col) ? null : $post->col;
 $posttitle = empty($post->title) ? null : $post->title;
 
-$formarray = array(
+$formarray = [
     'id'             => $cm->id,
     'course'         => $course,
     'cm'             => $cm,
@@ -202,15 +204,15 @@ $formarray = array(
     'title'          => $posttitle,
     'col'            => $postcol,
     'stickyid'       => $cm->instance,
-);
+];
 
 $mformcol = new form_column('column.php', $formarray, 'post');
 
-$mformcol->set_data(array(
+$mformcol->set_data([
         'stickycolid' => $postcol,
         'id' => $id,
         'col' => $postcol,
-    ) + $pageparams + $formarray);
+    ] + $pageparams + $formarray);
 
 // Is it canceled?
 if ($mformcol->is_cancelled()) {

@@ -24,25 +24,25 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$functions = array(
+$functions = [
 
-        'mod_stickynotes_changing_note_position' => array(
+        'mod_stickynotes_changing_note_position' => [
                 'classname'     => 'mod_stickynotes_external',
                 'methodname'    => 'changing_note_position',
                 'classpath'     => 'mod/stickynotes/externallib.php',
                 'description'   => 'Changing note position via ajax',
                 'type'          => 'write',
                 'ajax'          => true,
-                'capabilities'  => 'mod/stickynotes:updateownnote'
-        ),
+                'capabilities'  => 'mod/stickynotes:updateownnote',
+        ],
 
-         'mod_stickynotes_get_notes_column_select' => array(
+         'mod_stickynotes_get_notes_column_select' => [
                 'classname'   => 'mod_stickynotes_external',
                 'methodname'  => 'get_notes_column_select',
                 'classpath'   => 'mod/stickynotes/externallib.php',
                 'description' => 'Return notes un a column for select menu',
                 'type'        => 'read',
                 'ajax' => true,
-                'loginrequired' => true
-          )
-);
+                'loginrequired' => true,
+         ],
+];

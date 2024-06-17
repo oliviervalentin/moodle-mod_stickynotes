@@ -22,8 +22,6 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Execute mod_stickynotes upgrade from the given old version.
  *
@@ -45,9 +43,9 @@ function xmldb_stickynotes_upgrade($oldversion) {
         $ids = $DB->get_fieldset_sql('SELECT sn.id FROM {stickynotes} sn WHERE sn.id > 0');
         if (!empty($ids)) {
             foreach ($ids as $id) {
-                $cols = $DB->get_records('stickynotes_column', array('stickyid' => $id), '', '*');
+                $cols = $DB->get_records('stickynotes_column', ['stickyid' => $id], '', '*');
                 foreach ($cols as $col) {
-                    $notes = $DB->get_records('stickynotes_note', array('stickycolid' => $col->id), '', '*');
+                    $notes = $DB->get_records('stickynotes_note', ['stickycolid' => $col->id], '', '*');
                     $i = 0;
                     foreach ($notes as $note) {
                         $obj = new stdClass();
@@ -59,7 +57,7 @@ function xmldb_stickynotes_upgrade($oldversion) {
                 }
             }
         }
-        
+
         // Sticky notes savepoint reached.
         upgrade_mod_savepoint(true, 2021051002, 'stickynotes');
     }
@@ -74,17 +72,17 @@ function xmldb_stickynotes_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field2)) {
             $dbman->add_field($table, $field2);
         }
-        
+
         // Sticky notes savepoint reached.
         upgrade_mod_savepoint(true, 2021110403, 'stickynotes');
     }
     if ($oldversion < 2021110404) {
-    // Upgrade code.
-    upgrade_mod_savepoint(true, 2021110404, 'stickynotes');
+        // Upgrade code.
+        upgrade_mod_savepoint(true, 2021110404, 'stickynotes');
     }
     if ($oldversion < 2022071804) {
-    // Upgrade code.
-    upgrade_mod_savepoint(true, 2022071804, 'stickynotes');
+        // Upgrade code.
+        upgrade_mod_savepoint(true, 2022071804, 'stickynotes');
     }
     // Add feature to move all notes or not for students.
     if ($oldversion < 2023101706) {
@@ -104,7 +102,7 @@ function xmldb_stickynotes_upgrade($oldversion) {
     if ($oldversion < 2023101707) {
         // Upgrade code.
         upgrade_mod_savepoint(true, 2023112307, 'stickynotes');
-        }
+    }
     // Add completion on notes creation.
     if ($oldversion < 2023112312) {
         $table = new xmldb_table('stickynotes');

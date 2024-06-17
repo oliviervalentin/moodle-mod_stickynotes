@@ -32,8 +32,8 @@ $id = optional_param('id', 0, PARAM_INT);
 // Retrieve all informations.
 if ($id) {
     $cm = get_coursemodule_from_id('stickynotes', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('stickynotes', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('stickynotes', ['id' => $cm->instance], '*', MUST_EXIST);
 } else {
     throw new moodle_exception(get_string('missingidandcmid', 'mod_stickynotes'));
 }
@@ -43,25 +43,23 @@ $modulecontext = context_module::instance($cm->id);
 
 require_capability('mod/stickynotes:export', $modulecontext);
 
-
-
 // Start to retrieve all columns for this instance.
-$cols = $DB->get_records('stickynotes_column', array('stickyid' => $moduleinstance->id), '', '*');
-$allcols = array();
+$cols = $DB->get_records('stickynotes_column', ['stickyid' => $moduleinstance->id], '', '*');
+$allcols = [];
 
 // For each columns, retrieve all notes.
 foreach ($cols as $col) {
-    $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id),
+    $notes = $DB->get_records('stickynotes_note', ['stickyid' => $moduleinstance->id, 'stickycolid' => $col->id],
     'ordernote', '*');
 
     $allnotes = new StdClass;
-    $allnotes = array();
+    $allnotes = [];
     // For each note, retrieve and define all necessary information.
     foreach ($notes as $note) {
         // Count votes for note.
-        $votes = $DB->count_records('stickynotes_vote', array('stickyid' => $moduleinstance->id, 'stickynoteid' => $note->id),'*');
+        $votes = $DB->count_records('stickynotes_vote', ['stickyid' => $moduleinstance->id, 'stickynoteid' => $note->id], '*');
         // Retrieve author.
-        $getname = $DB->get_record('user', array('id' => $note->userid));
+        $getname = $DB->get_record('user', ['id' => $note->userid]);
         $author = $getname->lastname." ".$getname->firstname;
         // Contact message, author and votes.
         $note->final = $note->message.' ('.$author.' - '.$votes.' votes)';

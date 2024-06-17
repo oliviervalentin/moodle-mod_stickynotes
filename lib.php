@@ -110,15 +110,15 @@ function stickynotes_update_instance($moduleinstance, $mform = null) {
 function stickynotes_delete_instance($id) {
     global $DB;
 
-    $exists = $DB->get_record('stickynotes', array('id' => $id));
+    $exists = $DB->get_record('stickynotes', ['id' => $id]);
     if (!$exists) {
         return false;
     }
 
-    $DB->delete_records('stickynotes', array('id' => $id));
-    $DB->delete_records('stickynotes_column', array('stickyid' => $id));
-    $DB->delete_records('stickynotes_note', array('stickyid' => $id));
-    $DB->delete_records('stickynotes_vote', array('stickyid' => $id));
+    $DB->delete_records('stickynotes', ['id' => $id]);
+    $DB->delete_records('stickynotes_column', ['stickyid' => $id]);
+    $DB->delete_records('stickynotes_note', ['stickyid' => $id]);
+    $DB->delete_records('stickynotes_vote', ['stickyid' => $id]);
 
     return true;
 }
@@ -138,7 +138,7 @@ function stickynotes_delete_instance($id) {
  * @return string[].
  */
 function stickynotes_get_file_areas($course, $cm, $context) {
-    return array();
+    return [];
 }
 
 /**
@@ -176,7 +176,7 @@ function stickynotes_get_file_info($browser, $areas, $course, $cm, $context, $fi
  * @param bool $forcedownload Whether or not force download.
  * @param array $options Additional options affecting the file serving.
  */
-function stickynotes_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, $options = array()) {
+function stickynotes_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, $options = []) {
     global $DB, $CFG;
 
     if ($context->contextlevel != CONTEXT_MODULE) {
@@ -210,7 +210,7 @@ function stickynotes_extend_settings_navigation($settings, $stickynotesnode) {
 
     if (has_capability('mod/stickynotes:export', $PAGE->cm->context)) {
         $node = navigation_node::create(get_string('export', 'stickynotes'),
-                new moodle_url('/mod/stickynotes/export_csv.php', array('id' => $PAGE->cm->id)),
+                new moodle_url('/mod/stickynotes/export_csv.php', ['id' => $PAGE->cm->id]),
                 navigation_node::TYPE_SETTING,
                 new pix_icon('i/export', ''));
         $stickynotesnode->add_node($node);
@@ -244,31 +244,31 @@ class form_note extends moodleform {
         if ($stickyid->choose_color == 1) {
 
             // First, array the 6 colors defined for this activity.
-            $configcolor = array (
+            $configcolor = [
                 'color1',
                 'color2',
                 'color3',
                 'color4',
                 'color5',
-                'color6'
-            );
+                'color6',
+            ];
             // Second, retrieve colors settings for this instance.
-            $retrievecolors = $DB->get_record('stickynotes', array('id' => $stickyid->stickyid), '*', MUST_EXIST);
+            $retrievecolors = $DB->get_record('stickynotes', ['id' => $stickyid->stickyid], '*', MUST_EXIST);
 
-            $colorarray = array();
+            $colorarray = [];
             foreach ($configcolor as $color) {
                 if ($retrievecolors->$color == 1) {
                     // If a color is used in instance, design a colored square and add meaning if define.
                     $thiscolor = "<div style=\"width:50px;background-color:".get_config('mod_stickynotes', $color)
                     ."\">&nbsp;</div>&nbsp;";
-                    $thiscolor .= $DB->get_field('stickynotes', $color.'_meaning', array('id' => $stickyid->stickyid));
+                    $thiscolor .= $DB->get_field('stickynotes', $color.'_meaning', ['id' => $stickyid->stickyid]);
                     $thiscolor .= "\n";
                     // Create a radio button to choose color.
                     $colorarray[] = $mform->createElement('radio', 'color', '', $thiscolor, $color);
                 }
             }
             $mform->setDefault('color', $stickyid->color);
-            $mform->addGroup($colorarray, 'colorarr', get_string('choosecolorbuttons', 'stickynotes'), array('<br />'), false);
+            $mform->addGroup($colorarray, 'colorarr', get_string('choosecolorbuttons', 'stickynotes'), ['<br />'], false);
         } else {
             // Else, default color for note is always color 1.
             $mform->addElement('hidden', 'color');
@@ -284,7 +284,7 @@ class form_note extends moodleform {
             $mform->addHelpButton('nomove', 'nomove', 'stickynotes');
             $mform->setDefault('nomove',  '0');
 
-            $req = $DB->get_records('stickynotes_column', array('stickyid' => $stickyid->stickyid), 'id', 'id,title');
+            $req = $DB->get_records('stickynotes_column', ['stickyid' => $stickyid->stickyid], 'id', 'id,title');
             $options = [];
 
             foreach ($req as $new) {
@@ -314,7 +314,7 @@ class form_note extends moodleform {
         } else {
             // Else, hide column select and create ordernote select.
             $sql = 'SELECT ordernote, message FROM {stickynotes_note} WHERE stickycolid = ? ORDER BY ordernote';
-            $paramsdb = array($stickyid->stickycolid);
+            $paramsdb = [$stickyid->stickycolid];
             $dbresult = $DB->get_records_sql($sql, $paramsdb);
 
             $createorder[0] = get_string('lastplace', 'stickynotes');
@@ -457,14 +457,14 @@ function insert_stickynote($data, $moduleinstance, $course, $cm) {
         // If ordernote is zero, user creates note at the end of the column.
         // Calculate order : order of last note + 1.
         $sql = 'SELECT ordernote FROM {stickynotes_note} WHERE stickycolid = ? ORDER BY ordernote DESC LIMIT 1';
-        $paramsdb = array($data->stickycolid);
+        $paramsdb = [$data->stickycolid];
         $dbresult = $DB->get_field_sql($sql, $paramsdb);
         $data->ordernote = $dbresult + 1;
     } else {
         // User creates a note at a specific place.
         // First, all notes following are moved of one place BEFORE creating new note.
         $sql = 'SELECT id, ordernote FROM {stickynotes_note} WHERE stickycolid = ? AND ordernote >= ? ORDER BY ordernote';
-        $paramsdb = array($data->stickycolid, $data->ordernote);
+        $paramsdb = [$data->stickycolid, $data->ordernote];
         $dbresult = $DB->get_records_sql($sql, $paramsdb);
         foreach ($dbresult as $note) {
             $updatenotes = (object)$note;
@@ -496,7 +496,7 @@ function update_stickynote($data) {
 
     // First, retrieve all notes following the moved note BEFORE updating !
     $sql = 'SELECT id, ordernote FROM {stickynotes_note} WHERE stickycolid = ? AND ordernote >= ? AND id != ? ORDER BY ordernote';
-    $paramsdb = array($data->stickycolid, $data->ordernote, $data->note);
+    $paramsdb = [$data->stickycolid, $data->ordernote, $data->note];
     $dbresult = $DB->get_records_sql($sql, $paramsdb);
 
     // Now we can update the note at its new place.
@@ -526,7 +526,7 @@ function insert_column($data) {
     $data = (object)$data;
 
     // Count numbers of column for this activity.
-    $options = array('stickyid' => $data->stickyid);
+    $options = ['stickyid' => $data->stickyid];
     $count = $DB->count_records('stickynotes_column', $options);
 
     $last = $count + 1;
@@ -558,7 +558,7 @@ function update_column($data) {
   */
 function delete_column($col, $modulecontext) {
     global $DB;
-    if (!$DB->delete_records('stickynotes_column', array('id' => $col))) {
+    if (!$DB->delete_records('stickynotes_column', ['id' => $col])) {
         $result = false;
     }
 }
@@ -568,9 +568,9 @@ function delete_column($col, $modulecontext) {
   * @param int $modulecontext  Activity id
   * @return bool True if successful, false otherwise.
   */
-function delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm,$user) {
+function delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm, $user) {
     global $DB;
-    if (!$DB->delete_records('stickynotes_note', array('id' => $note))) {
+    if (!$DB->delete_records('stickynotes_note', ['id' => $note])) {
         $result = false;
     }
 
@@ -588,7 +588,7 @@ function delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm,
   */
 function stickynote_count_notes($userid, $modulecontext) {
     global $DB;
-    $count = $DB->count_records('stickynotes_note', array ('userid' => $userid, 'stickyid' => $modulecontext));
+    $count = $DB->count_records('stickynotes_note', ['userid' => $userid, 'stickyid' => $modulecontext]);
     return $count;
 }
  /**
@@ -598,7 +598,7 @@ function stickynote_count_notes($userid, $modulecontext) {
   */
 function stickynote_count_votes($note) {
     global $DB;
-    $count = $DB->count_records('stickynotes_vote', array ('stickynoteid' => $note));
+    $count = $DB->count_records('stickynotes_vote', ['stickynoteid' => $note]);
      return $count;
 }
  /**
@@ -608,7 +608,7 @@ function stickynote_count_votes($note) {
   */
 function get_column_title($col) {
     global $DB;
-    $record = $DB->get_record('stickynotes_column', array('id' => $col));
+    $record = $DB->get_record('stickynotes_column', ['id' => $col]);
     if (!$record) {
         return;
     } else {
@@ -635,7 +635,7 @@ function get_column_title($col) {
 function stickynote_get_vote_like($userid, $note, $limit, $max, $instance) {
     global $DB, $USER;
 
-    $post = $DB->get_record('stickynotes_vote', array('userid' => $userid, 'stickynoteid' => $note));
+    $post = $DB->get_record('stickynotes_vote', ['userid' => $userid, 'stickynoteid' => $note]);
     // If User has already voted for this note, display full icon to unvote.
     if ($post) {
         $params['myvote'] = 1;
@@ -646,7 +646,7 @@ function stickynote_get_vote_like($userid, $note, $limit, $max, $instance) {
         // If no votes detected.
         if ($limit == 1) {
             // If vote has max limit, count votes for this user.
-            $check = $DB->count_records('stickynotes_vote', array ('userid' => $userid, 'stickyid' => $instance));
+            $check = $DB->count_records('stickynotes_vote', ['userid' => $userid, 'stickyid' => $instance]);
             if ($check >= $max) {
                 // If user has reached max votes, icon is grey.
                 $params['myvote'] = 0;
@@ -698,11 +698,10 @@ function stickynote_do_vote_like($userid, $note, $action, $instance) {
         $data->userid = $userid;
         $data->stickynoteid = $note;
 
-        if (!$DB->delete_records('stickynotes_vote', array('userid' => $data->userid, 'stickynoteid' => $data->stickynoteid))) {
+        if (!$DB->delete_records('stickynotes_vote', ['userid' => $data->userid, 'stickynoteid' => $data->stickynoteid])) {
             $result = false;
         }
     }
-
     return true;
 }
 
@@ -733,9 +732,10 @@ function stickynotes_reset_course_form_definition($mform) {
  * @return array the defaults.
  */
 function stickynotes_reset_course_form_defaults($course) {
-    return array('reset_stickynotes_all' => 1,
+    return ['reset_stickynotes_all' => 1,
                  'reset_stickynotes_notes' => 1,
-                 'reset_stickynotes_votes' => 1);
+                 'reset_stickynotes_votes' => 1,
+        ];
 }
 
 /**
@@ -751,40 +751,52 @@ function stickynotes_reset_userdata($data) {
     global $CFG, $DB;
 
     $componentstr = get_string('modulenameplural', 'stickynotes');
-    $status = array();
+    $status = [];
 
     $sql = "SELECT sn.id FROM {stickynotes} sn WHERE sn.course=".$data->courseid."";
 
     // Remove all contents - columns, notes and votes.
     if (!empty($data->reset_stickynotes_all)) {
-        // Delete all columns, notes and votes queries. 
-        $res_columns = $DB->delete_records_select('stickynotes_column', "stickyid IN ($sql)");
-        $res_notes = $DB->delete_records_select('stickynotes_note', "stickyid IN ($sql)");
-        $res_votes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
+        // Delete all columns, notes and votes queries.
+        $rescolumns = $DB->delete_records_select('stickynotes_column', "stickyid IN ($sql)");
+        $resnotes = $DB->delete_records_select('stickynotes_note', "stickyid IN ($sql)");
+        $resvotes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
 
         // Now columns are deleted, create a new default column for each activity.
-        $res_activities = $DB->get_records_sql($sql);
-        foreach ($res_activities as $recreate_column) {
+        $resactivities = $DB->get_records_sql($sql);
+        foreach ($resactivities as $recreatecolumn) {
             $new = new stdClass();
-            $new->stickyid = $recreate_column->id;
+            $new->stickyid = $recreatecolumn->id;
             $new->title = get_string('new_column_title', 'stickynotes');
             insert_column($new);
         }
 
-        $status[] = array('component'=>$componentstr, 'item'=>get_string('removeallresponse', 'stickynotes'), 'error'=>false);
+        $status[] = [
+            'component' => $componentstr,
+            'item' => get_string('removeallresponse', 'stickynotes'),
+            'error' => false,
+        ];
     }
 
     // Remove notes and votes. Columns stay.
     if (!empty($data->reset_stickynotes_notes)) {
-        $res_notes = $DB->delete_records_select('stickynotes_note', "stickyid IN ($sql)");
-        $res_votes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
-        $status[] = array('component'=>$componentstr, 'item'=>get_string('removenotesandvotesresponse', 'stickynotes'), 'error'=>false);
+        $resnotes = $DB->delete_records_select('stickynotes_note', "stickyid IN ($sql)");
+        $resvotes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
+        $status[] = [
+            'component' => $componentstr,
+            'item' => get_string('removenotesandvotesresponse', 'stickynotes'),
+            'error' => false,
+        ];
     }
 
-    // Remove votes only
+    // Remove votes only.
     if (!empty($data->reset_stickynotes_votes)) {
-        $res_votes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
-        $status[] = array('component'=>$componentstr, 'item'=>get_string('removevotesresponse', 'stickynotes'), 'error'=>false);
+        $resvotes = $DB->delete_records_select('stickynotes_vote', "stickyid IN ($sql)");
+        $status[] = [
+            'component' => $componentstr,
+            'item' => get_string('removevotesresponse', 'stickynotes'),
+            'error' => false,
+        ];
     }
 
     return $status;
@@ -897,7 +909,7 @@ function mod_stickynotes_get_completion_active_rule_descriptions($cm) {
   * @param object $data  Datas from the form
   * @return post The id of the activity.
   */
-  function update_lock($instance, $lock, $lockvalue) {
+function update_lock($instance, $lock, $lockvalue) {
     global $DB;
     $data = new stdClass;
     $data->id = $instance;
@@ -916,35 +928,34 @@ function mod_stickynotes_get_completion_active_rule_descriptions($cm) {
   * @return post Text color (black or white) in hex.
   */
 
-function getcontrastcolor($hexcolor)
-{
-        // hexColor RGB
-        $R1 = hexdec(substr($hexcolor, 1, 2));
-        $G1 = hexdec(substr($hexcolor, 3, 2));
-        $B1 = hexdec(substr($hexcolor, 5, 2));
-        // Black RGB
-        $blackColor = "#000000";
-        $R2BlackColor = hexdec(substr($blackColor, 1, 2));
-        $G2BlackColor = hexdec(substr($blackColor, 3, 2));
-        $B2BlackColor = hexdec(substr($blackColor, 5, 2));
-         // Calc contrast ratio
-         $L1 = 0.2126 * pow($R1 / 255, 2.2) +
-               0.7152 * pow($G1 / 255, 2.2) +
-               0.0722 * pow($B1 / 255, 2.2);
-        $L2 = 0.2126 * pow($R2BlackColor / 255, 2.2) +
-              0.7152 * pow($G2BlackColor / 255, 2.2) +
-              0.0722 * pow($B2BlackColor / 255, 2.2);
-        $contrastRatio = 0;
-        if ($L1 > $L2) {
-            $contrastRatio = (int)(($L1 + 0.05) / ($L2 + 0.05));
-        } else {
-            $contrastRatio = (int)(($L2 + 0.05) / ($L1 + 0.05));
-        }
-        // If contrast is more than 5, return black color
-        if ($contrastRatio > 5) {
-            return '#000000';
-        } else { 
-            // if not, return white color.
-            return '#FFFFFF';
-        }
+function getcontrastcolor($hexcolor) {
+    // HexColor RGB.
+    $r1 = hexdec(substr($hexcolor, 1, 2));
+    $g1 = hexdec(substr($hexcolor, 3, 2));
+    $b1 = hexdec(substr($hexcolor, 5, 2));
+    // Black RGB.
+    $blackcolor = "#000000";
+    $r2blackcolor = hexdec(substr($blackcolor, 1, 2));
+    $g2blackcolor = hexdec(substr($blackcolor, 3, 2));
+    $b2blackcolor = hexdec(substr($blackcolor, 5, 2));
+    // Calcultates contrast ratio.
+    $l1 = 0.2126 * pow($r1 / 255, 2.2) +
+            0.7152 * pow($g1 / 255, 2.2) +
+            0.0722 * pow($b1 / 255, 2.2);
+    $l2 = 0.2126 * pow($r2blackcolor / 255, 2.2) +
+            0.7152 * pow($g2blackcolor / 255, 2.2) +
+            0.0722 * pow($b2blackcolor / 255, 2.2);
+    $contrastratio = 0;
+    if ($l1 > $l2) {
+        $contrastratio = (int)(($l1 + 0.05) / ($l2 + 0.05));
+    } else {
+        $contrastratio = (int)(($l2 + 0.05) / ($l1 + 0.05));
+    }
+    // If contrast is more than 5, return black color.
+    if ($contrastratio > 5) {
+        return '#000000';
+    } else {
+        // If not, return white color.
+        return '#FFFFFF';
+    }
 }

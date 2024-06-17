@@ -25,8 +25,6 @@
 // Standard GPL and phpdocs.
 namespace mod_stickynotes\output;
 
-defined('MOODLE_INTERNAL') || die;
-
 use mod_stickynotes;
 
  /**
