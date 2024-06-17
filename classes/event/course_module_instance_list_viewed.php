@@ -23,7 +23,6 @@
  */
 
 namespace mod_stickynotes\event;
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * The mod_stickynotes course module viewed event class.

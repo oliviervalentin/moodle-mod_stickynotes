@@ -38,7 +38,7 @@ $confirm = optional_param('confirm', 0, PARAM_INT);
 $ordernote = optional_param('ordernote', 0, PARAM_INT);
 
 // These params will be passed as hidden variables later in the form.
-$pageparams = array('edit' => $edit, 'create' => $create);
+$pageparams = ['edit' => $edit, 'create' => $create];
 
 // Course module id.
 $id = optional_param('id', 0, PARAM_INT);
@@ -51,15 +51,15 @@ $systemcontext = context_system::instance();
 
 if ($id) {
     $cm = get_coursemodule_from_id('stickynotes', $id, 0, false, MUST_EXIST);
-    $moduleinstance = $DB->get_record('stickynotes', array('id' => $cm->instance), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('stickynotes', ['id' => $cm->instance], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 }
 
-$PAGE->set_url('/mod/stickynnotes/note.php', array(
+$PAGE->set_url('/mod/stickynnotes/note.php', [
     'edit'           => $edit,
     'create'         => $create,
     'delete'         => $delete,
-));
+]);
 
 require_login(0, false);
 
@@ -71,7 +71,7 @@ if (!empty($create)) {
     }
 
     // Check if the instance is part of a course.
-    if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    if (!$course = $DB->get_record('course', ['id' => $cm->course])) {
         throw new moodle_exception('invalidcourseid');
     }
 
@@ -110,7 +110,7 @@ if (!empty($create)) {
     }
 
     // Check if the instance is part of a course.
-    if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    if (!$course = $DB->get_record('course', ['id' => $cm->course])) {
         throw new moodle_exception('invalidcourseid');
     }
 
@@ -120,7 +120,7 @@ if (!empty($create)) {
     }
 
     // Check if note exists.
-    if (!$post = $DB->get_record('stickynotes_note', array('id' => $note))) {
+    if (!$post = $DB->get_record('stickynotes_note', ['id' => $note])) {
         throw new moodle_exception('cannotgetnote', 'stickynotes');
     }
 
@@ -132,7 +132,7 @@ if (!empty($create)) {
     $updateownnote = has_capability('mod/stickynotes:updateownnote', $modulecontext);
     $updateanynote = has_capability('mod/stickynotes:updateanynote', $modulecontext);
 
-    if (!(($post->userid == $USER->id AND $updateownnote) OR $updateanynote)) {
+    if (!(($post->userid == $USER->id && $updateownnote) || $updateanynote)) {
         throw new moodle_exception('cannotupdatenote', 'stickynotes');
     }
 
@@ -155,7 +155,7 @@ if (!empty($create)) {
     }
 
     // Check if the instance is part of a course.
-    if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    if (!$course = $DB->get_record('course', ['id' => $cm->course])) {
         throw new moodle_exception('invalidcourseid');
     }
 
@@ -165,7 +165,7 @@ if (!empty($create)) {
     }
 
     // Check if note exists.
-    if (!$post = $DB->get_record('stickynotes_note', array('id' => $note))) {
+    if (!$post = $DB->get_record('stickynotes_note', ['id' => $note])) {
         throw new moodle_exception('cantgetnote', 'stickynotes');
     }
 
@@ -177,19 +177,19 @@ if (!empty($create)) {
     $deleteownnote = has_capability('mod/stickynotes:deleteownnote', $modulecontext);
     $deleteanynote = has_capability('mod/stickynotes:deleteanynote', $modulecontext);
 
-    if (!(($post->userid == $USER->id AND $deleteownnote) OR $deleteanynote)) {
+    if (!(($post->userid == $USER->id && $deleteownnote) || $deleteanynote)) {
         throw new moodle_exception('cannotdeletenote', 'stickynotes');
     }
 
     // User has confirmed deletion : note is deleted.
-    if (!empty($confirm) AND confirm_sesskey()) {
+    if (!empty($confirm) && confirm_sesskey()) {
         delete_stickynote($note, $modulecontext, $moduleinstance, $course, $cm, $post->userid);
 
         // Trigger note deleted event.
-        $params = array(
+        $params = [
             'context'  => $modulecontext,
-            'objectid' => $note
-            );
+            'objectid' => $note,
+        ];
         $event = \mod_stickynotes\event\note_deleted::create($params);
         $event->trigger();
 
@@ -230,7 +230,7 @@ if (!empty($edit)) {
     $postcol = $col;
 }
 
-$formarray = array(
+$formarray = [
     'id'             => $cm->id,
     'course'         => $course,
     'cm'             => $cm,
@@ -243,14 +243,14 @@ $formarray = array(
     'stickycolid'    => $postcol,
     'stickyid'       => $cm->instance,
     'ordernote'      => $ordernote,
-);
+];
 
 $mformnote = new form_note('note.php', $formarray, 'post');
 
-$mformnote->set_data(array(
+$mformnote->set_data([
         'stickycolid' => $postcol,
         'id' => $id,
-    ) + $pageparams + $formarray);
+    ] + $pageparams + $formarray);
 
 // If form is cancelled, redirect activity view page.
 if ($mformnote->is_cancelled()) {
@@ -283,10 +283,10 @@ if ($fromform = $mformnote->get_data()) {
         $updatenote = update_stickynote($fromform);
 
          // Trigger note updated event.
-        $params = array(
+        $params = [
             'context'  => $modulecontext,
-            'objectid' => $fromform->id
-            );
+            'objectid' => $fromform->id,
+        ];
         $event = \mod_stickynotes\event\note_updated::create($params);
         $event->trigger();
 
@@ -302,10 +302,10 @@ if ($fromform = $mformnote->get_data()) {
         $createnote = insert_stickynote($fromform, $moduleinstance, $course, $cm);
 
         // Trigger note created event.
-        $params = array(
+        $params = [
             'context'  => $modulecontext,
-            'objectid' => $createnote
-            );
+            'objectid' => $createnote,
+        ];
         $event = \mod_stickynotes\event\note_created::create($params);
         $event->trigger();
 

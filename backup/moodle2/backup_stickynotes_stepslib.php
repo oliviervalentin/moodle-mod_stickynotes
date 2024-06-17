@@ -22,8 +22,6 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Define the complete stickynotes structure for backup, with file and id annotations
  *
@@ -44,8 +42,8 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
         $userinfo = $this->get_setting_value('userinfo');
 
         // Define the root element describing the stickynotes instance.
-        $stickynotes = new backup_nested_element('stickynotes', array('id'),
-                                              array('course',
+        $stickynotes = new backup_nested_element('stickynotes', ['id'],
+                                              ['course',
                                                     'name',
                                                     'intro',
                                                     'introformat',
@@ -75,28 +73,28 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
                                                     'displaystickycaption',
                                                     'moveallnotes',
                                                     'seeallnotes',
-                                                    'completionstickynotes'));
+                                                    'completionstickynotes', ]);
 
         // Define each element separated.
         $stickynotescolumns = new backup_nested_element('stickynotescolumns');
-        $stickynotescolumn = new backup_nested_element('stickynotescolumn', array('id'),
-                                                            array('title',
-                                                            'column_order'));
+        $stickynotescolumn = new backup_nested_element('stickynotescolumn', ['id'],
+                                                            ['title',
+                                                            'column_order', ]);
 
         $stickynotesnotes = new backup_nested_element('stickynotesnotes');
-        $stickynotesnote = new backup_nested_element('stickynotesnote', array('id'),
-                                                        array('userid',
+        $stickynotesnote = new backup_nested_element('stickynotesnote', ['id'],
+                                                        ['userid',
                                                             'stickycolid',
                                                             'message',
                                                             'color',
                                                             'timecreated',
-                                                            'timemodified'));
+                                                            'timemodified', ]);
         $stickynotesvotes = new backup_nested_element('stickynotesvotes');
-        $stickynotesvote = new backup_nested_element('stickynotesvote', array('id'),
-                                                        array('userid',
+        $stickynotesvote = new backup_nested_element('stickynotesvote', ['id'],
+                                                        ['userid',
                                                             'stickynoteid',
                                                             'vote',
-                                                            'timecreated'));
+                                                            'timecreated', ]);
         // Build the tree.
         $stickynotes->add_child($stickynotescolumns);
         $stickynotescolumns->add_child($stickynotescolumn);
@@ -107,25 +105,25 @@ class backup_stickynotes_activity_structure_step extends backup_activity_structu
         $stickynotesnote->add_child($stickynotesvotes);
         $stickynotesvotes->add_child($stickynotesvote);
 
-        $stickynotes->set_source_table('stickynotes', array('id' => backup::VAR_ACTIVITYID));
+        $stickynotes->set_source_table('stickynotes', ['id' => backup::VAR_ACTIVITYID]);
 
         $stickynotescolumn->set_source_sql('
                 SELECT *
                 FROM {stickynotes_column}
                 WHERE stickyid = ?',
-            array(backup::VAR_PARENTID));
+            [backup::VAR_PARENTID]);
         $stickynotesnote->set_source_sql('
                 SELECT *
                 FROM {stickynotes_note}
                 WHERE stickyid = ?',
-            array(backup::VAR_PARENTID));
-        $stickynotescolumn->set_source_table('stickynotes_column', array('stickyid' => backup::VAR_ACTIVITYID));
+            [backup::VAR_PARENTID]);
+        $stickynotescolumn->set_source_table('stickynotes_column', ['stickyid' => backup::VAR_ACTIVITYID]);
 
         // All the rest of elements only happen if we are including user info.
         if ($this->get_task()->get_setting_value('userinfo')) {
             // All the rest of elements only happen if we are including user info.
-            $stickynotesnote->set_source_table('stickynotes_note', array('stickycolid' => backup::VAR_PARENTID));
-            $stickynotesvote->set_source_table('stickynotes_vote', array('stickynoteid' => backup::VAR_PARENTID));
+            $stickynotesnote->set_source_table('stickynotes_note', ['stickycolid' => backup::VAR_PARENTID]);
+            $stickynotesvote->set_source_table('stickynotes_vote', ['stickynoteid' => backup::VAR_PARENTID]);
         }
 
         // Define id annotations.

@@ -41,11 +41,11 @@ $lockvalue = optional_param('lockvalue', 0, PARAM_RAW);
 
 if ($id) {
     $cm = get_coursemodule_from_id('stickynotes', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('stickynotes', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('stickynotes', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($s) {
-    $moduleinstance = $DB->get_record('stickynotes', array('id' => $n), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('stickynotes', ['id' => $n], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $moduleinstance->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('stickynotes', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
     throw new moodle_exception(get_string('missingidandcmid', 'mod_stickynotes'));
@@ -56,15 +56,15 @@ $modulecontext = context_module::instance($cm->id);
 
 require_capability('mod/stickynotes:view', $modulecontext);
 
-$event = \mod_stickynotes\event\course_module_viewed::create(array(
+$event = \mod_stickynotes\event\course_module_viewed::create([
     'objectid' => $moduleinstance->id,
-    'context' => $modulecontext
-));
+    'context' => $modulecontext,
+]);
 $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('stickynotes', $moduleinstance);
 $event->trigger();
 
-$PAGE->set_url('/mod/stickynotes/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/stickynotes/view.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
@@ -74,6 +74,7 @@ $requirejs = 'require.config(' . json_encode($config) . ')';
 $PAGE->requires->js_amd_inline($requirejs);
 
 $PAGE->requires->js_call_amd('mod_stickynotes/dragndrop', 'init');
+$PAGE->requires->js_call_amd('mod_stickynotes/refresh', 'init');
 
 // Define some capabilities.
 $capabilitycreatenote = false;
@@ -90,7 +91,7 @@ if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
     && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))) {
     $capabilitycreatenote = true;
     $capabilityvote = true;
-    $is_admin = 1;
+    $isadmin = 1;
 } else if ((!is_guest($modulecontext, $USER) && isloggedin())
         && has_capability('mod/stickynotes:vote', $modulecontext)
         && has_capability('mod/stickynotes:createnote', $modulecontext)) {
@@ -99,7 +100,7 @@ if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
     if ($moduleinstance->locknotes == 1) {
         $locknotes = true;
         $capabilitycreatenote = false;
-    } else  {
+    } else {
         $locknotes = false;
         $capabilitycreatenote = true;
     }
@@ -107,10 +108,10 @@ if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
     if ($moduleinstance->lockvotes == 1) {
         $capabilityvote = false;
         $lockvotes = true;
-    }  else  {
+    } else {
         $capabilityvote = true;
         $lockvotes = false;
-    }     
+    }
 }
 
 // If user has just voted, first check capability.
@@ -123,7 +124,7 @@ if ($vote && !$capabilityvote) {
     }
     // If vote limitation, first check if user is at max.
     if ($moduleinstance->limitvotes == 1) {
-        $check = $DB->count_records('stickynotes_vote', array ('userid' => $USER->id, 'stickyid' => $cm->instance));
+        $check = $DB->count_records('stickynotes_vote', ['userid' => $USER->id, 'stickyid' => $cm->instance]);
         if ($check >= $moduleinstance->maxlimitvotes && $action == 'add') {
             throw new moodle_exception('cannotvotelimitreached', 'stickynotes');
         }
@@ -136,9 +137,9 @@ if ($vote && !$capabilityvote) {
 }
 
 // If admin locks votes or notes, first check capability.
-if ($lock && $is_admin == 0) {
+if ($lock && $isadmin == 0) {
     throw new moodle_exception('activelock', 'stickynotes');
-} else if ($lock && $is_admin == 1) {
+} else if ($lock && $isadmin == 1) {
     $updatelock = update_lock($cm->instance, $lock, $lockvalue);
     redirect("view.php?id=".$cm->id);
 }
@@ -149,34 +150,34 @@ $completion->set_module_viewed($cm);
 echo $OUTPUT->header();
 
 // Start to retrieve all columns for this instance.
-$cols = $DB->get_records('stickynotes_column', array('stickyid' => $moduleinstance->id), '', '*');
-$allcols = array();
+$cols = $DB->get_records('stickynotes_column', ['stickyid' => $moduleinstance->id], '', '*');
+$allcols = [];
 
 // For each columns, retrieve all notes.
 foreach ($cols as $col) {
     // If user has supercapabilities, we show all notes.
     if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
             && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))) {
-                $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id),
+                $notes = $DB->get_records('stickynotes_note', ['stickyid' => $moduleinstance->id, 'stickycolid' => $col->id],
                 'ordernote', '*');
     } else {
         // If user hasn't capabilities, check if he can see all notes through activity parameters.
         if ($moduleinstance->seeallnotes == 1) {
-            $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id),
+            $notes = $DB->get_records('stickynotes_note', ['stickyid' => $moduleinstance->id, 'stickycolid' => $col->id],
             'ordernote', '*');
         } else {
-            $notes = $DB->get_records('stickynotes_note', array('stickyid' => $moduleinstance->id, 'stickycolid' => $col->id, 'userid' => $USER->id),
-            'ordernote', '*');
+            $notes = $DB->get_records('stickynotes_note', ['stickyid' => $moduleinstance->id, 'stickycolid' => $col->id,
+            'userid' => $USER->id, ], 'ordernote', '*');
         }
     }
 
     $allnotes = new StdClass;
-    $allnotes = array();
+    $allnotes = [];
 
     // For each note, retrieve and define all necessary information.
     foreach ($notes as $note) {
         // Retrieve author of the note.
-        $getname = $DB->get_record('user', array('id' => $note->userid));
+        $getname = $DB->get_record('user', ['id' => $note->userid]);
         $note->fullname = $getname->lastname." ".$getname->firstname;
         // Count number of votes for this note.
         $note->totalvotes = stickynote_count_votes($note->id);
@@ -305,23 +306,26 @@ if ($moduleinstance->displaystickycaption == '1') {
     '.get_string('buttondisplaystickycaption', 'mod_stickynotes').'</button>';
 }
 if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
-    && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))){
+    && (has_capability('mod/stickynotes:deleteanynote', $modulecontext))) {
     echo "<div style='float: right; margin-bottom: 1em'>";
     if ($moduleinstance->locknotes == 0) {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=locknotes&lockvalue=1';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> ".get_string('buttonlocknotes', 'mod_stickynotes')."</button></a>&nbsp;";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> "
+        .get_string('buttonlocknotes', 'mod_stickynotes')."</button></a>&nbsp;";
     } else {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=locknotes&lockvalue=0';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> ".get_string('buttonunlocknotes', 'mod_stickynotes')."</button>&nbsp;";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> "
+        .get_string('buttonunlocknotes', 'mod_stickynotes')."</button>&nbsp;";
     }
     if ($moduleinstance->lockvotes == 0) {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=lockvotes&lockvalue=1';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> ".get_string('buttonlockvotes', 'mod_stickynotes')."</button></a>";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-lock'></i> "
+        .get_string('buttonlockvotes', 'mod_stickynotes')."</button></a>";
     } else {
         $url = $CFG->wwwroot.'/mod/stickynotes/view.php?id='.$cm->id.'&lock=lockvotes&lockvalue=0';
-        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> ".get_string('buttonunlockvotes', 'mod_stickynotes')."</button></a>";
+        echo "<a href=".$url."><button class='btn btn-primary'><i class='fa fa-unlock'></i> "
+        .get_string('buttonunlockvotes', 'mod_stickynotes')."</button></a>";
     }
-
     echo "</div>";
 }
 echo "</div>";
@@ -332,18 +336,18 @@ echo '<div style="margin-bottom: 3em;">';
 // If enabled, display button to show legend.
 if ($moduleinstance->displaystickycaption == '1') {
     // First, list the 6 colors.
-    $configcolor = array (
+    $configcolor = [
         'color1',
         'color2',
         'color3',
         'color4',
         'color5',
-        'color6'
-    );
+        'color6',
+    ];
     // Second, retrieve colors settings for this instance.
-    $retrievecolors = $DB->get_record('stickynotes', array('id' => $moduleinstance->id), '*', MUST_EXIST);
+    $retrievecolors = $DB->get_record('stickynotes', ['id' => $moduleinstance->id], '*', MUST_EXIST);
 
-    $colorarray = array();
+    $colorarray = [];
     echo '<div id="displaycapt" class="collapse">';
     echo '<h3>'.get_string('titledisplaystickycaption', 'mod_stickynotes').'</h3>';
     foreach ($configcolor as $color) {
@@ -353,7 +357,7 @@ if ($moduleinstance->displaystickycaption == '1') {
             .get_config('mod_stickynotes', $color)
             ."\">&nbsp;</div>&nbsp;";
             $thiscolor .= "<div style=\"display: inline-block\">".$DB->get_field('stickynotes', $color.'_meaning',
-            array('id' => $moduleinstance->id));
+            ['id' => $moduleinstance->id]);
             $thiscolor .= "<br /></div></div>";
             echo $thiscolor;
         }

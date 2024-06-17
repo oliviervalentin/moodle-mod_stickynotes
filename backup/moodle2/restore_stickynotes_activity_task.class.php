@@ -50,9 +50,9 @@ class restore_stickynotes_activity_task extends restore_activity_task {
      * processed by the link decoder.
      */
     public static function define_decode_contents() {
-        $contents = array();
+        $contents = [];
 
-        $contents[] = new restore_decode_content('stickynotes', array('intro'), null);
+        $contents[] = new restore_decode_content('stickynotes', ['intro'], null);
 
         return $contents;
     }
@@ -62,7 +62,7 @@ class restore_stickynotes_activity_task extends restore_activity_task {
      * to the activity to be executed by the link decoder.
      */
     public static function define_decode_rules() {
-        $rules = array();
+        $rules = [];
 
         $rules[] = new restore_decode_rule('STICKYNOTESVIEWBYID', '/mod/stickynotes/view.php?id=$1', 'course_module');
         $rules[] = new restore_decode_rule('STICKYNOTESINDEX', '/mod/stickynotes/index.php?id=$1', 'course');
@@ -74,7 +74,7 @@ class restore_stickynotes_activity_task extends restore_activity_task {
      * Define the restore log rules that will be applied.
      */
     public static function define_restore_log_rules() {
-        $rules = array();
+        $rules = [];
         $rules[] = new restore_log_rule('stickynotes', 'view', 'view.php?id={course_module}', '{stickynotes}');
         return $rules;
     }
@@ -83,7 +83,7 @@ class restore_stickynotes_activity_task extends restore_activity_task {
      * Define the restore log rules that will be applied.
      */
     public static function define_restore_log_rules_for_course() {
-        $rules = array();
+        $rules = [];
         $rules[] = new restore_log_rule('stickynotes', 'view all', 'index.php?id={course}', null);
         return $rules;
     }

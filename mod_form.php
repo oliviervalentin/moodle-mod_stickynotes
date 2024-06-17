@@ -47,7 +47,7 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field.
-        $mform->addElement('text', 'name', get_string('stickynotesname', 'mod_stickynotes'), array('size' => '64'));
+        $mform->addElement('text', 'name', get_string('stickynotesname', 'mod_stickynotes'), ['size' => '64']);
 
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
@@ -100,10 +100,10 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         $mform->addElement('header', 'settings_votes', get_string('settings_votes', 'stickynotes'));
 
         // Define votes types :0 = no votes, 1 = user can like a vote.
-        $options = array(
+        $options = [
             '0'      => get_string('votenone', 'stickynotes'),
-            '1'      => get_string('votelike', 'stickynotes')
-        );
+            '1'      => get_string('votelike', 'stickynotes'),
+        ];
 
         $mform->addElement('select', 'votes', get_string('votetype', 'stickynotes'), $options);
         $mform->addHelpButton('votes', 'votetype', 'stickynotes');
@@ -116,7 +116,7 @@ class mod_stickynotes_mod_form extends moodleform_mod {
         // Max number of votes.
         $mform->disabledIf('maxlimitvotes', 'votes', '0');
         $mform->disabledIf('maxlimitvotes', 'limitvotes', '1');
-        $maxvoteschoice = array(
+        $maxvoteschoice = [
             1   => 1,
             2   => 2,
             3   => 3,
@@ -127,7 +127,7 @@ class mod_stickynotes_mod_form extends moodleform_mod {
             8   => 8,
             9   => 9,
             10  => 10,
-        );
+        ];
         $mform->addElement('select', 'maxlimitvotes', get_string('maxlimitvotes', 'stickynotes'), $maxvoteschoice);
         $mform->addHelpButton('maxlimitvotes', 'maxlimitvotes', 'stickynotes');
         $mform->setType('maxlimitvotes', PARAM_INT);

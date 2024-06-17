@@ -33,7 +33,7 @@ use core_privacy\local\request\contextlist;
 use core_privacy\local\request\helper;
 use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
-use \core_privacy\local\request\transform;
+use core_privacy\local\request\transform;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -48,8 +48,7 @@ class provider implements
     \core_privacy\local\request\plugin\provider,
 
     // This plugin is capable of determining which users have data within it.
-    \core_privacy\local\request\core_userlist_provider
-{
+    \core_privacy\local\request\core_userlist_provider {
 
     /**
      * Return the fields which contain personal data.
@@ -89,7 +88,7 @@ class provider implements
         return $items;
     }
 
-/**
+    /**
      * Get the list of contexts that contain user information for the specified user.
      *
      * In the case of forum, that is any forum where the user has made any post, rated any content, or has any preferences.
@@ -170,10 +169,10 @@ class provider implements
             JOIN {stickynotes_note} sn ON sn.stickycolid = sc.id
             JOIN {stickynotes_vote} sv ON sv.stickynoteid = sn.id
             WHERE cm.id = :instanceid";
-      $userlist->add_from_sql('userid', $sql, $params);
+        $userlist->add_from_sql('userid', $sql, $params);
     }
 
-/**
+    /**
      * Export all user data for the specified user, in the specified contexts, using the supplied exporter instance.
      *
      * @param   approved_contextlist    $contextlist    The approved contexts to export information for.
@@ -211,7 +210,7 @@ class provider implements
             $subcontext = [
                 get_string('pluginname', 'mod_stickynotes'),
                 format_string($stickynotes->name),
-                $stickynotes->id
+                $stickynotes->id,
             ];
 
             // Get all notes created by the user.
@@ -220,7 +219,7 @@ class provider implements
             where userid = :userid
             and stickyid = :stickynotesid";
 
-            $query1notes = $DB->get_records_sql($sql1notes, array('userid' => $userid, 'stickynotesid' => $stickynotes->id));
+            $query1notes = $DB->get_records_sql($sql1notes, ['userid' => $userid, 'stickynotesid' => $stickynotes->id]);
             foreach ($query1notes as $query1note) {
                 $key = $query1note->id;
                 $notedata[$key] = (object) [
@@ -238,7 +237,7 @@ class provider implements
             where sv.userid = :userid
             and sv.stickyid = :stickynotesid";
 
-            $query2notes = $DB->get_records_sql($sql2notes, array('userid' => $userid, 'stickynotesid' => $stickynotes->id));
+            $query2notes = $DB->get_records_sql($sql2notes, ['userid' => $userid, 'stickynotesid' => $stickynotes->id]);
             foreach ($query2notes as $query2note) {
                 $key = $query2note->idnote;
                 $votedata[$key] = (object) [

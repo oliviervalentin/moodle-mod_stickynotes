@@ -22,8 +22,6 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Structure step to restore one stickynotes activity
  *
@@ -41,7 +39,7 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
      */
     protected function define_structure() {
 
-        $paths = array();
+        $paths = [];
         $userinfo = $this->get_setting_value('userinfo');
 
         $paths[] = new restore_path_element('stickynotes', '/activity/stickynotes');
@@ -52,7 +50,8 @@ class restore_stickynotes_activity_structure_step extends restore_activity_struc
             $paths[] = new restore_path_element('stickynotesnote',
                 '/activity/stickynotes/stickynotescolumns/stickynotescolumn/stickynotesnotes/stickynotesnote');
             $paths[] = new restore_path_element('stickynotesvote',
-                '/activity/stickynotes/stickynotescolumns/stickynotescolumn/stickynotesnotes/stickynotesnote/stickynotesvotes/stickynotesvote');
+                '/activity/stickynotes/stickynotescolumns/stickynotescolumn/stickynotesnotes/'.
+                'stickynotesnote/stickynotesvotes/stickynotesvote');
         }
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);

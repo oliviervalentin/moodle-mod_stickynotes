@@ -51,19 +51,16 @@ class custom_completion extends activity_custom_completion {
 
         $params = ['userid' => $userid, 'stickyid' => $stickyid];
         $sql = "SELECT COUNT(*)
-                           FROM {stickynotes_note} sn
-                           JOIN {stickynotes_column} sc ON sn.stickycolid = sc.id
-                          WHERE sn.userid = :userid
-                            AND sc.stickyid = :stickyid";
+                FROM {stickynotes_note} sn
+                JOIN {stickynotes_column} sc ON sn.stickycolid = sc.id
+                WHERE sn.userid = :userid
+                AND sc.stickyid = :stickyid";
 
         if ($rule == 'completionstickynotes') {
             $machin = $DB->count_records_sql($sql, $params);
             $status = $stickynotes->completionstickynotes <= $DB->count_records_sql($sql, $params);
         }
-// print_object("nombre de notes ".$machin);
-// echo "<br/>";
-// print_object("statut ".$status);
-// exit();
+
         return $status ? COMPLETION_COMPLETE : COMPLETION_INCOMPLETE;
     }
 
@@ -87,7 +84,7 @@ class custom_completion extends activity_custom_completion {
         $completionstickynotes = $this->cm->customdata['customcompletionrules']['completionstickynotes'] ?? 0;
 
         return [
-            'completionstickynotes' => get_string('completionstickynotesdetail:notes', 'mod_stickynotes', $completionstickynotes)
+            'completionstickynotes' => get_string('completionstickynotesdetail:notes', 'mod_stickynotes', $completionstickynotes),
         ];
     }
 
@@ -99,7 +96,7 @@ class custom_completion extends activity_custom_completion {
     public function get_sort_order(): array {
         return [
             'completionview',
-            'completionstickynotes'
+            'completionstickynotes',
         ];
     }
 }
