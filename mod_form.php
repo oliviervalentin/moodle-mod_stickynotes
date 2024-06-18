@@ -234,7 +234,6 @@ class mod_stickynotes_mod_form extends moodleform_mod {
      * @category completion
      * @return array List of added element names, or names of wrapping group elements.
      */
-
     public function add_completion_rules() {
         $mform = $this->_form;
 

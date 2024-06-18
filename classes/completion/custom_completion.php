@@ -29,6 +29,16 @@ namespace mod_stickynotes\completion;
 
 use core_completion\activity_custom_completion;
 
+/**
+ * Activity custom completion subclass for the stickynotes activity.
+ *
+ * Class for defining mod_stickynotes's custom completion rules and fetching the completion statuses
+ * of the custom completion rules for a given feedback instance and a user.
+ *
+ * @package mod_stickynotes
+ * @copyright 2021 Olivier VALENTIN
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class custom_completion extends activity_custom_completion {
 
     /**

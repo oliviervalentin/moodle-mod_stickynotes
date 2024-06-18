@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * External stickynotes API
+ * External stickynotes API for drag'n'drop.
  *
  * @package    mod_stickynotes
  * @copyright  2021 Sébastien Mehr <sebmehr.fr>
@@ -32,7 +32,16 @@ require_once("$CFG->libdir/externallib.php");
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_stickynotes_external extends external_api {
-
+    /**
+     * Changes note position next to a drag'n'drop moving.
+     * @param int $noteid       ID for note moved
+     * @param int $oldcolumnid  Column ID where the note was
+     * @param int $newcolumnid  Column ID where the note is moved to
+     * @param int $oldindex     Old place of the note in column
+     * @param int $newindex     New place of the note in column
+     *
+     * @return $dbresult        Return all infos of note
+     */
     public static function changing_note_position($noteid, $oldcolumnid, $newcolumnid, $oldindex, $newindex) {
         global $DB;
 
@@ -72,7 +81,11 @@ class mod_stickynotes_external extends external_api {
 
         return $dbresult;
     }
-
+    /**
+     * Describes the parameters for changing_note_position_parameters.
+     *
+     * @return external_function_parameters
+     */
     public static function changing_note_position_parameters() {
         return new external_function_parameters(
             [
@@ -84,7 +97,11 @@ class mod_stickynotes_external extends external_api {
             ]
         );
     }
-
+    /**
+     * Describes the parameters for changing_note_position_returns.
+     *
+     * @return external_multiple_structure
+     */
     public static function changing_note_position_returns() {
         return new external_multiple_structure(
             new external_single_structure(
@@ -98,8 +115,8 @@ class mod_stickynotes_external extends external_api {
     }
 
     /**
-     * Returns welcome message
-     * @return array = array('' => , ); welcome message
+     * Returns list of columns when moving note from note creation interface
+     * @return array List of columns
      */
     public static function get_notes_column_select($id) {
         global $USER;

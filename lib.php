@@ -921,13 +921,11 @@ function update_lock($instance, $lock, $lockvalue) {
 }
 
  /**
-  * Decides if text color is black or white depending on
-  * the note background color.
+  * Decides if text color is black or white depending on the note background color.
   * Author : Elmer Wilson
-  * @param object $data  Hexadecimal background color.
+  * @param object $hexcolor  Hexadecimal background color.
   * @return post Text color (black or white) in hex.
   */
-
 function getcontrastcolor($hexcolor) {
     // HexColor RGB.
     $r1 = hexdec(substr($hexcolor, 1, 2));
