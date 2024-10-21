@@ -51,11 +51,11 @@
                     <div id="{{elementidstickycontent}}" class="stickynotemod" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
                 {{/capabilityupdatenote}}
                 {{^capabilityupdatenote}}
-                    <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
+                    <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" ondragstart="event.stopPropagation();" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
                 {{/capabilityupdatenote}}
             {{/locknotes}}
             {{#locknotes}}
-                <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
+                <div id="{{elementidstickycontent}}" class="stickynotemod note_nomove" draggable="false" ondragstart="event.stopPropagation();" style="background-color:{{backgroundcolor}}; color:{{textcolor}};">
             {{/locknotes}}
         {{/capabilitymoveallnotes}}
                 <div id="{{elementid}}">
