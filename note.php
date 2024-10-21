@@ -24,7 +24,6 @@
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
-require_once(__DIR__.'/../../lib/outputcomponents.php');
 $PAGE->requires->js('/mod/stickynotes/assets/js_select.js');
 global $DB, $USER;
 
