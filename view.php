@@ -301,7 +301,7 @@ echo "<div id='descandcapt' style='margin-bottom: 1em'>";
 
 // If enabled, display button to show legend.
 if ($moduleinstance->displaystickycaption == '1') {
-    echo '<button class="btn btn-primary" id="buttondesc" data-toggle="collapse" data-target="#displaycapt">
+    echo '<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#displaycapt" aria-expanded="false" aria-controls="displaycapt">
     '.get_string('buttondisplaystickycaption', 'mod_stickynotes').'</button>';
 }
 if ((has_capability('mod/stickynotes:updateanynote', $modulecontext))
@@ -347,7 +347,7 @@ if ($moduleinstance->displaystickycaption == '1') {
     $retrievecolors = $DB->get_record('stickynotes', ['id' => $moduleinstance->id], '*', MUST_EXIST);
 
     $colorarray = [];
-    echo '<div id="displaycapt" class="collapse">';
+    echo '<div class="collapse" id="displaycapt"><div class="card card-body">';
     echo '<h3>'.get_string('titledisplaystickycaption', 'mod_stickynotes').'</h3>';
     foreach ($configcolor as $color) {
         if ($retrievecolors->$color == 1) {
@@ -361,7 +361,7 @@ if ($moduleinstance->displaystickycaption == '1') {
             echo $thiscolor;
         }
     }
-    echo '</div>';
+    echo '</div></div>';
 }
 
 $output = $PAGE->get_renderer('mod_stickynotes');

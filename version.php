@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->requires = 2024100700;
+$plugin->requires = 2025041400;
 $plugin->component = 'mod_stickynotes';
-$plugin->release = '0.5.3';
-$plugin->version = 2024061702;
+$plugin->release = '0.6.0';
+$plugin->version = 2025060401;
 $plugin->maturity = MATURITY_STABLE;
