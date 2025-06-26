@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Sticky Notes';
 $string['modulename'] = 'Sticky Notes';
+$string['modulename_help'] = 'Sticky Notes is a collaborative brainstorming activity allowing participants to post ideas as virtual sticky notes. Each member 
+can read and like others\' contributions. The visual interface makes idea sharing easier and encourages collective creativity.';
 $string['modulenameplural'] = 'Sticky Notes activities';
 $string['pluginadministration'] = 'Sticky Notes Admin';
 $string['modulenameplural'] = 'Sticky Notes';
