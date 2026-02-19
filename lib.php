@@ -24,10 +24,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(dirname(__FILE__) . '/../../config.php');
-require_once("$CFG->libdir/formslib.php");
-require_once("{$CFG->dirroot}/lib/navigationlib.php");
-global $COURSE, $OUTPUT, $PAGE, $CFG;;
+global $CFG;
+require_once($CFG->libdir . '/formslib.php');
+
+global $COURSE, $OUTPUT, $PAGE;
 
 
 /**
